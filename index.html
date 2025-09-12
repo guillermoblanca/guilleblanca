@@ -4,56 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mi Portfolio</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f4f4f9;
-      color: #333;
-    }
-    header {
-      background: #4CAF50;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    header h1 {
-      margin: 0;
-    }
-    nav {
-      margin-top: 1rem;
-    }
-    nav a {
-      margin: 0 1rem;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-    }
-    section {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 1rem;
-    }
-    .card {
-      background: white;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin-bottom: 1.5rem;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #222;
-      color: #aaa;
-      margin-top: 2rem;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <!-- Header -->
   <header>
     <h1>Hola, soy Guillermo Blanca</h1>
-    <p> Analista de datos | Programador de videojuegos | Entusiasta de la tecnología</p>
+    <p>Analista de datos | Programador de videojuegos | Entusiasta de la tecnología</p>
     <nav>
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#proyectos">Proyectos</a>
@@ -61,92 +19,86 @@
     </nav>
   </header>
 
-<section id="sobre-mi">
-  <div class="card">
-    <h2>Sobre mí</h2>
-
-    <p>Soy un profesional con más de 10 años de experiencia en desarrollo de videojuegos con Unity, habiendo liderado equipos como Lead durante 3 años. He coordinado el crecimiento de un estudio de 6 a 25 personas en un solo año, gestionando proyectos, optimizando procesos y fomentando la colaboración entre departamentos.</p>
-
-    <p>Además, cuento con experiencia docente: he sido profesor de Unity y de proyectos en CEV Madrid durante 2 años, y colaboro como corrector de código y estilo en UTAD, además de impartir conferencias sobre portfolios y buenas prácticas de programación.</p>
-
-    <p>Actualmente, estoy en proceso de transición hacia análisis de datos y machine learning, aplicando mi experiencia en programación y gestión de proyectos para desarrollar soluciones basadas en datos, aprendizaje automático y visualización de información.</p>
-
-    <p>Mi objetivo es combinar experiencia técnica, liderazgo, docencia y analítica de datos para crear proyectos de calidad y aportar valor tanto en el desarrollo de videojuegos como en la ciencia de datos.</p>
-
-  </div>
-</section>
-
-
-<section id="proyectos">
-  <div class="card">
-    <h2>Proyectos</h2>
-
-    <div class="proyecto">
-      <h3>Trial Xtreme Freedom</h3>
-      <iframe width="560" height="315"
-        src="https://www.youtube.com/embed/RKRuz1-1Mkg"
-        frameborder="0" allowfullscreen>
-      </iframe>
+  <!-- Sobre mí -->
+  <section id="sobre-mi">
+    <div class="card">
+      <h2>Sobre mí</h2>
+      <p>Soy un profesional con más de 10 años de experiencia en desarrollo de videojuegos con Unity, habiendo liderado equipos como Lead durante 3 años. He coordinado el crecimiento de un estudio de 6 a 25 personas en un solo año, gestionando proyectos, optimizando procesos y fomentando la colaboración entre departamentos.</p>
+      <p>Además, cuento con experiencia docente: he sido profesor de Unity y de proyectos en CEV Madrid durante 2 años, y colaboro como corrector de código y estilo en UTAD, además de impartir conferencias sobre portfolios y buenas prácticas de programación.</p>
+      <p>Actualmente, estoy en proceso de transición hacia análisis de datos y machine learning, aplicando mi experiencia en programación y gestión de proyectos para desarrollar soluciones basadas en datos, aprendizaje automático y visualización de información.</p>
+      <p>Mi objetivo es combinar experiencia técnica, liderazgo, docencia y analítica de datos para crear proyectos de calidad y aportar valor tanto en el desarrollo de videojuegos como en la ciencia de datos.</p>
     </div>
+  </section>
 
-    <div class="proyecto">
-      <h3>Proyecto 6: Islander 2 con gestión de recursos</h3>
-      <iframe width="560" height="315" 
-        src="https://www.youtube.com/embed/q7JfhZ5yVT0" 
-        frameborder="0" allowfullscreen>
-      </iframe>
-      <p>Segunda entrega de Islander con un sistema de gestión de recursos y modo puntuación, ofreciendo un desafío estratégico y rejugable.</p>
+  <!-- Proyectos -->
+  <section id="proyectos">
+    <div class="card">
+      <h2>Proyectos</h2>
+      <div class="proyectos-grid">
+
+        <div class="proyecto">
+          <h3>Trial Xtreme Freedom</h3>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/RKRuz1-1Mkg" title="Trial Xtreme Freedom" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="proyecto">
+          <h3>Islander 2: Gestión de recursos</h3>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/q7JfhZ5yVT0" title="Islander 2" allowfullscreen></iframe>
+          </div>
+          <p>Segunda entrega de Islander con un sistema de gestión de recursos y modo puntuación, ofreciendo un desafío estratégico y rejugable.</p>
+        </div>
+
+        <div class="proyecto">
+          <h3>Islander: Ciclo de día y noche</h3>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/JeEmwdCkMgk" title="Islander día y noche" allowfullscreen></iframe>
+          </div>
+          <p>Implementación de un ciclo dinámico de día y noche que afecta la jugabilidad y eventos del entorno en Islander.</p>
+        </div>
+
+        <div class="proyecto">
+          <h3>Universal Studio NDAs: Juego cooperativo</h3>
+          <p>Juego de aventuras para dos jugadores con más de 16 habilidades combinables, desarrollado para Universal Studios, con mecánicas cooperativas y narrativa compartida.</p>
+        </div>
+
+        <div class="proyecto">
+          <h3>Holgmang: Memories of the Forgotten</h3>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/XGREJqcxLm8" title="Holgmang" allowfullscreen></iframe>
+          </div>
+          <p>Sistema de combate con combos y ataques configurables, enfocado en exploración narrativa y progresión del personaje.</p>
+        </div>
+
+        <div class="proyecto">
+          <h3>Cruzcampo AR: Prototipo de realidad aumentada</h3>
+          <p>Desarrollo de un prototipo AR para etiquetas de cerveza, utilizando IA para identificar la etiqueta correcta y recompensar al usuario a través de un sistema integrado con API Rest y machine learning.</p>
+        </div>
+
+        <div class="proyecto">
+          <h3>Virtual Raiders: Juego VR con gestión de inventario</h3>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/yDyBuASYJWk" title="Virtual Raiders" allowfullscreen></iframe>
+          </div>
+          <p>Juego de realidad virtual donde el jugador gestiona inventario mientras combate enemigos en entornos inmersivos y dinámicos.</p>
+        </div>
+
+        <div class="proyecto">
+          <h3>Proyecto 7: Análisis de datos para Muxunam</h3>
+          <p>Extracción y tratamiento de datos de ventas de máquinas vending, cruzando información para generar insights y predicciones sobre el rendimiento del negocio.</p>
+        </div>
+
+      </div>
     </div>
+  </section>
 
-    <div class="proyecto">
-      <h3>Proyecto 5: Islander con sistema de día y noche</h3>
-      <iframe width="560" height="315" 
-        src="https://www.youtube.com/embed/JeEmwdCkMgk" 
-        frameborder="0" allowfullscreen>
-      </iframe>
-      <p>Implementación de un ciclo dinámico de día y noche que afecta la jugabilidad y eventos del entorno en Islander.</p>
-    </div>
-
-    <div class="proyecto">
-      <h3>Universal Studio NDAs: Juego de aventuras cooperativo</h3>
-      <p>Juego de aventuras para dos jugadores con más de 16 habilidades combinables, desarrollado para Universal Studios, con mecánicas cooperativas y narrativa compartida.</p>
-    </div>
-
-    <div class="proyecto">
-      <h3>Holgmang: Memories of the Forgotten</h3>
-      <iframe width="560" height="315" 
-        src="https://www.youtube.com/embed/XGREJqcxLm8" 
-        frameborder="0" allowfullscreen>
-      </iframe>
-      <p>Sistema de combate con combos y ataques configurables, enfocado en exploración narrativa y progresión del personaje.</p>
-    </div>
-
-    <div class="proyecto">
-      <h3>Cruzcampo AR: Prototipo de realidad aumentada</h3>
-      <p>Desarrollo de un prototipo AR para etiquetas de cerveza, utilizando IA para identificar la etiqueta correcta y recompensar al usuario a través de un sistema integrado con API Rest y machine learning.</p>
-    </div>
-
-    <div class="proyecto">
-      <h3>Virtual Raiders: Juego VR de disparos con gestión de inventario</h3>
-      <iframe width="560" height="315" 
-        src="https://www.youtube.com/embed/yDyBuASYJWk" 
-        frameborder="0" allowfullscreen>
-      </iframe>
-      <p>Juego de realidad virtual donde el jugador gestiona inventario mientras combate enemigos en entornos inmersivos y dinámicos.</p>
-    </div>
-
-    <div class="proyecto">
-      <h3>Proyecto 7: Análisis de datos para Muxunam</h3>
-      <p>Extracción y tratamiento de datos de ventas de máquinas vending, cruzando información para generar insights y predicciones sobre el rendimiento del negocio.</p>
-    </div>
-
-  </div>
-</section>
-
+  <!-- Contacto -->
   <section id="contacto">
     <div class="card">
       <h2>Contacto</h2>
-      <p>Puedes escribirme a: <a href="guillermo_848@hotmail.com">guillermo_848@hotmail.com</a></p>
+      <p>Puedes escribirme a: <a href="mailto:guillermo_848@hotmail.com">guillermo_848@hotmail.com</a></p>
       <p>O visitar mi <a href="https://github.com/guillermoblanca" target="_blank">GitHub Guillermoblanca</a></p>
     </div>
   </section>
