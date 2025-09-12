@@ -125,7 +125,7 @@ function updateAnimation() {
 
     if (!onGround) {
         newAnimation = 'jump';
-    } else if (velX !== 0) {
+    } else if (Math.abs(velX) > 0.1) {
         newAnimation = 'run';
     }
 
@@ -133,6 +133,12 @@ function updateAnimation() {
         setAnimation(newAnimation);
         currentAnimation = newAnimation;
     }
+
+    if (newAnimation !== currentAnimation) {
+        setAnimation(newAnimation);
+        currentAnimation = newAnimation;
+    }
+
     // reorientar según dirección
     if (velX > 0) {
         player.style.transform = 'scaleX(1)'; // mirando derecha
