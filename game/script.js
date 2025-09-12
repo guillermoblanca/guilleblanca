@@ -24,6 +24,20 @@ let moveLeft = false;
 let moveRight = false;
 let currentAnimation = 'idle';
 
+
+// Para que el movimiento sea relativo al ancho de la pantalla
+let screenWidth = container.offsetWidth;
+
+function updateParallax() {
+    let scrollX = posX; // posición del jugador
+
+    document.getElementById('layer1').style.backgroundPositionX = -scrollX * 0.2 + 'px';
+    document.getElementById('layer2').style.backgroundPositionX = -scrollX * 0.5 + 'px';
+    document.getElementById('layer3').style.backgroundPositionX = -scrollX * 0.8 + 'px';
+}
+
+
+
 document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') moveLeft = true;
     if (e.key === 'ArrowRight') moveRight = true;
@@ -33,32 +47,37 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+window.addEventListener('resize', () => {
+    document.getElementById('parallax').style.width = window.innerWidth + 'px';
+    document.getElementById('parallax').style.height = window.innerHeight + 'px';
+});
+
+
 document.addEventListener('keyup', (e) => {
     if (e.key === 'ArrowLeft') moveLeft = false;
     if (e.key === 'ArrowRight') moveRight = false;
 });
 
+// Límites del mundo
+let worldWidth = 2000; // ancho total del nivel
+
 function update() {
-    // mover horizontalmente con aceleración
+    // mover horizontalmente
     if (moveLeft) velX -= acc;
     if (moveRight) velX += acc;
 
-    // limitar velocidad máxima
-    if (velX > maxSpeed) velX = maxSpeed;
-    if (velX < -maxSpeed) velX = -maxSpeed;
+    // velocidad máxima
+    velX = Math.max(-maxSpeed, Math.min(maxSpeed, velX));
 
-    // fricción si no se pulsa ninguna tecla
-    if (!moveLeft && !moveRight) {
-        if (velX > 0) velX = Math.max(0, velX - friction);
-        if (velX < 0) velX = Math.min(0, velX + friction);
-    }
+    // fricción
+    if (!moveLeft && !moveRight) velX *= 0.8;
 
-    // aplicar velocidad horizontal
+    // aplicar velocidad
     posX += velX;
+    posY += velY;
 
     // gravedad
     velY += gravity;
-    posY += velY;
 
     // colisión con suelo
     let groundY = container.offsetHeight - ground.offsetHeight - player.offsetHeight;
@@ -68,20 +87,23 @@ function update() {
         onGround = true;
     }
 
-    // límites laterales
-    if (posX < 0) posX = 0;
-    if (posX > 2000) posX = 2000;
+    // limitar movimiento horizontal al mundo
+    posX = Math.max(0, Math.min(posX, worldWidth - player.offsetWidth));
 
     // aplicar posiciones
-    player.style.top = posY + 'px';
     player.style.left = posX + 'px';
+    player.style.top = posY + 'px';
 
-    // scroll lateral
-    container.scrollLeft = posX - 200;
+    // actualizar parallax sin mover el contenedor
+    updateParallax();
 
+    // animaciones y colisiones
+    updateAnimation();
     checkCollision();
+
     requestAnimationFrame(update);
 }
+
 
 function checkCollision() {
     document.querySelectorAll('.project').forEach(proj => {
@@ -95,7 +117,6 @@ function checkCollision() {
             infoBox.textContent = proj.dataset.info;
         }
 
-        updateAnimation();
     });
 }
 

@@ -32,6 +32,34 @@ p { margin-bottom: 10px; }
   z-index: 10;
 }
 
+#parallax {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;       /* ancho de la ventana */
+  height: 100vh;      /* altura de la ventana */
+  overflow: hidden;
+  z-index: 0;
+}
+
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;              /* ancho completo */
+  height: 50%;             /* alto completo de #parallax */
+  background-repeat: repeat-x;
+  background-size: auto 100%; /* escala vertical para cubrir altura */
+  background-position: 0 0;
+  z-index: 0;
+}
+
+
+#layer1 { background-image: url('assets/parallax-background/plx-1.png'); }
+#layer2 { background-image: url('assets/parallax-background/plx-2.png'); }
+#layer3 { background-image: url('assets/parallax-background/plx-3.png'); }
+
+
 
 .project {
   width: 150px;
