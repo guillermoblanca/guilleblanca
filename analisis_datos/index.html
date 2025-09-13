@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-<!-- Prism para resaltar código si hay -->
+<!-- Prism para resaltar código -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-okaidia.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-python.min.js"></script>
@@ -28,51 +28,67 @@
         </div>
     </div>
     <nav>
-        <a href="index.html">Inicio</a>
-        <a href="index.html#sobre-mi">Sobre mí</a>
-        <a href="index.html#proyectos">Proyectos</a>
+        <a href="../index.html">Inicio</a>
+        <a href="../index.html#sobre-mi">Sobre mí</a>
+        <a href="../index.html#proyectos">Proyectos</a>
         <a href="analisis_datos.html">Análisis de Datos</a>
-        <a href="index.html#contacto">Contacto</a>
+        <a href="../index.html#contacto">Contacto</a>
     </nav>
 </header>
 
 <h2 style="text-align:center; margin-top:20px;">Análisis de Datos</h2>
 
-<div class="cases-content" id="cases-container"></div>
+<div class="cases-container">
+    <!-- Sidebar -->
+    <aside class="cases-sidebar">
+        <h4>Entradas</h4>
+        <ul id="sidebar-list"></ul>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="cases-content" id="cases-container"></div>
+</div>
+
+<footer>
+    <p>© 2025 - Análisis de datos</p>
+</footer>
 
 <script>
-const cases = [
-    { title: "Acceder a Excel con Pandas", file: "cases/excel_pandas.html" }
-];
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('cases-container');
+    const sidebarList = document.getElementById('sidebar-list');
 
-const container = document.getElementById('cases-container');
-const sidebarList = document.getElementById('sidebar-list');
+    const cases = [
+        { title: "Acceder a Excel con Pandas", file: "cases/excel_pandas.html" }
+    ];
 
-cases.forEach(c => {
-    fetch(c.file)
-        .then(res => {
-            if (!res.ok) throw new Error("Archivo no encontrado");
-            return res.text();
-        })
-        .then(html => {
-            const div = document.createElement('div');
-            div.className = 'case';
-            div.id = c.title.replace(/\s+/g,'_');
-            div.innerHTML = `<h3>${c.title}</h3>${html}`;
-            container.appendChild(div);
+    cases.forEach(c => {
+        fetch(c.file)
+            .then(res => {
+                if (!res.ok) throw new Error("Archivo no encontrado");
+                return res.text();
+            })
+            .then(html => {
+                const div = document.createElement('div');
+                div.className = 'case';
+                div.id = c.title.replace(/\s+/g,'_');
+                div.innerHTML = `<h3>${c.title}</h3>${html}`;
+                container.appendChild(div);
 
-            // Sidebar
-            const li = document.createElement('li');
-            li.innerHTML = `<a href="#${div.id}">${c.title}</a>`;
-            sidebarList.appendChild(li);
+                // Sidebar
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#${div.id}">${c.title}</a>`;
+                sidebarList.appendChild(li);
 
-            Prism.highlightAll(); // resalta el código
-        })
-        .catch(err => {
-            console.log("Cargando archivo:", c.file);
-            container.innerHTML += `<p>Error cargando el caso: ${c.title}</p>`;
-            console.error(err);
-        });
+                // Resaltar código con Prism
+                Prism.highlightAll();
+            })
+            .catch(err => {
+                console.log("Cargando archivo:", c.file);
+                container.innerHTML += `<p>Error cargando el caso: ${c.title}</p>`;
+                console.error(err);
+            });
+    });
 });
 </script>
 
