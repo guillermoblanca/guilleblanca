@@ -11,8 +11,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-okaidia.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-python.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
+
 </head>
 <body>
 
@@ -39,13 +38,11 @@
 <h2 style="text-align:center; margin-top:20px;">Análisis de Datos</h2>
 
 <div class="cases-container">
-    <!-- Sidebar -->
     <aside class="cases-sidebar">
         <h4>Entradas</h4>
         <ul id="sidebar-list"></ul>
     </aside>
 
-    <!-- Contenido principal -->
     <div class="cases-content" id="cases-container"></div>
 </div>
 
@@ -83,9 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 Prism.highlightAll(); // resalta el código
             })
             .catch(err => {
-                console.log("Cargando archivo:", c.file);
+                console.error("Error cargando archivo:", c.file, err);
                 container.innerHTML += `<p>Error cargando el caso: ${c.title}</p>`;
-                console.error(err);
             });
     });
 });
