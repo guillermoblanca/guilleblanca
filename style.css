@@ -238,3 +238,33 @@ footer {
 .patterns-content {
   flex: 1;
 }
+
+/* Estilo de cada caso */
+.case {
+    background-color: #1e1e2f; /* fondo oscuro para que combine con Prism */
+    color: #f5f5f5;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.case h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.6em;
+    color: #ffcc00;
+}
+
+/* Código resaltado */
+.case pre {
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+/* Opcional: mejorar links dentro del case */
+.case a {
+    color: #00bfff;
+    text-decoration: underline;
+}
