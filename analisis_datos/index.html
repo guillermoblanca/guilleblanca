@@ -12,6 +12,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-python.min.js"></script>
 
+<style>
+.cases-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+.cases-sidebar {
+    width: 200px;
+}
+
+.cases-content {
+    flex: 1;
+    max-width: 800px;
+}
+
+.case {
+    background-color: #1e1e2f;
+    color: #f5f5f5;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    border: 2px solid #ffffff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.case h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.6em;
+    color: #ffcc00;
+}
+
+.case pre {
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    background: #2d2d44;
+}
+</style>
 </head>
 <body>
 
@@ -30,7 +70,7 @@
         <a href="../index.html">Inicio</a>
         <a href="../index.html#sobre-mi">Sobre mí</a>
         <a href="../index.html#proyectos">Proyectos</a>
-        <a href="analisis_datos.html">Análisis de Datos</a>
+        <a href="index.html">Análisis de Datos</a>
         <a href="../index.html#contacto">Contacto</a>
     </nav>
 </header>
@@ -73,9 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 container.appendChild(div);
 
                 // Sidebar
-                //const li = document.createElement('li');
-                //li.innerHTML = `<a href="#${div.id}">${c.title}</a>`;
-                //sidebarList.appendChild(li);
+                const li = document.createElement('li');
+                li.innerHTML = `<a href="#${div.id}">${c.title}</a>`;
+                sidebarList.appendChild(li);
 
                 Prism.highlightAll(); // resalta el código
             })
