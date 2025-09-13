@@ -1,29 +1,28 @@
-<section id="analisis-datos">
-  <div class="card">
-    <h2>Análisis de Datos: Optimización de tráfico web</h2>
+<h2>Análisis de Datos: Optimización de tráfico web</h2>
 
-    <p>
-      Este módulo demuestra cómo se pueden analizar datos de un sitio web para optimizar la experiencia del usuario y mejorar la toma de decisiones.
-      Se presentan métricas clave como visitas diarias, tiempo promedio de permanencia y canales de tráfico.
-    </p>
+<p>
+  Este módulo demuestra cómo se pueden analizar datos de un sitio web para optimizar la experiencia del usuario y
+  mejorar la toma de decisiones.
+  Se presentan métricas clave como visitas diarias, tiempo promedio de permanencia y canales de tráfico.
+</p>
 
-    <ul>
-      <li><strong>Visitas por día:</strong> Detecta tendencias y picos de tráfico.</li>
-      <li><strong>Tiempo de permanencia:</strong> Evalúa el interés en el contenido.</li>
-      <li><strong>Canales de tráfico:</strong> Identifica cómo llegan los usuarios.</li>
-    </ul>
+<ul>
+  <li><strong>Visitas por día:</strong> Detecta tendencias y picos de tráfico.</li>
+  <li><strong>Tiempo de permanencia:</strong> Evalúa el interés en el contenido.</li>
+  <li><strong>Canales de tráfico:</strong> Identifica cómo llegan los usuarios.</li>
+</ul>
 
-    <p>Ejemplo de visualización:</p>
+<p>Ejemplo de visualización:</p>
 
-    <canvas id="traficoChart" width="400" height="200"></canvas>
-    <canvas id="tiempoChart" width="400" height="200"></canvas>
+<canvas id="traficoChart" class="chart"></canvas>
+<canvas id="tiempoChart" class="chart"></canvas>
 
-    <p>
-      Con estos insights, se pueden tomar decisiones como mejorar contenido, reorganizar la navegación, o ajustar campañas de marketing.
-      Este ejemplo se puede ampliar para mostrar usuarios recurrentes, dispositivos usados o clicks en proyectos del portfolio.
-    </p>
-  </div>
-</section>
+<p>
+  Con estos insights, se pueden tomar decisiones como mejorar contenido, reorganizar la navegación, o ajustar campañas
+  de marketing.
+  Este ejemplo se puede ampliar para mostrar usuarios recurrentes, dispositivos usados o clicks en proyectos del
+  portfolio.
+</p>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
@@ -33,33 +32,33 @@
   // Visitas diarias
   const ctx1 = document.getElementById('traficoChart').getContext('2d');
   new Chart(ctx1, {
-      type: 'line',
-      data: {
-          labels: dias,
-          datasets: [{
-              label: 'Visitas diarias',
-              data: [120, 150, 170, 140, 200, 180, 220],
-              borderColor: '#4e79a7',
-              backgroundColor: 'rgba(78, 121, 167, 0.2)',
-              fill: true,
-              tension: 0.3
-          }]
-      },
-      options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    type: 'line',
+    data: {
+      labels: dias,
+      datasets: [{
+        label: 'Visitas diarias',
+        data: [120, 150, 170, 140, 200, 180, 220],
+        borderColor: '#4e79a7',
+        backgroundColor: 'rgba(78, 121, 167, 0.2)',
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
   });
 
   // Tiempo promedio de permanencia
   const ctx2 = document.getElementById('tiempoChart').getContext('2d');
   new Chart(ctx2, {
-      type: 'bar',
-      data: {
-          labels: dias,
-          datasets: [{
-              label: 'Minutos promedio',
-              data: [2.5, 3, 3.2, 2.8, 4, 3.5, 4.2],
-              backgroundColor: '#f28e2b'
-          }]
-      },
-      options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    type: 'bar',
+    data: {
+      labels: dias,
+      datasets: [{
+        label: 'Minutos promedio',
+        data: [2.5, 3, 3.2, 2.8, 4, 3.5, 4.2],
+        backgroundColor: '#f28e2b'
+      }]
+    },
+    options: { responsive: true, scales: { y: { beginAtZero: true } } }
   });
 </script>
