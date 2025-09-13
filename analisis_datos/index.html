@@ -23,21 +23,29 @@
     width: 200px;
 }
 
+/* Contenedor principal de las entradas */
 .cases-content {
-    flex: 1;
-    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centra horizontalmente */
+    width: 100%; /* ocupa todo el ancho disponible */
+    padding: 20px; 
+    box-sizing: border-box;
 }
 
+/* Cada caso */
 .case {
-    background-color: #1e1e2f;
-    color: #f5f5f5;
-    padding: 25px 30px;
-    margin-bottom: 30px;
-    border-radius: 12px;
-    border: 2px solid #ffffff;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    line-height: 1.6;
+    width: 80%;             /* ancho de la caja */
+    max-width: 1000px;      /* no se pase de cierto tamaño */
+    background-color: #1e1e1e; /* fondo oscuro similar a Prism */
+    color: #fff;            /* texto blanco */
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    overflow-x: auto;       /* permite scroll horizontal si el código es largo */
 }
+
 
 .case h3 {
     margin-top: 0;
