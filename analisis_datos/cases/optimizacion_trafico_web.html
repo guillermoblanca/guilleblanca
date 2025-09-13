@@ -1,62 +1,67 @@
-<h2>Análisis de Datos: Optimización de tráfico web</h2>
+<h2>Extracción de datos Muxunav</h2>
 
 <p>
-  Este módulo demuestra cómo se pueden analizar datos de un sitio web para optimizar la experiencia del usuario y
-  mejorar la toma de decisiones.
-  Se presentan métricas clave como visitas diarias, tiempo promedio de permanencia y canales de tráfico.
+  Esta función permite utilizar los datos de la tabla ventas generando un datatable con los datos de fecha y hora de compra, tipo de compra, importe y código de autorización
+  en caso de que no se haya comprado en Efectivo o sea Venta Perdida.
 </p>
 
-<ul>
-  <li><strong>Visitas por día:</strong> Detecta tendencias y picos de tráfico.</li>
-  <li><strong>Tiempo de permanencia:</strong> Evalúa el interés en el contenido.</li>
-  <li><strong>Canales de tráfico:</strong> Identifica cómo llegan los usuarios.</li>
-</ul>
+<pre>
+  <code class="language-python">
 
-<p>Ejemplo de visualización:</p>
+    def normalize_product_name(name):
+    if pd.isna(name):
+        return "Desconocido"
+
+    name = name.lower()
+    name = re.sub(r'[^a-z ]','',name) #Solo letras y espacios
+    name = re.sub(r'\s+', ' ', name).strip() #Quitamos espacios adicionales
+    name = name.capitalize()
+    return name
+
+def procesar_ventas(path: str, ubicacion: str, skip_footer: int = 10, header: int = 2) -> pd.DataFrame:
+    """
+    Procesa un archivo de ventas Excel y devuelve un DataFrame limpio.
+
+    Args:
+        path: Ruta del archivo Excel | CSV.
+        ubicacion: Nombre de la ubicación de la tienda.
+        skip_footer: Número de filas finales a excluir (subtotales u otros datos).
+        header: Fila inicial que contiene los nombres de las columnas.
+
+    Returns:
+        pd.DataFrame con columnas: producto, importe, tipo, fecha_hora, ubicacion.
+    """
+    if path.endswith('.csv'):
+        df = pd.read_csv(path, header=header)
+    elif path.endswith(('xls','xlsx')):
+        df = pd.read_excel(path, header=header)
+    else:
+        raise ValueError("Formato de archivo no soportado")
+    
+    df = df.drop(columns= ("Unnamed: 0"), errors='ignore')
+    
+    if skip_footer > 0:
+        df = df[:-skip_footer] #Quitamos los ultimos valores de ventas que reflejan el subtotal
+    
+    df.columns = df.columns.str.strip().str.lower()
+     # Manejar fecha y hora
+    if 'fecha' in df.columns and 'hora' in df.columns:
+        df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce', dayfirst=True)
+        df['hora'] = pd.to_timedelta(df['hora'], errors='coerce')
+        df['fecha_hora'] = df['fecha'] + df['hora']
+    elif 'fechahora' in df.columns:
+        df['fecha_hora'] = pd.to_datetime(df['fechahora'], errors='coerce') 
+    else:
+        raise ValueError("No se encontró columna de fecha/hora en el archivo")
+
+    df = df[['producto','importe','tipo','fecha_hora']]
+    df['importe'] =pd.to_numeric(df['importe'].astype(str).str.replace(',','.'), errors='coerce')
+
+    df['producto'] = df['producto'].apply(normalize_product_name)
+    df['producto'] = df['producto'].replace('Pokemon', 'Pokemon 151')
+    df['ubicacion'] = ubicacion
+    return df
 
 
-<p>
-  Con estos insights, se pueden tomar decisiones como mejorar contenido, reorganizar la navegación, o ajustar campañas
-  de marketing.
-  Este ejemplo se puede ampliar para mostrar usuarios recurrentes, dispositivos usados o clicks en proyectos del
-  portfolio.
-</p>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  // Datos de ejemplo
-  const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-
-  // Visitas diarias
-  const ctx1 = document.getElementById('traficoChart').getContext('2d');
-  new Chart(ctx1, {
-    type: 'line',
-    data: {
-      labels: dias,
-      datasets: [{
-        label: 'Visitas diarias',
-        data: [120, 150, 170, 140, 200, 180, 220],
-        borderColor: '#4e79a7',
-        backgroundColor: 'rgba(78, 121, 167, 0.2)',
-        fill: true,
-        tension: 0.3
-      }]
-    },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
-  });
-
-  // Tiempo promedio de permanencia
-  const ctx2 = document.getElementById('tiempoChart').getContext('2d');
-  new Chart(ctx2, {
-    type: 'bar',
-    data: {
-      labels: dias,
-      datasets: [{
-        label: 'Minutos promedio',
-        data: [2.5, 3, 3.2, 2.8, 4, 3.5, 4.2],
-        backgroundColor: '#f28e2b'
-      }]
-    },
-    options: { responsive: true, scales: { y: { beginAtZero: true } } }
-  });
-</script>
+  </code>
+</pre>
