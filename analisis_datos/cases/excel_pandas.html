@@ -1,16 +1,42 @@
 <p>
-Este ejemplo muestra cómo leer un archivo Excel usando <code>pandas</code> en Python:
+Este ejemplo muestra cómo leer un archivo Excel usando <code>pandas</code> en Python y limpiar los datos para análisis.
 </p>
 
 <pre><code class="language-python">
 import pandas as pd
 
-df = pd.read_excel('datos.xlsx')
-print(df.head())
+# 1. Leer el archivo Excel, indicando la fila de encabezado (headers)
+df = pd.read_excel('datos.xlsx', header=0)
+
+# 2. Mostrar las primeras filas
+print("Primeras 10 filas originales:")
+print(df.head(10))
+
+# 3. Eliminar columnas sobrantes por la parte inferior (suponiendo que Excel tiene filas vacías o metadatos al final)
+# Aquí tomamos solo las primeras 10 filas como ejemplo
+df = df.head(10)
+
+# 4. Renombrar las columnas con nombres personalizados
+df.columns = ['nombre', 'fecha_hora', 'valor', 'comentario']
+
+# 5. Convertir la columna de fecha_hora a tipo datetime
+df['fecha_hora'] = pd.to_datetime(df['fecha_hora'], errors='coerce')
+
+# 6. Normalizar nombres de columna: pasar a minúsculas y quitar espacios
+df.columns = df.columns.str.lower().str.replace(' ', '_')
+
+# 7. Mostrar el DataFrame final limpio
+print("\nDataFrame limpio:")
+print(df)
 </code></pre>
 
 <p>
-    De esta manera debe mostrarse una tabla con los datos. head() permite visualizar los primeros valores de la tabla. 
-    <br>
-    Para depurar se usa .info() o describe() devolviendo información adicional sobre la tabla así como los valores nulos que pueda contener.
+Explicación de pasos:
+<ul>
+<li><strong>header=0</strong>: indica que la primera fila contiene los nombres de las columnas.</li>
+<li><strong>head(10)</strong>: tomamos solo las primeras 10 filas como ejemplo para limpiar posibles filas sobrantes.</li>
+<li><strong>df.columns</strong>: renombramos las columnas con nombres claros.</li>
+<li><strong>pd.to_datetime</strong>: convierte la columna de fecha/hora a tipo datetime para análisis posterior.</li>
+<li><strong>str.lower().str.replace(' ', '_')</strong>: normaliza los nombres de columna para que no tengan espacios y estén en minúsculas.</li>
+</ul>
 </p>
