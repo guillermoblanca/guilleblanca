@@ -1,5 +1,4 @@
 
-
 let container = document.getElementById('game-container');
 let ground = document.getElementById('ground');
 let infoBox = document.getElementById('info-box');
@@ -127,11 +126,6 @@ function updateAnimation() {
         newAnimation = 'jump';
     } else if (Math.abs(velX) > 0.1) {
         newAnimation = 'run';
-    }
-
-    if (newAnimation !== currentAnimation) {
-        setAnimation(newAnimation);
-        currentAnimation = newAnimation;
     }
 
     if (newAnimation !== currentAnimation) {

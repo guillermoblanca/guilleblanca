@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Código & Patrones - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Tema oscuro Prism -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+
+    <!-- Core Prism -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+
+    <!-- Lenguajes -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-csharp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="header-left">
+                <h1>Hola, soy Guillermo Blanca</h1>
+                <p>Analista de datos | Programador de videojuegos | Entusiasta de la tecnología</p>
+            </div>
+            <div class="header-right">
+                <a href="https://www.linkedin.com/in/guillermo-b-8741a2110" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/guillermoblanca" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="index.html#sobre-mi">Sobre mí</a>
+            <a href="index.html#proyectos">Proyectos</a>
+            <a href="code_and_patterns.html">Código & Patrones</a>
+            <a href="index.html#contacto">Contacto</a>
+        </nav>
+    </header>
+
+    <h2 style="text-align:center; margin-top:20px;">Código & Patrones</h2>
+
+    <!-- Contenedor de sidebar + contenido -->
+    <div class="patterns-container">
+        <!-- Contenido principal -->
+        <div class="patterns-content">
+
+            <!-- Patrón Singleton -->
+            <section id="singleton" class="pattern-section">
+                <div class="card">
+                    <h3>Singleton</h3>
+
+                    <!-- Botones de selección de lenguaje -->
+                    <div class="code-tabs">
+                        <button class="tab-button active" data-lang="csharp">C#</button>
+                        <button class="tab-button" data-lang="python">Python</button>
+                        <button class="tab-button" data-lang="cpp">C++</button>
+                    </div>
+
+                    <!-- Bloques de código -->
+                    <pre><code class="language-csharp code-block">/* C# Singleton */
+public class Singleton {
+    private static Singleton instance;
+    private Singleton() { }
+    public static Singleton Instance {
+        get {
+            if(instance == null) instance = new Singleton();
+            return instance;
+        }
+    }
+}</code></pre>
+
+                    <pre style="display:none;"><code class="language-python code-block"># Python Singleton
+class Singleton:
+    _instance = None
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(Singleton, cls).__new__(cls)
+        return cls._instance</code></pre>
+
+                    <pre style="display:none;"><code class="language-cpp code-block">// C++ Singleton
+class Singleton {
+private:
+    static Singleton* instance;
+    Singleton() {}
+public:
+    static Singleton* getInstance() {
+        if(!instance)
+            instance = new Singleton();
+        return instance;
+    }
+};</code></pre>
+
+                    <p>Patrón creacional que asegura que una clase tenga una sola instancia y proporciona un punto de acceso global.</p>
+                </div>
+            </section>
+
+            <!-- Patrón Factory Method -->
+            <section id="factory" class="pattern-section">
+                <div class="card">
+                    <h3>Factory Method</h3>
+                    <pre><code class="language-csharp">// Ejemplo en C#
+public abstract class Creator {
+    public abstract Product FactoryMethod();
+}</code></pre>
+                    <p>Patrón creacional que permite delegar la creación de objetos a subclases.</p>
+                </div>
+            </section>
+
+            <!-- Patrón Observer -->
+            <section id="observer" class="pattern-section">
+                <div class="card">
+                    <h3>Observer</h3>
+                    <pre><code class="language-csharp">// Ejemplo en C#
+public interface IObserver {
+    void Update();
+}</code></pre>
+                    <p>Patrón comportamental que permite que un objeto notifique a otros sobre cambios de estado.</p>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="patterns-sidebar">
+            <h4>Índice de Patrones</h4>
+            <ul id="sidebar-list"></ul>
+        </aside>
+    </div>
+
+    <footer>
+        <p>© 2025 - Patrones de diseño</p>
+    </footer>
+
+    <!-- Script para tabs de código -->
+    <script>
+        document.querySelectorAll('.code-tabs').forEach(tabContainer => {
+            const buttons = tabContainer.querySelectorAll('.tab-button');
+            const preBlocks = tabContainer.parentElement.querySelectorAll('pre');
+
+            buttons.forEach((btn, idx) => {
+                btn.addEventListener('click', () => {
+                    preBlocks.forEach(block => block.style.display = 'none');
+                    preBlocks[idx].style.display = 'block';
+
+                    buttons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const codeBlock = preBlocks[idx].querySelector('code');
+                    Prism.highlightElement(codeBlock);
+                });
+            });
+        });
+    </script>
+
+    <!-- Script para generar sidebar dinámico -->
+    <script>
+        const sidebarList = document.getElementById('sidebar-list');
+        document.querySelectorAll('.pattern-section').forEach(section => {
+            const id = section.id;
+            const title = section.querySelector('h3').innerText;
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="#${id}">${title}</a>`;
+            sidebarList.appendChild(li);
+        });
+    </script>
+
+</body>
+
+</html>
