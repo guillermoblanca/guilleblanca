@@ -53,56 +53,31 @@
     <p>© 2025 - Análisis de datos</p>
 </footer>
 
-<script>
-const container = document.getElementById('cases-container');
-const sidebarList = document.getElementById('sidebar-list');
+<div id="case-container"></div>
 
-// Lista de carpetas de casos de análisis de datos
+<script>
 const cases = [
-    'case1'
+    { title: "Acceder a datos de Excel usando Pandas", file: "case1/content.html" }
 ];
 
-// Cargar entradas dinámicamente
-cases.forEach(async (folder) => {
-    try {
-        // Cargar título
-        const titleRes = await fetch(`analisis_datos/${folder}/title.txt`);
-        const title = await titleRes.text();
+const container = document.getElementById('case-container');
 
-        // Cargar contenido HTML
-        const contentRes = await fetch(`analisis_datos/${folder}/content.html`);
-        const contentHtml = await contentRes.text();
-
-        // Cargar fecha
-        let date = '';
-        try {
-            const dateRes = await fetch(`analisis_datos/${folder}/date.txt`);
-            date = await dateRes.text();
-        } catch {}
-
-        // Crear sección
-        const section = document.createElement('section');
-        section.id = folder;
-        section.classList.add('case-section');
-
-        section.innerHTML = `
-            <h3>${title}</h3>
-            ${date ? `<p class="case-date">${date}</p>` : ''}
-            <div class="case-content">${contentHtml}</div>
-        `;
-        container.appendChild(section);
-
-        // Añadir al sidebar
-        const li = document.createElement('li');
-        li.innerHTML = `<a href="#${folder}">${title}</a>`;
-        sidebarList.appendChild(li);
-
-        // Resaltar código si hay bloques <pre><code>
-        section.querySelectorAll('pre code').forEach(block => Prism.highlightElement(block));
-
-    } catch(err) {
-        console.error(`Error cargando ${folder}:`, err);
-    }
+cases.forEach(c => {
+    fetch(c.file)
+        .then(res => {
+            if (!res.ok) throw new Error("No se pudo cargar el archivo");
+            return res.text();
+        })
+        .then(html => {
+            const div = document.createElement('div');
+            div.classList.add('case');
+            div.innerHTML = `<h3>${c.title}</h3>${html}`;
+            container.appendChild(div);
+        })
+        .catch(err => {
+            container.innerHTML += `<p>Error cargando el caso: ${c.title}</p>`;
+            console.error(err);
+        });
 });
 </script>
 
