@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Análisis de Datos - Portfolio</title>
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<!-- Prism para resaltar código si hay -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-c.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-cpp.min.js"></script>
+</head>
+<body>
+
+<header>
+    <div class="header-top">
+        <div class="header-left">
+            <h1>Guillermo Blanca</h1>
+            <p>Analista de datos | Programador de videojuegos | Entusiasta de la tecnología</p>
+        </div>
+        <div class="header-right">
+            <a href="https://www.linkedin.com/in/guillermo-b-8741a2110" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/guillermoblanca" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="index.html#sobre-mi">Sobre mí</a>
+        <a href="index.html#proyectos">Proyectos</a>
+        <a href="analisis_datos.html">Análisis de Datos</a>
+        <a href="index.html#contacto">Contacto</a>
+    </nav>
+</header>
+
+<h2 style="text-align:center; margin-top:20px;">Análisis de Datos</h2>
+
+<div class="cases-container">
+    <!-- Sidebar -->
+    <aside class="cases-sidebar">
+        <h4>Entradas</h4>
+        <ul id="sidebar-list"></ul>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="cases-content" id="cases-container"></div>
+</div>
+
+<footer>
+    <p>© 2025 - Análisis de datos</p>
+</footer>
+
+<script>
+const container = document.getElementById('cases-container');
+const sidebarList = document.getElementById('sidebar-list');
+
+// Lista de carpetas de casos de análisis de datos
+const cases = [
+    'case1'
+];
+
+// Cargar entradas dinámicamente
+cases.forEach(async (folder) => {
+    try {
+        // Cargar título
+        const titleRes = await fetch(`analisis_datos/${folder}/title.txt`);
+        const title = await titleRes.text();
+
+        // Cargar contenido HTML
+        const contentRes = await fetch(`analisis_datos/${folder}/content.html`);
+        const contentHtml = await contentRes.text();
+
+        // Cargar fecha
+        let date = '';
+        try {
+            const dateRes = await fetch(`analisis_datos/${folder}/date.txt`);
+            date = await dateRes.text();
+        } catch {}
+
+        // Crear sección
+        const section = document.createElement('section');
+        section.id = folder;
+        section.classList.add('case-section');
+
+        section.innerHTML = `
+            <h3>${title}</h3>
+            ${date ? `<p class="case-date">${date}</p>` : ''}
+            <div class="case-content">${contentHtml}</div>
+        `;
+        container.appendChild(section);
+
+        // Añadir al sidebar
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="#${folder}">${title}</a>`;
+        sidebarList.appendChild(li);
+
+        // Resaltar código si hay bloques <pre><code>
+        section.querySelectorAll('pre code').forEach(block => Prism.highlightElement(block));
+
+    } catch(err) {
+        console.error(`Error cargando ${folder}:`, err);
+    }
+});
+</script>
+
+</body>
+</html>
