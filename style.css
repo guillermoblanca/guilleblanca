@@ -24,11 +24,9 @@ header {
 
 /* Contenedor superior del header: nombre y iconos */
 .header-top {
-  display: flex;
   justify-content: center; /* centra horizontalmente los bloques */
   align-items: flex-start; /* alineación vertical */
   width: 100%;
-  max-width: 1200px;
   gap: 40px; /* espacio entre izquierda y derecha */
 }
 
