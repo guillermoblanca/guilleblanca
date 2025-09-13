@@ -238,8 +238,19 @@ footer {
 .patterns-content {
   flex: 1;
 }
+.cases-container {
+    display: flex;
+    justify-content: center; /* centra horizontalmente el contenido principal */
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
 
-/* Estilo de cada caso */
+.cases-content {
+    max-width: 800px; /* ancho máximo del área de casos */
+    width: 100%;
+}
+
 .case {
     background-color: #1e1e2f; /* fondo oscuro */
     color: #f5f5f5;
@@ -257,14 +268,14 @@ footer {
     color: #ffcc00;
 }
 
-/* Código resaltado */
+/* Código resaltado con Prism */
 .case pre {
     padding: 15px;
     border-radius: 8px;
     overflow-x: auto;
+    background: #2d2d44;
 }
 
-/* Opcional: mejorar links dentro del case */
 .case a {
     color: #00bfff;
     text-decoration: underline;
