@@ -38,43 +38,38 @@
 
 <h2 style="text-align:center; margin-top:20px;">Análisis de Datos</h2>
 
-<div class="cases-container">
-    <!-- Sidebar -->
-    <aside class="cases-sidebar">
-        <h4>Entradas</h4>
-        <ul id="sidebar-list"></ul>
-    </aside>
-
-    <!-- Contenido principal -->
-    <div class="cases-content" id="cases-container"></div>
-</div>
-
-<footer>
-    <p>© 2025 - Análisis de datos</p>
-</footer>
-
-<div id="case-container"></div>
+<div class="cases-content" id="cases-container"></div>
 
 <script>
 const cases = [
-    { title: "Acceder a datos de Excel usando Pandas", file: "case1/content.html" }
+    { title: "Acceder a Excel con Pandas", file: "cases/excel_pandas.html" }
 ];
 
-const container = document.getElementById('case-container');
+const container = document.getElementById('cases-container');
+const sidebarList = document.getElementById('sidebar-list');
 
 cases.forEach(c => {
     fetch(c.file)
         .then(res => {
-            if (!res.ok) throw new Error("No se pudo cargar el archivo");
+            if (!res.ok) throw new Error("Archivo no encontrado");
             return res.text();
         })
         .then(html => {
             const div = document.createElement('div');
-            div.classList.add('case');
+            div.className = 'case';
+            div.id = c.title.replace(/\s+/g,'_');
             div.innerHTML = `<h3>${c.title}</h3>${html}`;
             container.appendChild(div);
+
+            // Sidebar
+            const li = document.createElement('li');
+            li.innerHTML = `<a href="#${div.id}">${c.title}</a>`;
+            sidebarList.appendChild(li);
+
+            Prism.highlightAll(); // resalta el código
         })
         .catch(err => {
+            console.log("Cargando archivo:", c.file);
             container.innerHTML += `<p>Error cargando el caso: ${c.title}</p>`;
             console.error(err);
         });
