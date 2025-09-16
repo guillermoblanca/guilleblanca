@@ -58,7 +58,6 @@ def procesar_ventas(path: str, ubicacion: str, skip_footer: int = 10, header: in
     df['importe'] =pd.to_numeric(df['importe'].astype(str).str.replace(',','.'), errors='coerce')
 
     df['producto'] = df['producto'].apply(normalize_product_name)
-    df['producto'] = df['producto'].replace('Pokemon', 'Pokemon 151')
     df['ubicacion'] = ubicacion
     return df
 
