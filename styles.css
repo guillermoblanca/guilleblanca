@@ -34,6 +34,7 @@
 /*=============== BASE ===============*/
 * {box-sizing: border-box; margin:0; padding:0;}
 html {scroll-behavior: smooth;}
+
 body {
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
@@ -101,9 +102,24 @@ button {cursor: pointer;}
 }
 
 /*=============== REUSABLE CLASSES ===============*/
+
+.section {
+  width: 100%;
+  place-items: center;
+  text-align: left;
+  padding: 10rem 2rem 5rem;
+  background-color: var(--container-color);
+}
+
 .container {
+  display: flex;
+  flex-direction: column;
+  gap :2rem;
+  place-items: center;
   max-width: 1024px;
   margin-left: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
   margin-right: 1.5rem;
 }
 
