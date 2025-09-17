@@ -1,0 +1,433 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+/*=============== VARIABLES ===============*/
+:root {
+  --header-height: 3.5rem;
+
+  --hue: 210;
+  --first-color: hsl(var(--hue), 100%, 70%);
+  --first-color-alt: hsl(var(--hue), 56%, 35%);
+  --title-color: hsl(228, 8%, 95%);
+  --text-color: hsl(228, 8%, 65%);
+  --body-color: hsl(228, 15%, 20%);
+  --container-color: hsl(228, 15%, 15%);
+
+  --body-font: "Poppins", sans-serif;
+  --biggest-font-size: 2rem;
+  --bigger-font-size: 1.25rem;
+  --h1-font-size: 1.5rem;
+  --h2-font-size: 1.25rem;
+  --h3-font-size: 1rem;
+  --normal-font-size: .938rem;
+  --small-font-size: .813rem;
+  --smaller-font-size: .75rem;
+
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  --z-tooltip: 10;
+  --z-fixed: 100;
+}
+
+/*=============== BASE ===============*/
+* {box-sizing: border-box; margin:0; padding:0;}
+html {scroll-behavior: smooth;}
+
+body {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--body-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+a {text-decoration: none; color: inherit;}
+ul, li {list-style:none;}
+img, iframe {max-width:100%; display:block;}
+h1,h2,h3,h4 {color: var(--title-color); font-weight: var(--font-medium);}
+button {cursor: pointer;}
+
+/*=============== HEADER ===============*/
+.header{
+  position: fixed;
+  width: 100%;
+  height: var(--header-height);
+  background-color: var(--container-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  z-index: var(--z-fixed);
+}
+
+.header .logo{
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+}
+
+.logo .highlight {
+  color: var(--first-color);
+}
+
+.header nav{
+  display: flex;
+  gap: 2rem;
+}
+.header nav a{
+  font-weight: var(--font-medium);
+  transition: color .3s;
+}
+.header nav a:hover, .active-link{
+  color: var(--first-color);
+}
+
+/*=============== HERO ===============*/
+
+.hero {
+  width: 100%;
+  place-items: center;
+  text-align: left;
+  padding: 10rem 2rem 5rem;
+  background-color: var(--container-color);
+}
+
+.hero__container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  place-items: center;
+  text-align: center; /* Centra el contenido en dispositivos móviles */
+}
+
+/*=============== REUSABLE CLASSES ===============*/
+
+.section {
+  width: 100%;
+  place-items: center;
+  text-align: left;
+  padding: 10rem 2rem 5rem;
+  background-color: var(--container-color);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap :2rem;
+  place-items: center;
+  max-width: 1024px;
+  margin-left: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.grid {
+  display: grid;
+}
+
+/*=============== RESPONSIVE DESIGN FOR HERO SECTION ===============*/
+@media screen and (min-width: 768px) {
+  .hero {
+    text-align: left; /* Desactiva el centrado en pantallas más grandes */
+  }
+
+  .hero__container {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    gap: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+
+.hero__title {
+  font-size: 2rem;
+  color: var(--title-color);
+}
+
+.highlight-alt {
+  font-size: 2rem;
+  color: var(--first-color);
+}
+
+.highlight-name {
+  font-size: 3rem;
+  color: var(--first-color);
+}
+
+.hero p{
+  margin: 1.5rem 20rem;
+  color: var(--text-color);
+}
+
+.hero__button{
+  display: inline-block;
+  place-items: center;
+  text-align: center;
+  background-color: var(--first-color);
+  color: var(--title-color);
+  border-radius: .5rem;
+  font-weight: var(--font-medium);
+  transition: box-shadow .3s;
+}
+
+.hero__button .btn:hover{
+  box-shadow: hsla(var(--hue), 100%, 40%, .25);
+}
+
+
+
+/*=============== ABOUT ME ===============*/
+.about {
+  background-color: var(--container-color);
+}
+
+.about__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  justify-content: center; /* centra las dos columnas */
+  align-items: center;     /* centra verticalmente */
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.about__data {
+  display: grid;
+  width: 100%;
+  place-items: center;
+  text-align: center;
+  padding: 3rem 20rem;
+  background-color: var(--container-color);
+}
+
+.about__description {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  margin: 1.5rem 9rem;
+  color: var(--text-color);
+}
+
+.about__image {
+  display: flex;
+  justify-content: center;
+}
+
+.about__image img {
+  width: 320px;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px hsla(var(--hue), 100%, 40%, .2);
+}
+
+/*=============== SKILLS ===============*/
+
+.skills__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  justify-content: center; /* centra las dos columnas */
+  align-items: center;     /* centra verticalmente */
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.skills__content {
+  display: grid;
+  width: 100%;
+  place-items: center;
+  text-align: center;
+  padding: 3rem 20rem;
+  background-color: var(--container-color);
+}
+
+
+/* Skills dentro de cada fase */
+.skill-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1rem; /* (RELEVANTE) añadido para mejor espaciado */
+}
+
+.skill-card {
+  background-color: var(--container-color);
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border-left: 4px solid var(--first-color); /* (RELEVANTE) antes era borde sólido completo */
+  transition: transform 0.3s, border-color 0.3s; /* (RELEVANTE) añadido border-color */
+}
+
+.skill-card:hover {
+  transform: translateY(-4px); /* (RELEVANTE) antes -3px */
+  border-color: var(--first-color-alt); /* (RELEVANTE) cambio dinámico */
+}
+
+.skill-card h4 {
+  font-size: var(--h3-font-size);
+  color: var(--first-color);
+  margin-bottom: 0.5rem;
+}
+
+.skill-card p {
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+/* GRID RESPONSIVE */
+@media screen and (min-width: 768px) {
+  .timeline {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem; /* (RELEVANTE) más espacio en grid */
+  }
+
+  .skill-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (min-width: 1120px) {
+  .timeline {
+    gap: 3rem;
+  }
+
+  .phase {
+    padding: 2.5rem; /* (RELEVANTE) más aire en desktop */
+  }
+}
+
+/*=============== TITULOS ===============*/
+.section__title {
+  font-size: var(--h1-font-size);
+  font-weight: var(--font-semi-bold);
+  margin-bottom: 1rem;
+  text-align: center;
+  color: var(--title-color);
+}
+
+.section__subtitle {
+  font-size: var(--normal-font-size);
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--text-color);
+}
+
+/*=============== BUTTONS ===============*/
+.button {
+  display: inline-block;
+  background-color: var(--first-color);
+  padding: 1rem 1.75rem;
+  border-radius: .5rem;
+  color: var(--title-color);
+  font-weight: var(--font-medium);
+  transition: box-shadow .4s;
+  text-align: center;
+}
+
+.button:hover {
+  box-shadow: 0 8px 24px hsla(var(--hue), 100%, 40%, .25);
+}
+
+
+/*new*/
+
+/*=============== HABILIDADES ===============*/
+section li{
+  margin-bottom: .5rem;
+  font-weight: var(--font-medium);
+}
+
+/*=============== PROYECTOS ===============*/
+.proyectos-grid{
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+}
+.proyecto{
+  background-color: var(--container-color);
+  border-radius:1rem;
+  padding:1rem;
+}
+.proyecto h3{
+  color: var(--first-color);
+  margin-bottom:.5rem;
+}
+.video-container{
+  margin-bottom:1rem;
+  overflow:hidden;
+  border-radius:1rem;
+}
+
+/*=============== CONTACTO ===============*/
+.contact{
+  text-align:center;
+  padding:5rem 2rem;
+}
+.contact .btn{
+  margin-top:1rem;
+}
+
+/*=============== FOOTER ===============*/
+footer{
+  text-align:center;
+  padding:3rem 2rem;
+  background-color: var(--container-color);
+  color: var(--title-color);
+}
+
+/*=============== TIMELINE / DATA CYCLE ===============*/
+.data-cycle {
+  background-color: var(--container-color);
+  padding-block: 4rem 2rem;
+}
+
+.data-cycle .section__title { /* (RELEVANTE) nuevo estilo para título */
+  font-size: var(--h1-font-size);
+  color: var(--first-color);
+  margin-bottom: 0.5rem;
+}
+
+.data-cycle .section__subtitle { /* (RELEVANTE) nuevo estilo para subtítulo */
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+  margin-bottom: 3rem;
+  display: block;
+}
+
+.data-cycle .timeline {
+  display: grid;
+  gap: 2.5rem; /* (RELEVANTE) antes era 2rem */
+}
+
+/* Fases */
+.phase {
+  background-color: var(--body-color);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 6px 18px hsla(var(--hue), 100%, 40%, 0.15); /* (RELEVANTE) sombra más suave */
+  transition: transform 0.3s, box-shadow 0.3s; /* (RELEVANTE) añadida transición de sombra */
+}
+
+.phase:hover {
+  transform: translateY(-6px); /* (RELEVANTE) antes -5px */
+  box-shadow: 0 12px 28px hsla(var(--hue), 100%, 40%, 0.25); /* (RELEVANTE) hover más intenso */
+}
+
+.phase-header {
+  margin-bottom: 1.5rem;
+}
+
+.phase-header h3 {
+  font-size: var(--h2-font-size);
+  color: var(--title-color);
+  margin-bottom: 0.5rem;
+}
+
+.phase-header p {
+  font-size: var(--normal-font-size);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
