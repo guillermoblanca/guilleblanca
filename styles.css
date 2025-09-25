@@ -319,9 +319,10 @@ section:first-of-type {
 }
 
 
-@media screen and (min-width: 768px){
+@media screen and (min-width: 768px) {
+
   /* Ajustar el ancho del menú de navegación */
-  .nav__menu{
+  .nav__menu {
     width: 55%;
   }
 
@@ -330,7 +331,7 @@ section:first-of-type {
 
   .home__container,
   .about__container,
-  .skills__container{
+  .skills__container {
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
   }
@@ -338,25 +339,25 @@ section:first-of-type {
   .home__data,
   .about__data,
   .skills__data,
-  :is(.about__data, .skills__data) :is(.section__subtitle, .section__title){
+  :is(.about__data, .skills__data) :is(.section__subtitle, .section__title) {
     text-align: initial;
   }
 
-  .home__social{
+  .home__social {
     justify-content: initial;
   }
 
   .home__blob,
-  .about__blob{
+  .about__blob {
     width: 400px;
   }
 
-  .about__data{
+  .about__data {
     order: 1;
   }
 
   .services__container,
-  .projects__container{
+  .projects__container {
     grid-template-columns: repeat(3, 352px);
   }
 }
@@ -529,6 +530,9 @@ section:first-of-type {
   .contact__container {
     grid-template-columns: 680px;
     padding-block: 2.5rem 2rem;
+    column-gap: 1.5rem;
+
+    text-align: center;
   }
 
   .contact__form {
@@ -578,12 +582,12 @@ section:first-of-type {
 
 
 /*=============== SERVICES ===============*/
-.services__container{
+.services__container {
   row-gap: 2rem;
   padding-block: 1rem;
 }
 
-.services__card{
+.services__card {
   text-align: center;
   background-color: var(--container-color);
   padding: 3rem 1.25rem;
@@ -592,19 +596,37 @@ section:first-of-type {
   transition: border .4s;
 }
 
-.services__icon{
+.services__icon {
   display: block;
   font-size: 4rem;
   color: var(--first-color);
   margin-bottom: .75rem;
 }
 
-.services__title{
+.services__title {
   font-size: var(--h2-font-size);
   margin-bottom: 1.5rem;
 }
 
 
-.services__card:hover{
+.services__card:hover {
   border: 2px solid var(--first-color);
 }
+
+.project {
+  background-color: var(--container-color);
+}
+
+.project__card {
+  background-color: var(--body-color);
+  text-align: center;
+  padding: 3rem 1.25rem;
+  border-radius: 1rem;
+  border: 2px solid var(--container-color);
+  transition: border .4s;
+}
+
+.project__card:hover{
+  border: 2px solid var(--first-color);
+}
+
