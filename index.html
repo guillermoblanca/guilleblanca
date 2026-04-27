@@ -1,345 +1,326 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Analista de Datos</title>
+    <title>Guillermo Blanca | Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!--=============== FAVICON ===============-->
     <link rel="shortcut icon" href="static/images/infinity-line.png" type="image/x-icon">
-
-    <!--=============== REMIXICONS ===============-->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontisto/css/fontisto/fontisto.min.css">
-
-
 </head>
 
-<body style="height: 100%">
-    <!---===================Header=====================-->
+<body>
+
+    <!-- ==================== SPLASH ==================== -->
+    <div id="splash" class="splash">
+        <div class="splash__inner">
+            <div class="splash__logo">Guillermo <span>Blanca</span></div>
+            <p class="splash__question" data-i18n="splash.question"></p>
+            <div class="splash__cards">
+                <button class="splash__card" data-role="game">
+                    <i class="ri-gamepad-line splash__icon"></i>
+                    <h2 class="splash__card-title" data-i18n="splash.game.title"></h2>
+                    <p class="splash__card-sub" data-i18n="splash.game.sub"></p>
+                </button>
+                <button class="splash__card" data-role="data">
+                    <i class="ri-bar-chart-2-fill splash__icon"></i>
+                    <h2 class="splash__card-title" data-i18n="splash.data.title"></h2>
+                    <p class="splash__card-sub" data-i18n="splash.data.sub"></p>
+                </button>
+            </div>
+            <div class="splash__lang">
+                <button class="lang-btn" data-lang="en">EN</button>
+                <span class="lang-sep">|</span>
+                <button class="lang-btn" data-lang="es">ES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== HEADER ==================== -->
     <header class="header" id="header">
         <nav class="nav container">
-            <a href class="nav__logo" onclick="location.reload(); return false;">
-                Guillermo
-                <span>Blanca</span>
-            </a>
-            <div class="nav__menu">
+            <a href="#home" class="nav__logo">Guillermo <span>Blanca</span></a>
+
+            <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="#home" class="nav__link">Home</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#about" class="nav__link">About</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#services" class="nav__link">Services</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#projects" class="nav__link">Projects</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#contact" class="nav__link">Contact</a>
-                    </li>
+                    <li class="nav__item"><a href="#home"     class="nav__link" data-i18n="nav.home"></a></li>
+                    <li class="nav__item"><a href="#about"    class="nav__link" data-i18n="nav.about"></a></li>
+                    <li class="nav__item"><a href="#services" class="nav__link" data-i18n="nav.services"></a></li>
+                    <li class="nav__item"><a href="#projects" class="nav__link" data-i18n="nav.projects"></a></li>
+                    <li class="nav__item"><a href="#contact"  class="nav__link" data-i18n="nav.contact"></a></li>
                 </ul>
             </div>
-            <!--Falta por añadir el boton de toggle cuando se usa movil-->>
+
+            <div class="nav__controls">
+                <div class="role-toggle" id="role-toggle">
+                    <button class="role-toggle__btn" data-role-switch="game" data-i18n="toggle.game"></button>
+                    <button class="role-toggle__btn" data-role-switch="data" data-i18n="toggle.data"></button>
+                </div>
+                <div class="lang-toggle">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <span class="lang-sep">|</span>
+                    <button class="lang-btn" data-lang="es">ES</button>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <!--==================MAIN=============================-->
+    <!-- ==================== MAIN ==================== -->
     <main class="main">
+
+        <!-- HOME -->
         <section class="home section" id="home">
             <div class="home_container container grid">
                 <div class="home_content">
                     <div class="home_data">
-                        <h1>
-                            Hello,
-                            <span class="highlight-alt">I am</span><br>
-                            <span class="highlight-name">Guillermo Blanca</span>
-                            <br>
-                            Software Developer
-                        </h1>
 
-                        <p class="home__description">
-                            I am a developer with over 10 years of experience in video game development using Unity3D
-                            and Unreal Engine. I have worked in C# and C++ programming, game mechanics design,
-                            performance optimization, and multi-platform publishing. I am currently focusing my career
-                            on data analysis and data science, applying my knowledge of Python, SQL, Power BI, and
-                            statistical analysis to transform data into valuable information for decision-making.
-                        </p>
-                        <a href="#contact" class="button">Let's Talk</a>
+                        <div class="role-game">
+                            <h1>
+                                <span class="highlight-alt" data-i18n="home.hello"></span><br>
+                                <span class="highlight-name">Guillermo Blanca</span><br>
+                                <span data-i18n="home.game.role"></span>
+                            </h1>
+                            <p class="home__description" data-i18n="home.game.desc"></p>
+                        </div>
+
+                        <div class="role-data">
+                            <h1>
+                                <span class="highlight-alt" data-i18n="home.hello"></span><br>
+                                <span class="highlight-name">Guillermo Blanca</span><br>
+                                <span data-i18n="home.data.role"></span>
+                            </h1>
+                            <p class="home__description" data-i18n="home.data.desc"></p>
+                        </div>
+
+                        <a href="#contact" class="button" data-i18n="home.cta"></a>
                     </div>
                 </div>
+
                 <div class="home__social">
-                    <a href="https://www.linkedin.com/in/guillermo-b-8741a2110" target="_blank"
-                        class="home__social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://github.com/guillermoblanca" target="_blank" class="home__social-link"><i
-                            class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/guillermo-b-8741a2110" target="_blank" class="home__social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/guillermoblanca" target="_blank" class="home__social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
+        <!-- ABOUT -->
         <section class="about section" id="about">
             <div class="about__container container">
                 <div class="about__data">
-                    <h3 class="section__subtitle">My
-                        <span>Intro</span>
-                    </h3>
-                    <h2 class="section__title"> About Me</h2>
-                    <p class="about__description">
-                        With over a decade of experience in developing technological and creative projects, I have
-                        combined professional practice with team management and academic training. My career includes
-                        creating video games in engines such as Unity and Unreal Engine, as well as participating in
-                        teaching initiatives, sharing knowledge in programming, interactive design, and technical
-                        problem solving. Currently, I apply this experience in the field of data analysis and science,
-                        providing a comprehensive vision that combines creativity, leadership, and analytical skills to
-                        generate innovative solutions.
-                    </p>
-                    <a href="#contact" class="button">Contact Me</a>
+                    <h3 class="section__subtitle"><span data-i18n="about.subtitle"></span></h3>
+                    <h2 class="section__title" data-i18n="about.title"></h2>
+
+                    <div class="role-game">
+                        <p class="about__description" data-i18n="about.game.desc"></p>
+                    </div>
+                    <div class="role-data">
+                        <p class="about__description" data-i18n="about.data.desc"></p>
+                    </div>
+
+                    <a href="#contact" class="button" data-i18n="about.cta"></a>
                 </div>
             </div>
         </section>
 
+        <!-- SKILLS -->
         <section class="skills section" id="skills">
             <div class="skills__container container grid">
                 <div class="skills__data">
-                    <h3 class="section__subtitle">
-                        Favorite <span>Skills</span>
-                    </h3>
-                    <h2 class="section__title">
-                        Skills
-                    </h2>
-                    <p class="skills__description">
-                        Learn about my most valuable skills for your business
-                    </p>
-                    <a href="#projects" class="button">See projects</a>
+                    <h3 class="section__subtitle"><span data-i18n="skills.subtitle"></span></h3>
+                    <h2 class="section__title" data-i18n="skills.title"></h2>
+                    <p class="skills__description" data-i18n="skills.desc"></p>
+                    <a href="#projects" class="button" data-i18n="skills.cta"></a>
                 </div>
 
-                <div class="skills__content">
+                <div class="skills__content role-game">
                     <ol class="skills__group">
-                        <li class="skills__item">
-                            Python
-                        </li>
-                        <li class="skills__item">
-                            MySQL
-                        </li>
-                        <li class="skills__item">
-                            PowerBI
-                        </li>
-                        <li class="skills__item">
-                            Git & Github
-                        </li>
+                        <li class="skills__item">Unity3D</li>
+                        <li class="skills__item">Unreal Engine</li>
+                        <li class="skills__item">C#</li>
+                        <li class="skills__item">C++ / C</li>
                     </ol>
                     <ol class="skills__group" start="5">
-                        <li class="skills__item">
-                            Unity
-                        </li>
-                        <li class="skills__item">
-                            Unreal
-                        </li>
-                        <li class="skills__item">
-                            C#
-                        </li>
-                        <li class="skills__item">
-                            C++ & C
-                        </li>
+                        <li class="skills__item">VR / AR</li>
+                        <li class="skills__item">Mobile Dev</li>
+                        <li class="skills__item">Git & GitHub</li>
+                        <li class="skills__item">Performance Opt.</li>
+                    </ol>
+                </div>
+
+                <div class="skills__content role-data">
+                    <ol class="skills__group">
+                        <li class="skills__item">Python</li>
+                        <li class="skills__item">SQL / MySQL</li>
+                        <li class="skills__item">Power BI</li>
+                        <li class="skills__item">pandas / NumPy</li>
+                    </ol>
+                    <ol class="skills__group" start="5">
+                        <li class="skills__item">Matplotlib</li>
+                        <li class="skills__item">Statistical Analysis</li>
+                        <li class="skills__item">ETL Pipelines</li>
+                        <li class="skills__item">Git & GitHub</li>
                     </ol>
                 </div>
             </div>
         </section>
 
+        <!-- SERVICES -->
         <section class="services section" id="services">
             <div class="services_container container">
-                <h3 class="section__subtitle">My
-                    <span>Services</span>
-                </h3>
-                <h2 class="section__title"> What I Do</h2>
-                <div class="services__container container grid">
-                    <article class="services__card">
-                        <i class="ri-pie-chart-2-fill services__icon"></i>
-                        <h2 class="services__title"> Data Analyst</h2>
-                        <p class="services__description">
-                            I have experience in exploratory data analysis (EDA), leveraging visualization tools and
-                            storytelling techniques to derive insights and conclusions
-                        </p>
-                    </article>
-                    <article class="services__card">
-                        <i class="ri-database-2-fill services__icon"></i>
-                        <h2 class="services__title"> Databases</h2>
-                        <p class="services__description">
-                            Experience as a Data Analyst with solid knowledge of relational databases and SQL, data
-                            cleaning and manipulation, and development of dashboards in Power BI and Tableau to
-                            facilitate data-driven decision making.
-                        </p>
-                    </article>
-                    <article class="services__card">
-                        <i class="ri-line-chart-fill services__icon"></i>
-                        <h2 class="services__title"> Focus on insights and strategic value</h2>
-                        <p class="services__description">
-                            Data Analyst with the ability to transform data into actionable insights, generating clear
-                            visualizations and strategic analyses that support decision-making and optimize processes in
-                            business environments.
-                        </p>
-                    </article>
+                <h3 class="section__subtitle"><span data-i18n="services.subtitle"></span></h3>
+                <h2 class="section__title" data-i18n="services.title"></h2>
+
+                <div class="services__container container grid role-game">
                     <article class="services__card">
                         <i class="ri-smartphone-line services__icon"></i>
-                        <h2 class="services__title"> Mobile Games</h2>
-                        <p class="services__description">
-                            I have experience creating video games for a wide range of mobile devices, ensuring fully
-                            responsive and optimized gameplay.
-                        </p>
-
+                        <h2 class="services__title" data-i18n="srv.game.mobile.title"></h2>
+                        <p class="services__description" data-i18n="srv.game.mobile.desc"></p>
                     </article>
                     <article class="services__card">
                         <i class="ri-gamepad-line services__icon"></i>
-                        <h2 class="services__title"> Console and PC Games</h2>
-                        <p class="services__description">
-                            Experienced in developing video games for leading gaming consoles such as PlayStation,
-                            Nintendo Switch, and Xbox, with a focus on performance and user experience.
-                        </p>
+                        <h2 class="services__title" data-i18n="srv.game.console.title"></h2>
+                        <p class="services__description" data-i18n="srv.game.console.desc"></p>
                     </article>
                     <article class="services__card">
                         <i class="ri-glasses-fill services__icon"></i>
-                        <h2 class="services__title"> AR/VR Experiences</h2>
-                        <p class="services__description">
-                            Experienced in designing and developing immersive experiences for Augmented Reality (AR) and
-                            Virtual Reality (VR), focusing on interactivity and user engagement.
-                        </p>
+                        <h2 class="services__title" data-i18n="srv.game.vrar.title"></h2>
+                        <p class="services__description" data-i18n="srv.game.vrar.desc"></p>
                     </article>
                 </div>
 
+                <div class="services__container container grid role-data">
+                    <article class="services__card">
+                        <i class="ri-pie-chart-2-fill services__icon"></i>
+                        <h2 class="services__title" data-i18n="srv.data.eda.title"></h2>
+                        <p class="services__description" data-i18n="srv.data.eda.desc"></p>
+                    </article>
+                    <article class="services__card">
+                        <i class="ri-database-2-fill services__icon"></i>
+                        <h2 class="services__title" data-i18n="srv.data.db.title"></h2>
+                        <p class="services__description" data-i18n="srv.data.db.desc"></p>
+                    </article>
+                    <article class="services__card">
+                        <i class="ri-line-chart-fill services__icon"></i>
+                        <h2 class="services__title" data-i18n="srv.data.insights.title"></h2>
+                        <p class="services__description" data-i18n="srv.data.insights.desc"></p>
+                    </article>
+                </div>
             </div>
         </section>
 
-        <!---TO CLEAN-->
-        <!-- Proyectos -->
+        <!-- PROJECTS -->
         <section class="project section" id="projects">
             <div class="services_container container">
                 <div class="grid">
-                    <h3 class="section__subtitle">My
-                        <span>Projects</span>
-                    </h3>
-                    <h2 class="section__title"> Projects</h2>
-                    <div class="services__container container grid">
+                    <h3 class="section__subtitle"><span data-i18n="projects.subtitle"></span></h3>
+                    <h2 class="section__title" data-i18n="projects.title"></h2>
+
+                    <!-- Game projects -->
+                    <div class="services__container container grid role-game">
                         <article class="project__card">
-                            <div class="container__social">
-                                <h3>Trial Xtreme Freedom</h3>
-                                <div class="video-container">
-                                    <iframe src="https://www.youtube.com/embed/RKRuz1-1Mkg" title="Trial Xtreme Freedom"
-                                        allowfullscreen></iframe>
-                                </div>
-                                <p>Notification system, many screens ui and api rest implemented</p>
+                            <h3>Trial Xtreme Freedom</h3>
+                            <div class="video-container">
+                                <iframe src="https://www.youtube.com/embed/RKRuz1-1Mkg" title="Trial Xtreme Freedom" allowfullscreen></iframe>
                             </div>
+                            <p data-i18n="proj.trial.desc"></p>
                         </article>
-
                         <article class="project__card">
-                            <h3>Islander 2: Gestión de recursos</h3>
+                            <h3>Islander 2</h3>
                             <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/q7JfhZ5yVT0" title="Islander 2"
-                                    allowfullscreen></iframe>
+                                <iframe src="https://www.youtube.com/embed/q7JfhZ5yVT0" title="Islander 2" allowfullscreen></iframe>
                             </div>
-                            <p>Islander 2 with a resource management system and scoring mode, offering a strategic and
-                                replayable challenge where you create the game's architecture.</p>
-
+                            <p data-i18n="proj.islander2.desc"></p>
                         </article>
-
-                        <div class="project__card">
-                            <h3>Islander: Actualización de nuevo contenido</h3>
+                        <article class="project__card">
+                            <h3>Islander: New Content Update</h3>
                             <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/JeEmwdCkMgk" title="Islander día y noche"
-                                    allowfullscreen></iframe>
+                                <iframe src="https://www.youtube.com/embed/JeEmwdCkMgk" title="Islander Update" allowfullscreen></iframe>
                             </div>
-                            <p>patches with new content</p>
-
-                        </div>
-
-                        <div class="project__card">
-                            <h3>Holgmang: Memories of the Forgotten</h3>
+                            <p data-i18n="proj.islander.desc"></p>
+                        </article>
+                        <article class="project__card">
+                            <h3>Holmgang: Memories of the Forgotten</h3>
                             <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/XGREJqcxLm8" title="Holgmang"
-                                    allowfullscreen></iframe>
+                                <iframe src="https://www.youtube.com/embed/XGREJqcxLm8" title="Holmgang" allowfullscreen></iframe>
                             </div>
-                            <p>
-                                Combat system with configurable combos and attacks, focused on narrative exploration
-                                and character progression.
-                            </p>
-
-                        </div>
-
-                        <div class="project__card">
+                            <p data-i18n="proj.holmgang.desc"></p>
+                        </article>
+                        <article class="project__card">
                             <h3>Virtual Raiders</h3>
                             <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/yDyBuASYJWk" title="Virtual Raiders"
-                                    allowfullscreen></iframe>
+                                <iframe src="https://www.youtube.com/embed/yDyBuASYJWk" title="Virtual Raiders" allowfullscreen></iframe>
                             </div>
-                            <p>Virtual reality game where the player manages inventory while fighting enemies
-                                in immersive and dynamic environments.</p>
-
-                        </div>
-
-                        <div class="project__card">
+                            <p data-i18n="proj.vr.desc"></p>
+                        </article>
+                        <article class="project__card">
                             <h3>Flipys Tesla</h3>
                             <div class="video-container">
-                                <iframe src="https://www.youtube.com/embed/eATye7bZYnY" title="Flipys tesla"
-                                    allowfullscreen></iframe>
+                                <iframe src="https://www.youtube.com/embed/eATye7bZYnY" title="Flipys Tesla" allowfullscreen></iframe>
                             </div>
-                            <p>Exclusive VR game for PS4. Integration of mini-games, event mode, and path finding.</p>
-                        </div>
-
-                        <div class="project__card">
+                            <p data-i18n="proj.flipys.desc"></p>
+                        </article>
+                        <article class="project__card">
                             <h3>Cruzcampo AR</h3>
-                            <p>Development of an AR prototype for beer labels, using AI to identify the correct label
-                                and reward the user through a system integrated with Rest API and machine learning.
-                            </p>
-                        </div>
+                            <p data-i18n="proj.cruzcampo.desc"></p>
+                        </article>
+                        <article class="project__card">
+                            <h3>Universal Studios NDA: Adventure Game Coop</h3>
+                            <p data-i18n="proj.universal.desc"></p>
+                        </article>
+                    </div>
 
-                        <div class="project__card">
-                            <h3>Data analysis for Muxunav</h3>
-                            <p>Extraction and processing of vending machine sales data, cross-referencing information to
-                                generate insights and predictions about business performance
-                            </p>
-                        </div>
-                        <div class="project__card">
-                            <h3>Universal Studio NDAs: Adventure Game Coop</h3>
-                            <p>
-                                Adventure game for two players with over 16 combinable skills, developed for Universal
-                                Studios, with cooperative mechanics and shared narrative.
-                            </p>
-                        </div>
+                    <!-- Data projects -->
+                    <div class="services__container container grid role-data">
+                        <article class="project__card project__card--data">
+                            <div class="project__tag" data-i18n="proj.tag.casestudy"></div>
+                            <h3>Amazon Reviews — <span data-i18n="proj.sentiment.title"></span></h3>
+                            <p data-i18n="proj.sentiment.desc"></p>
+                            <div style="display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin-top:.5rem;">
+                                <a href="case_study/index.html" class="button" data-i18n="proj.sentiment.cta"></a>
+                                <a href="https://github.com/guillermoblanca/amazon_reviews_pipeline" target="_blank" class="button--outline" style="font-size:var(--small-font-size); padding:.7rem 1.1rem; display:inline-flex; align-items:center; gap:.4rem;">
+                                    <i class="fab fa-github"></i> GitHub
+                                </a>
+                            </div>
+                        </article>
+                        <article class="project__card project__card--data project__card--placeholder">
+                            <div class="project__tag project__tag--soon" data-i18n="proj.tag.comingsoon"></div>
+                            <i class="ri-eye-line project__placeholder-icon"></i>
+                            <h3 data-i18n="proj.hf2.title"></h3>
+                            <p data-i18n="proj.hf2.desc"></p>
+                        </article>
                     </div>
                 </div>
             </div>
         </section>
 
     </main>
-    <!-- Contacto -->
+
+    <!-- CONTACT -->
     <section id="contact" class="contact section">
         <div class="container">
             <header class="contact__group">
-                <h2 class="section__title">Contact</h2>
-                <h3 class="section__subtitle">Contact <span>Me</span></h3>
+                <h3 class="section__subtitle"><span data-i18n="contact.subtitle"></span></h3>
+                <h2 class="section__title" data-i18n="contact.title"></h2>
             </header>
-
             <div class="contact__container container">
-                <p>
-                    You can reach me anytime at: <strong>guillermo_848@hotmail.com</strong></p>
-                </p>
-                <a href="mailto:guillermo_848@hotmail.com" class="contact button">
-                    Get in touch
-                </a>
+                <p><span data-i18n="contact.text"></span> <strong>guillermo_848@hotmail.com</strong></p>
+                <a href="mailto:guillermo_848@hotmail.com" class="contact button" data-i18n="contact.cta"></a>
             </div>
         </div>
     </section>
 
+    <footer>
+        <p>© 2025 Guillermo Blanca</p>
+    </footer>
 
-    <div>
-        <footer>
-            <p>© 2025 Guillermo Blanca</p>
-        </footer>
-    </div>
     <script src="js/main.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>

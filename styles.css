@@ -630,3 +630,231 @@ section:first-of-type {
   border: 2px solid var(--first-color);
 }
 
+/*=============== VIDEO CONTAINER ===============*/
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: .5rem;
+  margin-block: 1rem;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/*=============== ROLE VISIBILITY ===============*/
+body[data-role="game"] .role-data { display: none !important; }
+body[data-role="data"] .role-game { display: none !important; }
+
+/*=============== SPLASH ===============*/
+.splash {
+  position: fixed;
+  inset: 0;
+  background-color: var(--body-color);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+.splash--exit {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.splash__logo {
+  font-size: var(--h1-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+  letter-spacing: .5px;
+}
+
+.splash__logo span {
+  color: var(--first-color);
+}
+
+.splash__question {
+  font-size: var(--bigger-font-size);
+  color: var(--title-color);
+  font-weight: var(--font-medium);
+}
+
+.splash__cards {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.splash__card {
+  background-color: var(--container-color);
+  border: 2px solid transparent;
+  border-radius: 1.25rem;
+  padding: 2.5rem 2rem;
+  width: 220px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  transition: border-color .3s, transform .3s, box-shadow .3s;
+  color: var(--text-color);
+}
+
+.splash__card:hover {
+  border-color: var(--first-color);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px hsla(var(--hue), 100%, 40%, .2);
+}
+
+.splash__icon {
+  font-size: 3rem;
+  color: var(--first-color);
+}
+
+.splash__card-title {
+  font-size: var(--h2-font-size);
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+}
+
+.splash__card-sub {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+}
+
+.splash__lang {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+/*=============== LANG & ROLE TOGGLES ===============*/
+.lang-sep {
+  color: var(--text-color);
+  opacity: .5;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--body-font);
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  color: var(--text-color);
+  transition: color .3s;
+  padding: .25rem .1rem;
+}
+
+.lang-btn:hover,
+.lang-btn.active {
+  color: var(--first-color);
+}
+
+.nav__controls {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.lang-toggle {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.role-toggle {
+  display: flex;
+  align-items: center;
+  background-color: var(--body-color);
+  border-radius: 2rem;
+  padding: .2rem .25rem;
+  gap: .15rem;
+}
+
+.role-toggle__btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--body-font);
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  color: var(--text-color);
+  padding: .3rem .75rem;
+  border-radius: 2rem;
+  transition: background-color .3s, color .3s;
+  white-space: nowrap;
+}
+
+.role-toggle__btn:hover {
+  color: var(--title-color);
+}
+
+.role-toggle__btn.active {
+  background-color: var(--first-color);
+  color: hsl(228, 15%, 10%);
+  font-weight: var(--font-semi-bold);
+}
+
+/*=============== DATA PROJECT CARDS ===============*/
+.project__card--data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.project__tag {
+  display: inline-block;
+  background-color: var(--first-color-alt);
+  color: var(--title-color);
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-semi-bold);
+  padding: .25rem .75rem;
+  border-radius: 2rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.project__tag--soon {
+  background-color: hsl(228, 15%, 30%);
+  color: var(--text-color);
+}
+
+.project__placeholder-icon {
+  font-size: 3rem;
+  color: var(--text-color);
+  opacity: .4;
+}
+
+.project__card--placeholder {
+  opacity: .65;
+  border-style: dashed;
+}
+
+/*=============== FOOTER ===============*/
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-color);
+  font-size: var(--small-font-size);
+}
+

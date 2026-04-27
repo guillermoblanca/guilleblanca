@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon Reviews — Sentiment Analysis Pipeline | Guillermo Blanca</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* ── Layout ── */
+        .cs-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(var(--header-height) + 3rem) 1.5rem 5rem;
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .cs-page {
+            min-width: 0;
+        }
+
+        /* ── TOC Sidebar ── */
+        .cs-toc {
+            position: sticky;
+            top: calc(var(--header-height) + 2rem);
+            background-color: var(--container-color);
+            border-radius: 1rem;
+            padding: 1.25rem 1rem;
+        }
+
+        .cs-toc__title {
+            font-size: var(--smaller-font-size);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: var(--first-color);
+            font-weight: var(--font-semi-bold);
+            margin-bottom: 1rem;
+            padding-bottom: .6rem;
+            border-bottom: 1px solid hsl(228, 15%, 25%);
+        }
+
+        .cs-toc__list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: .1rem;
+        }
+
+        .cs-toc__item--h2 > a {
+            font-size: var(--smaller-font-size);
+            font-weight: var(--font-medium);
+            color: var(--text-color);
+            display: block;
+            padding: .35rem .5rem;
+            border-radius: .35rem;
+            border-left: 2px solid transparent;
+            transition: color .2s, background-color .2s, border-left-color .2s;
+            line-height: 1.4;
+        }
+
+        .cs-toc__item--h3 > a {
+            font-size: var(--smaller-font-size);
+            color: var(--text-color);
+            opacity: .7;
+            display: block;
+            padding: .25rem .5rem .25rem 1.1rem;
+            border-radius: .35rem;
+            border-left: 2px solid transparent;
+            transition: color .2s, opacity .2s, background-color .2s, border-left-color .2s;
+            line-height: 1.4;
+        }
+
+        .cs-toc__item--h2 > a:hover,
+        .cs-toc__item--h3 > a:hover {
+            color: var(--first-color);
+            opacity: 1;
+            background-color: hsl(228, 15%, 18%);
+        }
+
+        .cs-toc__item--h2 > a.toc-active {
+            color: var(--first-color);
+            border-left-color: var(--first-color);
+            background-color: hsl(228, 15%, 18%);
+        }
+
+        .cs-toc__item--h3 > a.toc-active {
+            color: var(--first-color);
+            opacity: 1;
+            border-left-color: var(--first-color-alt);
+            background-color: hsl(228, 15%, 18%);
+        }
+
+        @media (max-width: 1023px) {
+            .cs-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .cs-toc { display: none; }
+        }
+
+        /* ── Back link ── */
+        .cs-back {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            transition: color .3s;
+            margin-bottom: 2.5rem;
+        }
+        .cs-back:hover { color: var(--first-color); }
+
+        /* ── Hero ── */
+        .cs-hero { margin-bottom: 3rem; }
+
+        .cs-hero__tag {
+            display: inline-block;
+            background-color: var(--first-color-alt);
+            color: var(--title-color);
+            font-size: var(--smaller-font-size);
+            font-weight: var(--font-semi-bold);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            padding: .25rem .75rem;
+            border-radius: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cs-hero__title {
+            font-size: var(--h1-font-size);
+            color: var(--title-color);
+            line-height: 1.3;
+            margin-bottom: .75rem;
+        }
+
+        .cs-hero__title span { color: var(--first-color); }
+
+        .cs-hero__sub {
+            color: var(--text-color);
+            font-size: var(--normal-font-size);
+            line-height: 1.7;
+            margin-bottom: 1.75rem;
+            max-width: 680px;
+        }
+
+        .cs-hero__badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .badge {
+            background-color: var(--container-color);
+            border: 1px solid hsl(228, 15%, 28%);
+            color: var(--text-color);
+            font-size: var(--smaller-font-size);
+            font-weight: var(--font-medium);
+            padding: .3rem .7rem;
+            border-radius: .4rem;
+        }
+
+        .cs-hero__actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .button--outline {
+            background: none;
+            border: 2px solid var(--first-color);
+            color: var(--first-color);
+            padding: .8rem 1.5rem;
+            border-radius: .5rem;
+            font-weight: var(--font-medium);
+            font-size: var(--normal-font-size);
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            transition: background-color .3s, color .3s;
+            cursor: pointer;
+        }
+        .button--outline:hover {
+            background-color: var(--first-color);
+            color: hsl(228, 15%, 10%);
+        }
+
+        /* ── Metrics strip ── */
+        .cs-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .metric-card {
+            background-color: var(--container-color);
+            border: 2px solid transparent;
+            border-radius: 1rem;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            transition: border-color .3s;
+        }
+        .metric-card:hover { border-color: var(--first-color); }
+
+        .metric-card__value {
+            font-size: var(--h1-font-size);
+            font-weight: var(--font-semi-bold);
+            color: var(--first-color);
+            line-height: 1.1;
+        }
+
+        .metric-card__label {
+            font-size: var(--smaller-font-size);
+            color: var(--text-color);
+            margin-top: .35rem;
+        }
+
+        /* ── Section titles ── */
+        .cs-section { margin-bottom: 3.5rem; }
+
+        .cs-section__title {
+            font-size: var(--h2-font-size);
+            color: var(--title-color);
+            border-left: 3px solid var(--first-color);
+            padding-left: .75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-section__text {
+            color: var(--text-color);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* ── Pipeline diagram ── */
+        .pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 1.5rem 0;
+        }
+
+        .pipeline__step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .pipeline__connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 48px;
+            flex-shrink: 0;
+        }
+
+        .pipeline__dot {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--first-color-alt);
+            border: 2px solid var(--first-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--first-color);
+            flex-shrink: 0;
+        }
+
+        .pipeline__line {
+            width: 2px;
+            flex: 1;
+            min-height: 1.5rem;
+            background: linear-gradient(to bottom, var(--first-color), transparent);
+            margin: .25rem 0;
+        }
+
+        .pipeline__body {
+            background-color: var(--container-color);
+            border-radius: .75rem;
+            padding: 1rem 1.25rem;
+            flex: 1;
+            margin-bottom: .75rem;
+        }
+
+        .pipeline__phase {
+            font-size: var(--smaller-font-size);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: var(--first-color);
+            font-weight: var(--font-semi-bold);
+            margin-bottom: .25rem;
+        }
+
+        .pipeline__title {
+            font-size: var(--h3-font-size);
+            color: var(--title-color);
+            font-weight: var(--font-medium);
+            margin-bottom: .4rem;
+        }
+
+        .pipeline__detail {
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* ── Code block ── */
+        .cs-code {
+            background-color: var(--container-color);
+            border-radius: .75rem;
+            padding: 1.25rem 1.5rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: var(--smaller-font-size);
+            color: hsl(210, 80%, 75%);
+            line-height: 1.7;
+            margin: 1.25rem 0;
+            border: 1px solid hsl(228, 15%, 28%);
+        }
+
+        /* ── Data table ── */
+        .cs-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--small-font-size);
+            margin: 1.25rem 0;
+        }
+
+        .cs-table th {
+            background-color: var(--container-color);
+            color: var(--first-color);
+            font-weight: var(--font-semi-bold);
+            text-align: left;
+            padding: .75rem 1rem;
+            border-bottom: 2px solid var(--first-color-alt);
+        }
+
+        .cs-table td {
+            color: var(--text-color);
+            padding: .65rem 1rem;
+            border-bottom: 1px solid hsl(228, 15%, 22%);
+        }
+
+        .cs-table tr:hover td { background-color: hsl(228, 15%, 17%); }
+
+        .cs-table code {
+            background-color: var(--body-color);
+            padding: .15rem .4rem;
+            border-radius: .25rem;
+            font-size: .85em;
+            color: var(--first-color);
+        }
+
+        /* ── Results images ── */
+        .cs-charts {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            margin: 1.5rem 0;
+        }
+
+        .cs-chart {
+            background-color: var(--container-color);
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: border-color .3s;
+        }
+        .cs-chart:hover { border-color: var(--first-color); }
+
+        .cs-chart__img {
+            width: 100%;
+            display: block;
+            background-color: hsl(228, 15%, 12%);
+        }
+
+        .cs-chart__caption {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .cs-chart__title {
+            font-size: var(--h3-font-size);
+            color: var(--title-color);
+            margin-bottom: .5rem;
+        }
+
+        .cs-chart__text {
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        /* ── Decision blocks ── */
+        .cs-decisions {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .decision-card {
+            background-color: var(--container-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border-left: 3px solid var(--first-color-alt);
+            transition: border-left-color .3s;
+        }
+        .decision-card:hover { border-left-color: var(--first-color); }
+
+        .decision-card__q {
+            font-size: var(--normal-font-size);
+            color: var(--title-color);
+            font-weight: var(--font-semi-bold);
+            margin-bottom: .75rem;
+        }
+
+        .decision-card__a {
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        /* ── API endpoints ── */
+        .endpoint-list {
+            display: flex;
+            flex-direction: column;
+            gap: .75rem;
+            margin: 1.25rem 0;
+        }
+
+        .endpoint {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: var(--container-color);
+            border-radius: .5rem;
+            padding: .75rem 1rem;
+            font-size: var(--small-font-size);
+        }
+
+        .endpoint__method {
+            font-weight: var(--font-semi-bold);
+            font-family: monospace;
+            padding: .2rem .5rem;
+            border-radius: .3rem;
+            font-size: var(--smaller-font-size);
+            min-width: 46px;
+            text-align: center;
+        }
+        .endpoint__method--get  { background: hsl(142, 60%, 20%); color: hsl(142, 70%, 55%); }
+        .endpoint__method--post { background: hsl(210, 60%, 20%); color: hsl(210, 80%, 65%); }
+
+        .endpoint__path {
+            color: var(--first-color);
+            font-family: monospace;
+            min-width: 160px;
+        }
+
+        .endpoint__desc { color: var(--text-color); }
+
+        /* ── Lang toggle ── */
+        .cs-lang {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .cs-metrics { grid-template-columns: repeat(2, 1fr); }
+            .endpoint { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header blur-header" id="header">
+        <nav class="nav container">
+            <a href="../index.html" class="nav__logo">Guillermo <span>Blanca</span></a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="../index.html#projects" class="nav__link" data-i18n="nav.projects"></a></li>
+                    <li class="nav__item"><a href="../index.html#contact"  class="nav__link" data-i18n="nav.contact"></a></li>
+                </ul>
+            </div>
+            <div class="nav__controls">
+                <div class="cs-lang">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <span class="lang-sep">|</span>
+                    <button class="lang-btn" data-lang="es">ES</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="cs-wrapper">
+    <div class="cs-page">
+
+        <!-- Back -->
+        <a href="../index.html#projects" class="cs-back">
+            <i class="ri-arrow-left-line"></i>
+            <span data-i18n="back"></span>
+        </a>
+
+        <!-- Hero -->
+        <div class="cs-hero">
+            <div class="cs-hero__tag" data-i18n="tag"></div>
+            <h1 class="cs-hero__title">
+                Amazon Reviews — <span data-i18n="hero.title.accent"></span>
+            </h1>
+            <p class="cs-hero__sub" data-i18n="hero.sub"></p>
+
+            <div class="cs-hero__badges">
+                <span class="badge">Python 3.11</span>
+                <span class="badge">PySpark 3.5</span>
+                <span class="badge">MLlib</span>
+                <span class="badge">FastAPI</span>
+                <span class="badge">Docker</span>
+                <span class="badge">scikit-learn</span>
+                <span class="badge">Gradio</span>
+                <span class="badge">pytest</span>
+            </div>
+
+            <div class="cs-hero__actions">
+                <a href="https://github.com/guillermoblanca/amazon_reviews_pipeline"
+                   target="_blank" class="button">
+                    <i class="fab fa-github"></i>
+                    <span data-i18n="btn.github"></span>
+                </a>
+                <a href="https://github.com/guillermoblanca/amazon_reviews_pipeline/archive/refs/heads/main.zip"
+                   target="_blank" class="button--outline">
+                    <i class="ri-download-line"></i>
+                    <span data-i18n="btn.download"></span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Metrics -->
+        <div class="cs-metrics">
+            <div class="metric-card">
+                <div class="metric-card__value">94.32%</div>
+                <div class="metric-card__label">Accuracy</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-card__value">97.74%</div>
+                <div class="metric-card__label">AUC-ROC</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-card__value">89.55%</div>
+                <div class="metric-card__label">F1-Score</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-card__value">93.08%</div>
+                <div class="metric-card__label">Precision</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-card__value">86.27%</div>
+                <div class="metric-card__label">Recall</div>
+            </div>
+        </div>
+
+        <!-- 1. Description -->
+        <div class="cs-section">
+            <h2 class="cs-section__title" data-i18n="s1.title"></h2>
+            <p class="cs-section__text" data-i18n="s1.p1"></p>
+            <p class="cs-section__text" data-i18n="s1.p2"></p>
+        </div>
+
+        <!-- 2. Architecture -->
+        <div class="cs-section">
+            <h2 class="cs-section__title" data-i18n="s2.title"></h2>
+            <p class="cs-section__text" data-i18n="s2.intro"></p>
+
+            <div class="pipeline">
+                <div class="pipeline__step">
+                    <div class="pipeline__connector">
+                        <div class="pipeline__dot"><i class="ri-upload-cloud-line"></i></div>
+                        <div class="pipeline__line"></div>
+                    </div>
+                    <div class="pipeline__body">
+                        <div class="pipeline__phase" data-i18n="phase.1.label"></div>
+                        <div class="pipeline__title" data-i18n="phase.1.title"></div>
+                        <div class="pipeline__detail" data-i18n="phase.1.detail"></div>
+                    </div>
+                </div>
+                <div class="pipeline__step">
+                    <div class="pipeline__connector">
+                        <div class="pipeline__dot"><i class="ri-filter-3-line"></i></div>
+                        <div class="pipeline__line"></div>
+                    </div>
+                    <div class="pipeline__body">
+                        <div class="pipeline__phase" data-i18n="phase.2.label"></div>
+                        <div class="pipeline__title" data-i18n="phase.2.title"></div>
+                        <div class="pipeline__detail" data-i18n="phase.2.detail"></div>
+                    </div>
+                </div>
+                <div class="pipeline__step">
+                    <div class="pipeline__connector">
+                        <div class="pipeline__dot"><i class="ri-brain-line"></i></div>
+                        <div class="pipeline__line"></div>
+                    </div>
+                    <div class="pipeline__body">
+                        <div class="pipeline__phase" data-i18n="phase.3.label"></div>
+                        <div class="pipeline__title" data-i18n="phase.3.title"></div>
+                        <div class="pipeline__detail" data-i18n="phase.3.detail"></div>
+                    </div>
+                </div>
+                <div class="pipeline__step">
+                    <div class="pipeline__connector">
+                        <div class="pipeline__dot"><i class="ri-bar-chart-2-fill"></i></div>
+                    </div>
+                    <div class="pipeline__body">
+                        <div class="pipeline__phase" data-i18n="phase.4.label"></div>
+                        <div class="pipeline__title" data-i18n="phase.4.title"></div>
+                        <div class="pipeline__detail" data-i18n="phase.4.detail"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Data pipeline -->
+        <div class="cs-section">
+            <h2 class="cs-section__title" data-i18n="s3.title"></h2>
+            <p class="cs-section__text" data-i18n="s3.p1"></p>
+
+            <table class="cs-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="table.rating"></th>
+                        <th data-i18n="table.class"></th>
+                        <th>Label</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-i18n="table.r45"></td>
+                        <td data-i18n="table.pos"></td>
+                        <td><code>1</code></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="table.r3"></td>
+                        <td data-i18n="table.excl"></td>
+                        <td><code>null</code></td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="table.r12"></td>
+                        <td data-i18n="table.neg"></td>
+                        <td><code>0</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="cs-section__text" data-i18n="s3.p2"></p>
+
+            <div class="cs-code">"Great Product!" → lowercase → remove HTML → alphanumeric only → collapse spaces → trim → "great product"</div>
+        </div>
+
+        <!-- 4. Model training -->
+        <div class="cs-section">
+            <h2 class="cs-section__title" data-i18n="s4.title"></h2>
+            <p class="cs-section__text" data-i18n="s4.p1"></p>
+
+            <div class="cs-code">Tokenizer → StopWordsRemover → HashingTF (2¹⁶ features) → IDF → LogisticRegression</div>
+
+            <p class="cs-section__text" data-i18n="s4.p2"></p>
+            <p class="cs-section__text" data-i18n="s4.p3"></p>
+        </div>
+
+        <!-- 5. Results -->
+        <div class="cs-section">
+            <h2 class="cs-section__title" data-i18n="s5.title"></h2>
+            <p class="cs-section__text" data-i18n="s5.intro"></p>
+
+            <div class="cs-charts">
+                <div class="cs-chart">
+                    <img src="confusion_matrix.png" alt="Confusion Matrix" class="cs-chart__img" loading="lazy">
+                    <div class="cs-chart__caption">
+                        <h3 class="cs-chart__title" data-i18n="chart1.title"></h3>
+                        <p class="cs-chart__text" data-i18n="chart1.text"></p>
+                    </div>
+                </div>
+
+                <div class="cs-chart">
+                    <img src="roc_curve.png" alt="ROC Curve" class="cs-chart__img" loading="lazy">
+                    <div class="cs-chart__caption">
+                        <h3 class="cs-chart__title" data-i18n="chart2.title"></h3>
+                        <p class="cs-chart__text" data-i18n="chart2.text"></p>
+                    </div>
+                </div>
+
+                <div class="cs-chart">
+                    <img src="probability_distribution.png" alt="Probability Distribution" class="cs-chart__img" loading="lazy">
+                    <div class="cs-chart__caption">
+                        <h3 class="cs-chart__title" data-i18n="chart3.title"></h3>
+                        <p class="cs-chart__text" data-i18n="chart3.text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. API -->
+        <div class="cs-section">
+            <h2 class="cs-section__title" data-i18n="s6.title"></h2>
+            <p class="cs-section__text" data-i18n="s6.intro"></p>
+
+            <div class="endpoint-list">
+                <div class="endpoint">
+                    <span class="endpoint__method endpoint__method--get">GET</span>
+                    <span class="endpoint__path">/health</span>
+                    <span class="endpoint__desc" data-i18n="api.health"></span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint__method endpoint__method--get">GET</span>
+                    <span class="endpoint__path">/model/info</span>
+                    <span class="endpoint__desc" data-i18n="api.info"></span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint__method endpoint__method--post">POST</span>
+                    <span class="endpoint__path">/predict</span>
+                    <span class="endpoint__desc" data-i18n="api.predict"></span>
+                </div>
+                <div class="endpoint">
+                    <span class="endpoint__method endpoint__method--post">POST</span>
+                    <span class="endpoint__path">/predict/batch</span>
+                    <span class="endpoint__desc" data-i18n="api.batch"></span>
+                </div>
+            </div>
+
+            <div class="cs-code">{
+  "sentiment": "positive",
+  "label": 1,
+  "confidence": 0.9821,
+  "probabilities": { "positive": 0.9821, "negative": 0.0179 }
+}</div>
+        </div>
+
+        <!-- 7. Design decisions -->
+        <div class="cs-section">
+            <h2 class="cs-section__title" data-i18n="s7.title"></h2>
+            <div class="cs-decisions">
+                <div class="decision-card">
+                    <div class="decision-card__q" data-i18n="d1.q"></div>
+                    <div class="decision-card__a" data-i18n="d1.a"></div>
+                </div>
+                <div class="decision-card">
+                    <div class="decision-card__q" data-i18n="d2.q"></div>
+                    <div class="decision-card__a" data-i18n="d2.a"></div>
+                </div>
+                <div class="decision-card">
+                    <div class="decision-card__q" data-i18n="d3.q"></div>
+                    <div class="decision-card__a" data-i18n="d3.a"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Tests -->
+        <div class="cs-section">
+            <h2 class="cs-section__title" data-i18n="s8.title"></h2>
+            <p class="cs-section__text" data-i18n="s8.intro"></p>
+
+            <table class="cs-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="test.file"></th>
+                        <th data-i18n="test.type"></th>
+                        <th data-i18n="test.what"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>test_transform.py</code></td>
+                        <td data-i18n="test.unit"></td>
+                        <td data-i18n="test.t1"></td>
+                    </tr>
+                    <tr>
+                        <td><code>test_api.py</code></td>
+                        <td data-i18n="test.integration"></td>
+                        <td data-i18n="test.t2"></td>
+                    </tr>
+                    <tr>
+                        <td><code>test_model_quality.py</code></td>
+                        <td data-i18n="test.regression"></td>
+                        <td data-i18n="test.t3"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 9. Stack -->
+        <div class="cs-section">
+            <h2 class="cs-section__title" data-i18n="s9.title"></h2>
+            <table class="cs-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="stack.tech"></th>
+                        <th data-i18n="stack.version"></th>
+                        <th data-i18n="stack.role"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Python</td><td>3.11</td><td data-i18n="stack.r.python"></td></tr>
+                    <tr><td>PySpark</td><td>3.5.1</td><td data-i18n="stack.r.spark"></td></tr>
+                    <tr><td>OpenJDK</td><td>17</td><td data-i18n="stack.r.jdk"></td></tr>
+                    <tr><td>scikit-learn</td><td>1.5.0</td><td data-i18n="stack.r.sklearn"></td></tr>
+                    <tr><td>Matplotlib / Seaborn</td><td>3.9 / 0.13</td><td data-i18n="stack.r.viz"></td></tr>
+                    <tr><td>FastAPI</td><td>0.111</td><td data-i18n="stack.r.api"></td></tr>
+                    <tr><td>Gradio</td><td>4.36</td><td data-i18n="stack.r.gradio"></td></tr>
+                    <tr><td>pytest</td><td>8.2</td><td data-i18n="stack.r.pytest"></td></tr>
+                    <tr><td>Docker + Compose</td><td>≥ 24</td><td data-i18n="stack.r.docker"></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bottom CTA -->
+        <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1rem;">
+            <a href="https://github.com/guillermoblanca/amazon_reviews_pipeline"
+               target="_blank" class="button">
+                <i class="fab fa-github"></i>
+                <span data-i18n="btn.github"></span>
+            </a>
+            <a href="../index.html#projects" class="button--outline">
+                <i class="ri-arrow-left-line"></i>
+                <span data-i18n="back"></span>
+            </a>
+        </div>
+
+    </div><!-- /.cs-page -->
+
+    <!-- TOC Sidebar -->
+    <aside class="cs-toc">
+        <div class="cs-toc__title" data-i18n="toc.title"></div>
+        <ul class="cs-toc__list" id="toc-list"></ul>
+    </aside>
+
+    </div><!-- /.cs-wrapper -->
+
+    <footer>
+        <p>© 2025 Guillermo Blanca</p>
+    </footer>
+
+    <script>
+    const T = {
+      en: {
+        'toc.title':    'Contents',
+        'nav.projects': 'Projects',
+        'nav.contact':  'Contact',
+        'back':         'Back to portfolio',
+        'tag':          'Case Study',
+        'hero.title.accent': 'Sentiment Analysis Pipeline',
+        'hero.sub':     'End-to-end pipeline — from ~21,000 raw Amazon reviews to a trained model served as a production REST API. Built with PySpark MLlib, containerized with Docker, and tested with an automated quality suite.',
+        'btn.github':   'View on GitHub',
+        'btn.download': 'Download ZIP',
+
+        's1.title': '1. Project overview',
+        's1.p1':    'This pipeline covers the full lifecycle of an NLP classification problem: ingesting a messy CSV, designing a distributed transformation strategy, training a model with cross-validation, evaluating it rigorously, and exposing it via a production-ready REST API — everything orchestrated with Docker and runnable with a single command.',
+        's1.p2':    'The goal is not only to reach good metrics, but to demonstrate data architecture knowledge: how a distributed pipeline is designed, how data leakage is prevented, how a model is exposed robustly in production, and how quality is guaranteed with automated tests.',
+
+        's2.title': '2. Pipeline architecture (4 phases)',
+        's2.intro': 'The pipeline is split into four independent Python modules, each with a single responsibility:',
+        'phase.1.label':  'Phase 1',
+        'phase.1.title':  'Ingestion',
+        'phase.1.detail': 'SparkSession local[*] · schema validation fail-fast · tolerant CSV reading (multiLine, escape, PERMISSIVE mode)',
+        'phase.2.label':  'Phase 2',
+        'phase.2.title':  'Transformation',
+        'phase.2.detail': 'Rating parsing with regex · binary labelling · 5-step text cleaning cascade · title+body combination',
+        'phase.3.label':  'Phase 3',
+        'phase.3.title':  'Training',
+        'phase.3.detail': '80/20 split · 5-stage MLlib Pipeline · 3-fold Cross-Validation · hyperparameter grid search',
+        'phase.4.label':  'Phase 4',
+        'phase.4.title':  'Evaluation',
+        'phase.4.detail': 'F1, AUC-ROC, Precision, Recall, Accuracy · Confusion matrix · ROC curve · Probability distribution',
+
+        's3.title': '3. Ingestion & transformation',
+        's3.p1':    'Rating 3 reviews are explicitly excluded — not classified as neutral. Including them introduces noise: the same text ("works, but delivery was slow") can accompany either a 3 or a 4 depending on the user. Binary labelling:',
+        'table.rating': 'Rating', 'table.class': 'Class',
+        'table.r45': '4 & 5 stars', 'table.pos': 'Positive',
+        'table.r3':  '3 stars',     'table.excl': 'Excluded',
+        'table.r12': '1 & 2 stars', 'table.neg': 'Negative',
+        's3.p2':    'Each cleaning step runs via F.regexp_replace() in Spark executors — not on the driver — maintaining distributed scalability regardless of dataset size:',
+
+        's4.title': '4. Model training — MLlib Pipeline',
+        's4.p1':    'A PySpark Pipeline ensures the same transformations are applied identically to train and test, eliminating any possibility of data leakage. 5 chained stages:',
+        's4.p2':    'HashingTF instead of CountVectorizer: CountVectorizer needs to build the full vocabulary in memory during fit(). HashingTF applies a hash function directly — constant memory cost, no vocabulary — with numFeatures=65,536 (2¹⁶) to minimize collisions on vocabularies up to ~50k words.',
+        's4.p3':    'Cross-Validation with 4 combinations × 3 folds = 12 training runs. Selection metric: AUC-ROC. This produces a robust performance estimate that does not overfit to a single validation split.',
+
+        's5.title': '5. Model results',
+        's5.intro': 'Evaluated on 3,982 examples never seen during training (1,122 positive · 2,860 negative):',
+        'chart1.title': 'Confusion Matrix',
+        'chart1.text':  'Breakdowns of TP/TN/FP/FN over the 3,982-sample test set. Precision of 93.08% shows the model is conservative about labelling something as positive — reducing the risk of hiding product quality issues by misclassifying negative reviews.',
+        'chart2.title': 'ROC Curve — AUC 0.9774',
+        'chart2.text':  'The ROC curve plots TPR vs FPR across all classification thresholds. AUC = 0.9774 means: given one positive and one negative review at random, the model assigns higher probability to the positive one in 97% of cases. Excellent for binary text classification.',
+        'chart3.title': 'Probability Distribution',
+        'chart3.text':  'Histogram of P(positive) split by true class. Positive class (real) concentrates mass near 1.0; negative class near 0.0. The clear separation confirms the model is well calibrated — it is not just correct, but confident. Overlap near 0.5 marks genuinely ambiguous reviews.',
+
+        's6.title': '6. Production inference API',
+        's6.intro': 'The trained model is served as a REST service with FastAPI, launchable with docker-compose up api. The PipelineModel and SparkSession are loaded once at startup and persist across requests — no JVM overhead per request.',
+        'api.health':  'Kubernetes-compatible liveness probe',
+        'api.info':    'Active model metadata (audit trail)',
+        'api.predict': 'Classify a single review',
+        'api.batch':   'Classify up to 100 reviews in parallel',
+
+        's7.title': '7. Key design decisions',
+        'd1.q': 'Why PySpark and not pandas + scikit-learn?',
+        'd1.a': 'The 21k-row dataset fits in memory, but the architecture is identical to millions of reviews on a real cluster. The same code running on local[*] scales to a production cluster by changing only the SPARK_MASTER variable in docker-compose.yml. This demonstrates the difference between "code that works" and "architecture that scales".',
+        'd2.q': 'Why TF-IDF and not BERT?',
+        'd2.a': 'In sentiment classification with ratings as labels (strong, clean signal), TF-IDF + Logistic Regression is rarely beaten significantly by more complex models. BERT requires GPU and is not native in PySpark. TF-IDF is the right choice to demonstrate mastery of the process without hiding logic in a black box — and with 94.32% accuracy, the results speak for themselves.',
+        'd3.q': 'Why Cross-Validation instead of a single split?',
+        'd3.a': 'A single validation split may produce an atypical partition that generates overly optimistic or pessimistic estimates. k-fold CV evaluates the model across k distinct partitions and averages the results, producing a robust and honest estimate of real-world performance.',
+
+        's8.title': '8. Automated test suite',
+        's8.intro': 'A golden set of 14 reviews with known labels (5 clearly positive, 5 clearly negative, 4 edge cases) is used for regression testing. If test_model_quality.py fails, the model should not be deployed to production — the same pattern used by Spotify, Netflix, and Airbnb in their ML pipelines.',
+        'test.file': 'File', 'test.type': 'Type', 'test.what': 'Verifies',
+        'test.unit':        'Unit',
+        'test.integration': 'Integration',
+        'test.regression':  'Regression',
+        'test.t1': 'Each transformation function in isolation',
+        'test.t2': 'All endpoints: HTTP codes, schemas, validations',
+        'test.t3': 'Model surpasses minimum thresholds on golden set',
+
+        's9.title': '9. Full tech stack',
+        'stack.tech': 'Technology', 'stack.version': 'Version', 'stack.role': 'Role',
+        'stack.r.python':  'Pipeline language',
+        'stack.r.spark':   'Distributed processing + MLlib',
+        'stack.r.jdk':     'Java runtime for Spark',
+        'stack.r.sklearn':  'Evaluation metrics + lightweight export',
+        'stack.r.viz':     'Evaluation visualizations',
+        'stack.r.api':     'Production REST inference API',
+        'stack.r.gradio':  'Interactive demo on HuggingFace Spaces',
+        'stack.r.pytest':  'Unit + integration + regression tests',
+        'stack.r.docker':  'Containerization, reproducibility, multi-service',
+      },
+
+      es: {
+        'toc.title':    'Contenido',
+        'nav.projects': 'Proyectos',
+        'nav.contact':  'Contacto',
+        'back':         'Volver al portfolio',
+        'tag':          'Caso de Estudio',
+        'hero.title.accent': 'Pipeline de Análisis de Sentimiento',
+        'hero.sub':     'Pipeline end-to-end — desde ~21.000 reseñas reales de Amazon hasta un modelo entrenado servido como API REST en producción. Construido con PySpark MLlib, contenedorizado con Docker y testado con una suite de calidad automatizada.',
+        'btn.github':   'Ver en GitHub',
+        'btn.download': 'Descargar ZIP',
+
+        's1.title': '1. Descripción del proyecto',
+        's1.p1':    'Este pipeline cubre el ciclo completo de un problema de clasificación NLP: ingerir un CSV con datos sucios, diseñar una estrategia de transformación distribuida, entrenar un modelo con validación cruzada, evaluarlo de forma rigurosa y exponerlo vía una API REST lista para producción — todo orquestado con Docker y ejecutable con un único comando.',
+        's1.p2':    'El objetivo no es solo alcanzar buenas métricas, sino demostrar conocimiento de arquitectura de datos: cómo se diseña un pipeline distribuido, cómo se previene el data leakage, cómo se expone un modelo en producción de forma robusta, y cómo se garantiza la calidad con tests automatizados.',
+
+        's2.title': '2. Arquitectura del pipeline (4 fases)',
+        's2.intro': 'El pipeline está dividido en cuatro módulos Python independientes, cada uno con una responsabilidad única:',
+        'phase.1.label':  'Fase 1',
+        'phase.1.title':  'Ingesta',
+        'phase.1.detail': 'SparkSession local[*] · validación de esquema fail-fast · lectura CSV tolerante a errores (multiLine, escape, modo PERMISSIVE)',
+        'phase.2.label':  'Fase 2',
+        'phase.2.title':  'Transformación',
+        'phase.2.detail': 'Parseo de rating con regex · etiquetado binario · pipeline de limpieza de texto en 5 pasos · combinación título+cuerpo',
+        'phase.3.label':  'Fase 3',
+        'phase.3.title':  'Entrenamiento',
+        'phase.3.detail': 'Split 80/20 · Pipeline MLlib de 5 etapas · Cross-Validation 3-fold · búsqueda de hiperparámetros',
+        'phase.4.label':  'Fase 4',
+        'phase.4.title':  'Evaluación',
+        'phase.4.detail': 'F1, AUC-ROC, Precision, Recall, Accuracy · Matriz de confusión · Curva ROC · Distribución de probabilidades',
+
+        's3.title': '3. Ingesta y transformación',
+        's3.p1':    'Las reseñas con rating 3 se excluyen explícitamente — no se clasifican como neutras. Incluirlas introduce ruido: el mismo texto ("funciona, pero la entrega tardó") puede acompañar tanto un 3 como un 4 según el usuario. Etiquetado binario:',
+        'table.rating': 'Rating', 'table.class': 'Clase',
+        'table.r45': '4 y 5 estrellas', 'table.pos': 'Positivo',
+        'table.r3':  '3 estrellas',      'table.excl': 'Excluido',
+        'table.r12': '1 y 2 estrellas',  'table.neg': 'Negativo',
+        's3.p2':    'Cada paso de limpieza se ejecuta con F.regexp_replace() en los executors de Spark — no en el driver — manteniendo la escalabilidad distribuida independientemente del tamaño del dataset:',
+
+        's4.title': '4. Entrenamiento — Pipeline MLlib',
+        's4.p1':    'Un Pipeline de PySpark garantiza que las mismas transformaciones se aplican de forma idéntica a train y test, eliminando cualquier posibilidad de data leakage. 5 etapas encadenadas:',
+        's4.p2':    'HashingTF en lugar de CountVectorizer: CountVectorizer necesita construir el vocabulario completo en memoria durante fit(). HashingTF aplica una función hash directamente — coste de memoria constante, sin vocabulario — con numFeatures=65.536 (2¹⁶) para minimizar colisiones en vocabularios de hasta ~50k palabras.',
+        's4.p3':    'Cross-Validation: 4 combinaciones × 3 folds = 12 entrenamientos. Métrica de selección: AUC-ROC. Esto produce una estimación robusta del rendimiento que no sobreajusta a una partición de validación concreta.',
+
+        's5.title': '5. Resultados del modelo',
+        's5.intro': 'Evaluado sobre 3.982 ejemplos nunca vistos durante el entrenamiento (1.122 positivos · 2.860 negativos):',
+        'chart1.title': 'Matriz de Confusión',
+        'chart1.text':  'Desglose de TP/TN/FP/FN sobre el conjunto de test de 3.982 muestras. La Precision del 93.08% muestra que el modelo es conservador a la hora de etiquetar algo como positivo — reduciendo el riesgo de esconder problemas de calidad clasificando erróneamente reseñas negativas.',
+        'chart2.title': 'Curva ROC — AUC 0.9774',
+        'chart2.text':  'La curva ROC representa TPR vs FPR para todos los umbrales de clasificación. AUC = 0.9774 significa: tomando una reseña positiva y una negativa al azar, el modelo asigna mayor probabilidad a la positiva en el 97% de los casos. Excelente para clasificación binaria de texto.',
+        'chart3.title': 'Distribución de Probabilidades',
+        'chart3.text':  'Histograma de P(positivo) separado por clase real. La clase positiva concentra masa cerca de 1.0; la negativa cerca de 0.0. La separación clara confirma que el modelo está bien calibrado — no solo acierta, sino que lo hace con confianza alta. El solapamiento cerca de 0.5 marca reseñas genuinamente ambiguas.',
+
+        's6.title': '6. API de inferencia en producción',
+        's6.intro': 'El modelo entrenado se expone como servicio REST con FastAPI, levantable con docker-compose up api. El PipelineModel y la SparkSession se cargan una sola vez en el startup y persisten entre peticiones — sin overhead de JVM por request.',
+        'api.health':  'Liveness probe compatible con Kubernetes',
+        'api.info':    'Metadatos del modelo activo (auditoría)',
+        'api.predict': 'Clasificar una review individual',
+        'api.batch':   'Clasificar hasta 100 reviews en paralelo',
+
+        's7.title': '7. Decisiones técnicas clave',
+        'd1.q': '¿Por qué PySpark y no pandas + scikit-learn?',
+        'd1.a': 'El dataset de 21k filas cabe en memoria, pero la arquitectura es idéntica a la de millones de reseñas en un cluster real. El mismo código que corre en local[*] escala a un cluster de producción cambiando solo la variable SPARK_MASTER en docker-compose.yml. Esto demuestra la diferencia entre "código que funciona" y "arquitectura que escala".',
+        'd2.q': '¿Por qué TF-IDF y no BERT?',
+        'd2.a': 'En clasificación de sentimiento con ratings como etiqueta (señal fuerte y limpia), TF-IDF + Logistic Regression rara vez es superado de forma significativa. BERT requiere GPU y no es nativo en PySpark. TF-IDF es la elección correcta para demostrar dominio del proceso sin ocultar la lógica en una caja negra — y con un 94.32% de accuracy, los resultados hablan por sí solos.',
+        'd3.q': '¿Por qué Cross-Validation en lugar de un único split?',
+        'd3.a': 'Un único split puede producir una partición atípica con estimaciones demasiado optimistas o pesimistas. La CV de k-folds evalúa el modelo en k particiones distintas y promedia, produciendo una estimación robusta y honesta del rendimiento real.',
+
+        's8.title': '8. Suite de tests automatizados',
+        's8.intro': 'Un golden set de 14 reseñas con etiquetas conocidas (5 claramente positivas, 5 claramente negativas, 4 casos límite) se usa para tests de regresión. Si test_model_quality.py falla, el modelo no debe desplegarse — el mismo patrón que usan Spotify, Netflix y Airbnb en sus pipelines de ML.',
+        'test.file': 'Archivo', 'test.type': 'Tipo', 'test.what': 'Qué verifica',
+        'test.unit':        'Unitario',
+        'test.integration': 'Integración',
+        'test.regression':  'Regresión',
+        'test.t1': 'Cada función de transformación de forma aislada',
+        'test.t2': 'Todos los endpoints: códigos HTTP, esquemas, validaciones',
+        'test.t3': 'El modelo supera umbrales mínimos sobre el golden set',
+
+        's9.title': '9. Stack tecnológico completo',
+        'stack.tech': 'Tecnología', 'stack.version': 'Versión', 'stack.role': 'Rol',
+        'stack.r.python':  'Lenguaje del pipeline',
+        'stack.r.spark':   'Procesamiento distribuido + MLlib',
+        'stack.r.jdk':     'Runtime de Java para Spark',
+        'stack.r.sklearn':  'Métricas de evaluación + exportación ligera',
+        'stack.r.viz':     'Visualizaciones de evaluación',
+        'stack.r.api':     'API REST de inferencia en producción',
+        'stack.r.gradio':  'Demo interactiva en HuggingFace Spaces',
+        'stack.r.pytest':  'Tests unitarios + integración + regresión',
+        'stack.r.docker':  'Contenedorización, reproducibilidad, multi-servicio',
+      }
+    };
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const v = T[lang][el.dataset.i18n];
+        if (v !== undefined) el.textContent = v;
+      });
+      document.querySelectorAll('.lang-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.lang === lang)
+      );
+      document.documentElement.lang = lang;
+      localStorage.setItem('lang', lang);
+    }
+
+    /* ── TOC builder ── */
+    function buildToc() {
+      const list = document.getElementById('toc-list');
+      if (!list) return;
+      list.innerHTML = '';
+
+      // Collect all section headings (h2 inside cs-section, plus the metrics block)
+      const headings = document.querySelectorAll('.cs-section .cs-section__title, .cs-metrics');
+      let idCounter = 0;
+
+      headings.forEach(el => {
+        // Assign an id if it doesn't have one
+        if (!el.id) {
+          el.id = 'toc-' + (idCounter++);
+        }
+
+        const isMetrics = el.classList.contains('cs-metrics');
+        const level     = isMetrics ? 'h2' : 'h2';
+        const text      = isMetrics
+          ? (document.documentElement.lang === 'es' ? 'Métricas clave' : 'Key metrics')
+          : el.textContent.trim();
+
+        const li = document.createElement('li');
+        li.className = 'cs-toc__item--' + level;
+        li.innerHTML = `<a href="#${el.id}">${text}</a>`;
+        list.appendChild(li);
+
+        // Sub-items: charts and decision cards within each section
+        if (!isMetrics) {
+          const parent = el.closest('.cs-section');
+          if (parent) {
+            parent.querySelectorAll('.cs-chart__title, .decision-card__q, .pipeline__title').forEach(sub => {
+              if (!sub.id) sub.id = 'toc-' + (idCounter++);
+              const subLi = document.createElement('li');
+              subLi.className = 'cs-toc__item--h3';
+              subLi.innerHTML = `<a href="#${sub.id}">${sub.textContent.trim()}</a>`;
+              list.appendChild(subLi);
+            });
+          }
+        }
+      });
+    }
+
+    /* ── TOC scroll spy ── */
+    function initScrollSpy() {
+      const links = document.querySelectorAll('.cs-toc__list a');
+      if (!links.length) return;
+
+      const targets = Array.from(links).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+      function onScroll() {
+        const offset = window.innerHeight * 0.25;
+        let active = targets[0];
+        targets.forEach(t => {
+          if (t.getBoundingClientRect().top <= offset) active = t;
+        });
+        links.forEach(a => {
+          a.classList.toggle('toc-active', a.getAttribute('href') === '#' + active.id);
+        });
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+
+    /* ── Smooth scroll for TOC links ── */
+    function initTocScroll() {
+      document.getElementById('toc-list').addEventListener('click', e => {
+        const a = e.target.closest('a');
+        if (!a) return;
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const lang = localStorage.getItem('lang') || 'en';
+      applyLang(lang);
+      document.querySelectorAll('.lang-btn').forEach(b =>
+        b.addEventListener('click', () => {
+          applyLang(b.dataset.lang);
+          buildToc(); // rebuild TOC text after lang change
+        })
+      );
+      buildToc();
+      initScrollSpy();
+      initTocScroll();
+    });
+    </script>
+
+</body>
+</html>
