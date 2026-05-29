@@ -47,8 +47,8 @@ const TRANSLATIONS = {
     'skills.level.intermediate': 'Intermediate',
     'skills.level.junior': 'Junior',
 
-    'skills.backend.title': 'Backend & Infrastructure',
-    'skills.analytics.title': 'Data & Analytics Tools',
+    'skills.backend.title': 'Backend & Infra',
+    'skills.analytics.title': 'Analytics Tools',
 
     'skills.ai.title': 'AI & Modern Workflow',
     'skills.ai.claude': 'Claude AI',
@@ -172,8 +172,8 @@ const TRANSLATIONS = {
     'skills.level.intermediate': 'Intermedio',
     'skills.level.junior': 'Junior',
 
-    'skills.backend.title': 'Backend e Infraestructura',
-    'skills.analytics.title': 'Herramientas de Datos y Analytics',
+    'skills.backend.title': 'Backend & Infra',
+    'skills.analytics.title': 'Herramientas Analytics',
 
     'skills.ai.title': 'IA y Flujo Moderno',
     'skills.ai.claude': 'Claude AI',

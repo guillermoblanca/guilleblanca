@@ -315,12 +315,7 @@ body[data-role="game"] .skills__container {
 .skills__data { text-align: center; }
 body[data-role="game"] .skills__data { text-align: initial; }
 body[data-role="data"] .skills__data { display: none !important; }
-body[data-role="data"] .skills__container {
-  grid-template-columns: 1fr;
-  max-width: 100%;
-  margin-inline: 0;
-  padding: 0 2rem;
-}
+body[data-role="data"] #skills { display: none !important; }
 .skills__description { margin-bottom: 2rem; }
 
 /* Game Dev list */
@@ -333,103 +328,6 @@ body[data-role="game"] .skills__content {
 .skills__group { display: grid; row-gap: 1rem; list-style: decimal-leading-zero; }
 .skills__item { font-weight: var(--font-medium); color: var(--title-color); }
 .skills__item::marker { color: var(--first-color); }
-
-/* ── Data role: 4-column skill groups ── */
-.skills-4grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  width: 100%;
-}
-
-.skill-group {
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid hsl(228, 15%, 25%);
-  border-radius: 1rem;
-  padding: 2rem;
-  min-height: 280px;
-  transition: border-color 0.3s, transform 0.3s;
-}
-
-.skill-group:hover {
-  border-color: var(--first-color);
-  transform: translateY(-6px);
-}
-
-.skill-group__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background-color: var(--first-color-alt);
-  border-radius: 50%;
-  font-size: 1.5rem;
-  color: var(--first-color);
-  margin-bottom: 1rem;
-}
-
-.skill-group__title {
-  font-size: var(--normal-font-size);
-  color: var(--title-color);
-  font-weight: var(--font-semi-bold);
-  margin: 0 0 1rem 0;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid hsl(228, 15%, 25%);
-}
-
-.skill-group__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.skill-group__list li {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-}
-
-.skill-group__name {
-  font-size: var(--small-font-size);
-  color: var(--text-color);
-  line-height: 1.4;
-}
-
-.skill-tag {
-  font-size: 0.6rem;
-  font-weight: var(--font-semi-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  padding: 0.15rem 0.5rem;
-  border-radius: 0.3rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.skill-tag--senior {
-  background-color: hsl(145, 60%, 20%);
-  color: hsl(145, 60%, 55%);
-  border: 1px solid hsl(145, 40%, 30%);
-}
-
-.skill-tag--mid {
-  background-color: hsl(38, 80%, 18%);
-  color: hsl(38, 100%, 60%);
-  border: 1px solid hsl(38, 60%, 30%);
-}
-
-@media (max-width: 900px) {
-  .skills-4grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 540px) {
-  .skills-4grid { grid-template-columns: 1fr; }
-}
 
 
 /*-----------------NAV----------------*/
@@ -1030,6 +928,25 @@ body[data-role="data"] #about { display: none !important; }
 .project__card--placeholder {
   opacity: .65;
   border-style: dashed;
+}
+
+/*=============== TECH STACK CHIPS ===============*/
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  margin-top: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.tech-chip {
+  background-color: var(--container-color);
+  border: 1px solid hsl(228, 15%, 28%);
+  color: var(--text-color);
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  padding: .25rem .65rem;
+  border-radius: .35rem;
 }
 
 /*=============== FOOTER ===============*/
