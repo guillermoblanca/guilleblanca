@@ -316,11 +316,11 @@ section:first-of-type {
 }
 
 /* Hide skills metadata for data role — content is self-explanatory */
-.role-data .skills__data {
+body[data-role="data"] .skills__data {
   display: none !important;
 }
 
-.role-data .skills__content {
+body[data-role="data"] .skills__content {
   padding-top: 2rem;
 }
 
