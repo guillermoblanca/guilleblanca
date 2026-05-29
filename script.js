@@ -42,11 +42,27 @@ const TRANSLATIONS = {
 
     'skills.tech.title': 'Technologies',
 
+    'skills.ai.title': 'AI & Automation',
+    'skills.ai.claude': 'Claude AI (Architecture, Code Review, Iteration)',
+    'skills.ai.copilot': 'GitHub Copilot & AI-Assisted Development',
+    'skills.ai.workflow': 'Workflow Automation & Process Optimization',
+
     'skills.domain.title': 'Domain Exposure',
     'skills.domain.marketing': 'Marketing & E-commerce Analytics',
     'skills.domain.saas': 'SaaS Product Analytics',
     'skills.domain.ops': 'Operations & Supply Chain',
     'skills.domain.compliance': 'Data Privacy & Compliance (RGPD, Consent Mode)',
+
+    'philosophy.subtitle': 'How I Work',
+    'philosophy.title':    'Work Philosophy',
+    'philosophy.card1.title': 'Domain-Agnostic Infrastructure',
+    'philosophy.card1.desc':  'I build ETL pipelines, data systems, and integration layers that work across industries. The technical patterns stay constant — only the business context changes.',
+    'philosophy.card2.title': 'AI-Accelerated Development',
+    'philosophy.card2.desc':  'I use Claude AI for architecture validation, code review, and iteration. This means faster shipping, better quality, and no sacrificing engineering standards for speed.',
+    'philosophy.card3.title': 'Scalable from Day One',
+    'philosophy.card3.desc':  'Every system I build is production-ready: automated testing, quality checks, monitoring, and alerting. You get infrastructure that grows with your business.',
+    'philosophy.conclusion': 'This is what an adaptable data engineer delivers: systems that work anywhere, built fast, and scaled intelligently.',
+    'philosophy.tech_note': 'Built with Claude AI • GitHub',
 
     'services.subtitle': 'What I Do',
     'services.title':    'Services',
@@ -143,11 +159,27 @@ const TRANSLATIONS = {
 
     'skills.tech.title': 'Tecnologías',
 
+    'skills.ai.title': 'IA y Automatización',
+    'skills.ai.claude': 'Claude AI (Arquitectura, Code Review, Iteración)',
+    'skills.ai.copilot': 'GitHub Copilot y Desarrollo Asistido por IA',
+    'skills.ai.workflow': 'Automatización de Flujos y Optimización de Procesos',
+
     'skills.domain.title': 'Experiencia en Dominios',
     'skills.domain.marketing': 'Marketing y E-commerce Analytics',
     'skills.domain.saas': 'SaaS Product Analytics',
     'skills.domain.ops': 'Operaciones y Supply Chain',
     'skills.domain.compliance': 'Privacidad y Compliance (RGPD, Consent Mode)',
+
+    'philosophy.subtitle': 'Cómo Trabajo',
+    'philosophy.title':    'Filosofía de Trabajo',
+    'philosophy.card1.title': 'Infraestructura Agnóstica de Dominio',
+    'philosophy.card1.desc':  'Construyo pipelines ETL, sistemas de datos e integraciones que funcionan en cualquier industria. Los patrones técnicos permanecen constantes — solo el contexto empresarial cambia.',
+    'philosophy.card2.title': 'Desarrollo Acelerado con IA',
+    'philosophy.card2.desc':  'Uso Claude AI para validación de arquitectura, code review e iteración. Esto significa entregas más rápidas, mejor calidad y sin sacrificar estándares de ingeniería por velocidad.',
+    'philosophy.card3.title': 'Escalable desde el Inicio',
+    'philosophy.card3.desc':  'Todo sistema que construyo es production-ready: testing automatizado, controles de calidad, monitoreo y alerting. Tienes infraestructura que crece con tu negocio.',
+    'philosophy.conclusion': 'Esto es lo que entrega un data engineer adaptable: sistemas que funcionan en cualquier lugar, construidos rápido y escalados inteligentemente.',
+    'philosophy.tech_note': 'Construido con Claude AI • GitHub',
 
     'services.subtitle': 'Qué Hago',
     'services.title':    'Servicios',

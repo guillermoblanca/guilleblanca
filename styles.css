@@ -207,6 +207,92 @@ section:first-of-type {
 }
 
 
+/*=============== WORK PHILOSOPHY ===============*/
+
+.philosophy {
+  background: linear-gradient(135deg, var(--container-color) 0%, hsl(228, 15%, 16%) 100%);
+}
+
+.philosophy__container {
+  row-gap: 3.5rem;
+}
+
+.philosophy__data {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.philosophy__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.philosophy__card {
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid hsl(228, 15%, 25%);
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.philosophy__card:hover {
+  border-color: var(--first-color);
+  transform: translateY(-8px);
+  background-color: rgba(34, 141, 255, 0.05);
+}
+
+.philosophy__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--first-color-alt);
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--first-color);
+}
+
+.philosophy__card-title {
+  font-size: var(--h3-font-size);
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+  margin-bottom: 0.75rem;
+}
+
+.philosophy__card-desc {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.philosophy__footer {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid hsl(228, 15%, 25%);
+}
+
+.philosophy__conclusion {
+  font-size: var(--normal-font-size);
+  color: var(--title-color);
+  font-weight: var(--font-semi-bold);
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+.philosophy__tech-note {
+  font-size: var(--smaller-font-size);
+  color: var(--text-color);
+  margin: 0;
+  opacity: 0.8;
+}
+
+
 /*=============== SKILLS ===============*/
 
 .skills {
