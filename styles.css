@@ -800,6 +800,9 @@ section:first-of-type {
 body[data-role="game"] .role-data { display: none !important; }
 body[data-role="data"] .role-game { display: none !important; }
 
+/* Hide About section for data role — Work Philosophy provides better narrative */
+body[data-role="data"] #about { display: none !important; }
+
 /*=============== SPLASH ===============*/
 .splash {
   position: fixed;
