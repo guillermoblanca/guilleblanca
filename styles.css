@@ -299,6 +299,7 @@ section:first-of-type {
   background-color: var(--container-color);
 }
 
+/* Game Dev: side-by-side */
 .skills__container {
   display: grid;
   grid-template-columns: 1fr;
@@ -306,143 +307,49 @@ section:first-of-type {
   row-gap: 3.5rem;
 }
 
-.role-game .skills__container {
+body[data-role="game"] .skills__container {
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
 }
 
-.role-data .skills__container {
-  grid-template-columns: 1fr;
-}
+.skills__data { text-align: center; }
+body[data-role="game"] .skills__data { text-align: initial; }
+body[data-role="data"] .skills__data { display: none !important; }
+.skills__description { margin-bottom: 2rem; }
 
-/* Hide skills metadata for data role — content is self-explanatory */
-body[data-role="data"] .skills__data {
-  display: none !important;
-}
-
-body[data-role="data"] .skills__content {
-  padding-top: 2rem;
-}
-
-.skills__data {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.role-game .skills__data {
-  margin-bottom: 0;
-  text-align: initial;
-}
-
-.skills__description {
-  margin-bottom: 2rem;
-}
-
-.skills__content,
-.skills__group {
-  display: grid;
-}
-
-.skills__content {
+/* Game Dev list */
+.skills__content { display: grid; }
+body[data-role="game"] .skills__content {
   grid-template-columns: repeat(2, max-content);
   column-gap: 4rem;
   justify-content: center;
-  align-items: center;
 }
+.skills__group { display: grid; row-gap: 1rem; list-style: decimal-leading-zero; }
+.skills__item { font-weight: var(--font-medium); color: var(--title-color); }
+.skills__item::marker { color: var(--first-color); }
 
-.skills__content.role-data {
-  display: flex !important;
-  flex-direction: column;
-  gap: 2.5rem;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.skills__group {
-  row-gap: 1rem;
-  list-style: decimal-leading-zero;
-}
-
-.skills__item {
-  font-weight: var(--font-medium);
-  color: var(--title-color);
-}
-
-.skills__item::marker {
-  color: var(--first-color);
-}
-
-/* Skills Category Styling for role-data */
-.skills__category {
-  font-size: var(--smaller-font-size);
-  color: var(--text-color);
-  font-weight: var(--font-semi-bold);
-  margin-top: 0;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  opacity: 0.6;
-}
-
-.skills-category-group {
+/* ── Data role: 4-column skill groups ── */
+.skills-4grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
   width: 100%;
 }
 
-.skills-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin: 0;
-  padding: 0;
-}
-
-.skills-item {
-  font-weight: var(--font-medium);
-  color: var(--title-color);
-  padding-left: 1.5rem;
-  padding-right: 1rem;
-  position: relative;
-  line-height: 1.6;
-  word-wrap: break-word;
-  white-space: normal;
-}
-
-.skills-item::before {
-  content: "▸";
-  position: absolute;
-  left: 0;
-  color: var(--first-color);
-  font-weight: bold;
-}
-
-/* Skills Cards Grid — same visual as Work Philosophy */
-.skills-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1.5rem;
-}
-
-.skill-card {
+.skill-group {
   background-color: rgba(255, 255, 255, 0.02);
   border: 1px solid hsl(228, 15%, 25%);
   border-radius: 1rem;
-  padding: 1.75rem 1.25rem;
-  text-align: center;
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
+  padding: 1.75rem 1.5rem;
+  transition: border-color 0.3s, transform 0.3s;
 }
 
-.skill-card:hover {
+.skill-group:hover {
   border-color: var(--first-color);
-  transform: translateY(-8px);
-  background-color: rgba(34, 141, 255, 0.05);
+  transform: translateY(-6px);
 }
 
-.skill-card__icon {
+.skill-group__icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -450,77 +357,71 @@ body[data-role="data"] .skills__content {
   height: 48px;
   background-color: var(--first-color-alt);
   border-radius: 50%;
-  margin-bottom: 0.25rem;
   font-size: 1.5rem;
   color: var(--first-color);
+  margin-bottom: 1rem;
 }
 
-.skill-card__name {
-  font-size: var(--h3-font-size);
+.skill-group__title {
+  font-size: var(--normal-font-size);
   color: var(--title-color);
   font-weight: var(--font-semi-bold);
-  margin: 0;
-  line-height: 1.3;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid hsl(228, 15%, 25%);
 }
 
-.skill-card__detail {
-  font-size: var(--smaller-font-size);
+.skill-group__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.skill-group__list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.skill-group__name {
+  font-size: var(--small-font-size);
   color: var(--text-color);
-  margin: 0;
-  line-height: 1.5;
+  line-height: 1.4;
 }
 
-.skill-card__level {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.skill-tag {
+  font-size: 0.6rem;
   font-weight: var(--font-semi-bold);
-  padding: 0.2rem 0.6rem;
-  border-radius: 0.3rem;
-}
-
-/* Proficiency Badges */
-.proficiency-badge {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: var(--font-semi-bold);
-  padding: 0.2rem 0.6rem;
-  border-radius: 0.3rem;
-  margin-left: 0.5rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.3rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.proficiency-senior {
+.skill-tag--senior {
   background-color: hsl(145, 60%, 20%);
   color: hsl(145, 60%, 55%);
-  border: 1px solid hsl(145, 60%, 35%);
+  border: 1px solid hsl(145, 40%, 30%);
 }
 
-.proficiency-intermediate {
-  background-color: hsl(38, 80%, 20%);
+.skill-tag--mid {
+  background-color: hsl(38, 80%, 18%);
   color: hsl(38, 100%, 60%);
-  border: 1px solid hsl(38, 80%, 35%);
+  border: 1px solid hsl(38, 60%, 30%);
 }
 
-.proficiency-junior {
-  background-color: hsl(210, 50%, 20%);
-  color: hsl(210, 100%, 70%);
-  border: 1px solid hsl(210, 50%, 35%);
+@media (max-width: 900px) {
+  .skills-4grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Better spacing in skills items with inline content */
-.skills-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.skills-item > strong {
-  color: var(--first-color);
-  font-weight: var(--font-semi-bold);
+@media (max-width: 540px) {
+  .skills-4grid { grid-template-columns: 1fr; }
 }
 
 
