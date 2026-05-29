@@ -399,6 +399,50 @@ section:first-of-type {
   font-weight: bold;
 }
 
+/* Proficiency Badges */
+.proficiency-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: var(--font-semi-bold);
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.3rem;
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.proficiency-senior {
+  background-color: hsl(145, 60%, 20%);
+  color: hsl(145, 60%, 55%);
+  border: 1px solid hsl(145, 60%, 35%);
+}
+
+.proficiency-intermediate {
+  background-color: hsl(38, 80%, 20%);
+  color: hsl(38, 100%, 60%);
+  border: 1px solid hsl(38, 80%, 35%);
+}
+
+.proficiency-junior {
+  background-color: hsl(210, 50%, 20%);
+  color: hsl(210, 100%, 70%);
+  border: 1px solid hsl(210, 50%, 35%);
+}
+
+/* Better spacing in skills items with inline content */
+.skills-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.skills-item > strong {
+  color: var(--first-color);
+  font-weight: var(--font-semi-bold);
+}
+
 
 /*-----------------NAV----------------*/
 

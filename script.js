@@ -42,12 +42,20 @@ const TRANSLATIONS = {
 
     'skills.tech.title': 'Technologies',
 
-    'skills.ai.title': 'AI & Automation',
-    'skills.ai.claude': 'Claude AI (Architecture, Code Review, Iteration)',
-    'skills.ai.copilot': 'GitHub Copilot & AI-Assisted Development',
+    'skills.lang.title': 'Languages & Proficiency',
+    'skills.level.senior': 'Senior',
+    'skills.level.intermediate': 'Intermediate',
+    'skills.level.junior': 'Junior',
+
+    'skills.backend.title': 'Backend & Infrastructure',
+    'skills.analytics.title': 'Data & Analytics Tools',
+
+    'skills.ai.title': 'AI & Modern Workflow',
+    'skills.ai.claude': 'Claude AI',
+    'skills.ai.copilot': 'Copilot',
     'skills.ai.workflow': 'Workflow Automation & Process Optimization',
 
-    'skills.domain.title': 'Domain Exposure',
+    'skills.domain.title': 'Domain Expertise',
     'skills.domain.marketing': 'Marketing & E-commerce Analytics',
     'skills.domain.saas': 'SaaS Product Analytics',
     'skills.domain.ops': 'Operations & Supply Chain',
@@ -159,9 +167,17 @@ const TRANSLATIONS = {
 
     'skills.tech.title': 'Tecnologías',
 
-    'skills.ai.title': 'IA y Automatización',
-    'skills.ai.claude': 'Claude AI (Arquitectura, Code Review, Iteración)',
-    'skills.ai.copilot': 'GitHub Copilot y Desarrollo Asistido por IA',
+    'skills.lang.title': 'Lenguajes y Dominio',
+    'skills.level.senior': 'Senior',
+    'skills.level.intermediate': 'Intermedio',
+    'skills.level.junior': 'Junior',
+
+    'skills.backend.title': 'Backend e Infraestructura',
+    'skills.analytics.title': 'Herramientas de Datos y Analytics',
+
+    'skills.ai.title': 'IA y Flujo Moderno',
+    'skills.ai.claude': 'Claude AI',
+    'skills.ai.copilot': 'Copilot',
     'skills.ai.workflow': 'Automatización de Flujos y Optimización de Procesos',
 
     'skills.domain.title': 'Experiencia en Dominios',
