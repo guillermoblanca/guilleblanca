@@ -7,11 +7,12 @@ const TRANSLATIONS = {
     'splash.data.title': 'Data Analyst',
     'splash.data.sub':   'Python · SQL · Power BI · ML',
 
-    'nav.home':     'Home',
-    'nav.about':    'About',
-    'nav.services': 'Services',
-    'nav.projects': 'Projects',
-    'nav.contact':  'Contact',
+    'nav.home':       'Home',
+    'nav.about':      'About',
+    'nav.philosophy': 'How I Work',
+    'nav.services':   'Services',
+    'nav.projects':   'Projects',
+    'nav.contact':    'Contact',
 
     'toggle.game': 'Game Dev',
     'toggle.data': 'Data Analyst',
@@ -132,11 +133,12 @@ const TRANSLATIONS = {
     'splash.data.title': 'Analista de Datos',
     'splash.data.sub':   'Python · SQL · Power BI · ML',
 
-    'nav.home':     'Inicio',
-    'nav.about':    'Sobre mí',
-    'nav.services': 'Servicios',
-    'nav.projects': 'Proyectos',
-    'nav.contact':  'Contacto',
+    'nav.home':       'Inicio',
+    'nav.about':      'Sobre mí',
+    'nav.philosophy': 'Cómo Trabajo',
+    'nav.services':   'Servicios',
+    'nav.projects':   'Proyectos',
+    'nav.contact':    'Contacto',
 
     'toggle.game': 'Game Dev',
     'toggle.data': 'Analista de Datos',
@@ -276,6 +278,18 @@ function setRole(role) {
   document.querySelectorAll('.role-toggle__btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.roleSwitch === role);
   });
+
+  const aboutLink = document.querySelector('.header nav a[data-i18n="nav.about"], .header nav a[data-i18n="nav.philosophy"]');
+  if (aboutLink) {
+    if (role === 'data') {
+      aboutLink.setAttribute('href', '#philosophy');
+      aboutLink.dataset.i18n = 'nav.philosophy';
+    } else {
+      aboutLink.setAttribute('href', '#about');
+      aboutLink.dataset.i18n = 'nav.about';
+    }
+    aboutLink.textContent = TRANSLATIONS[currentLang][aboutLink.dataset.i18n];
+  }
 }
 
 /*=============== LANG ===============*/
