@@ -350,8 +350,8 @@ body[data-role="data"] .skills__content {
   align-items: center;
 }
 
-.role-data .skills__content {
-  grid-template-columns: 1fr;
+.skills__content.role-data {
+  grid-template-columns: 1fr !important;
   max-width: 100%;
   margin: 0 auto;
   column-gap: unset;
