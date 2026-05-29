@@ -351,13 +351,12 @@ body[data-role="data"] .skills__content {
 }
 
 .skills__content.role-data {
-  grid-template-columns: 1fr !important;
+  grid-template-columns: repeat(2, 1fr) !important;
   max-width: 100%;
   margin: 0 auto;
-  column-gap: unset;
+  gap: 1.5rem;
   padding: 0;
   align-items: start;
-  row-gap: 0;
 }
 
 .skills__group {
@@ -392,12 +391,7 @@ body[data-role="data"] .skills__content {
   border: 1px solid hsl(228, 15%, 22%);
   border-radius: 1rem;
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
   width: 100%;
-}
-
-.skills-category-group:last-child {
-  margin-bottom: 0;
 }
 
 .skills-list {
