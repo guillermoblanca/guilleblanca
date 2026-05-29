@@ -315,6 +315,15 @@ section:first-of-type {
   grid-template-columns: 1fr;
 }
 
+/* Hide skills metadata for data role — content is self-explanatory */
+.role-data .skills__data {
+  display: none !important;
+}
+
+.role-data .skills__content {
+  padding-top: 2rem;
+}
+
 .skills__data {
   text-align: center;
   margin-bottom: 3rem;
