@@ -351,13 +351,13 @@ body[data-role="data"] .skills__content {
 }
 
 .skills__content.role-data {
-  grid-template-columns: repeat(2, 1fr) !important;
+  grid-template-columns: 1fr !important;
   max-width: 100%;
   margin: 0 auto;
-  column-gap: 2rem;
-  padding: 0 1rem;
+  column-gap: unset;
+  padding: 0;
   align-items: start;
-  row-gap: 2rem;
+  row-gap: 0;
 }
 
 .skills__group {
@@ -376,22 +376,24 @@ body[data-role="data"] .skills__content {
 
 /* Skills Category Styling for role-data */
 .skills__category {
-  font-size: var(--h3-font-size);
+  font-size: var(--smaller-font-size);
   color: var(--first-color);
   font-weight: var(--font-semi-bold);
   margin-top: 0;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid hsl(228, 15%, 25%);
 }
 
 .skills-category-group {
-  margin-bottom: 3rem;
+  background-color: var(--container-color);
+  border: 1px solid hsl(228, 15%, 22%);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   width: 100%;
-}
-
-.skills-category-group:first-child {
-  margin-top: 0;
 }
 
 .skills-category-group:last-child {
@@ -428,9 +430,9 @@ body[data-role="data"] .skills__content {
 /* Skills Cards Grid */
 .skills-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
 }
 
 .skill-card {
