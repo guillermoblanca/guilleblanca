@@ -300,12 +300,29 @@ section:first-of-type {
 }
 
 .skills__container {
+  display: grid;
+  grid-template-columns: 1fr;
   padding-bottom: 2rem;
   row-gap: 3.5rem;
 }
 
+.role-game .skills__container {
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+}
+
+.role-data .skills__container {
+  grid-template-columns: 1fr;
+}
+
 .skills__data {
   text-align: center;
+  margin-bottom: 3rem;
+}
+
+.role-game .skills__data {
+  margin-bottom: 0;
+  text-align: initial;
 }
 
 .skills__description {
