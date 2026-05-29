@@ -198,22 +198,26 @@
                     <!-- Languages -->
                     <div class="skills-category-group">
                         <h4 class="skills__category" data-i18n="skills.lang.title">Languages & Proficiency</h4>
-                        <div class="skills-list">
-                            <div class="skills-item">
-                                <span>Python</span>
-                                <span class="proficiency-badge proficiency-senior" data-i18n="skills.level.senior">Senior</span>
+                        <div class="skills-cards-grid">
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-code-s-slash-line"></i></div>
+                                <h5 class="skill-card__name">Python</h5>
+                                <span class="skill-card__level proficiency-senior">Senior</span>
                             </div>
-                            <div class="skills-item">
-                                <span>SQL</span>
-                                <span class="proficiency-badge proficiency-senior" data-i18n="skills.level.senior">Senior</span>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-database-line"></i></div>
+                                <h5 class="skill-card__name">SQL</h5>
+                                <span class="skill-card__level proficiency-senior">Senior</span>
                             </div>
-                            <div class="skills-item">
-                                <span>JavaScript</span>
-                                <span class="proficiency-badge proficiency-intermediate" data-i18n="skills.level.intermediate">Intermediate</span>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-code-line"></i></div>
+                                <h5 class="skill-card__name">JavaScript</h5>
+                                <span class="skill-card__level proficiency-intermediate">Intermediate</span>
                             </div>
-                            <div class="skills-item">
-                                <span>Bash / Shell</span>
-                                <span class="proficiency-badge proficiency-intermediate" data-i18n="skills.level.intermediate">Intermediate</span>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-terminal-line"></i></div>
+                                <h5 class="skill-card__name">Bash / Shell</h5>
+                                <span class="skill-card__level proficiency-intermediate">Intermediate</span>
                             </div>
                         </div>
                     </div>
@@ -221,26 +225,49 @@
                     <!-- Core Competencies -->
                     <div class="skills-category-group">
                         <h4 class="skills__category" data-i18n="skills.core.title">Core Competencies</h4>
-                        <div class="skills-list">
-                            <div class="skills-item" data-i18n="skills.core.etl">ETL & Data Pipelines</div>
-                            <div class="skills-item" data-i18n="skills.core.integration">Multi-source Data Integration</div>
-                            <div class="skills-item" data-i18n="skills.core.quality">Data Quality & Testing</div>
-                            <div class="skills-item" data-i18n="skills.core.api">API Design & Integration</div>
+                        <div class="skills-cards-grid">
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-flow-chart-line"></i></div>
+                                <h5 class="skill-card__name" data-i18n="skills.core.etl">ETL & Data Pipelines</h5>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-link-m"></i></div>
+                                <h5 class="skill-card__name" data-i18n="skills.core.integration">Multi-source Integration</h5>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-shield-check-line"></i></div>
+                                <h5 class="skill-card__name" data-i18n="skills.core.quality">Data Quality & Testing</h5>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-git-pull-request-line"></i></div>
+                                <h5 class="skill-card__name" data-i18n="skills.core.api">API Design & Integration</h5>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Backend & Infrastructure -->
                     <div class="skills-category-group">
                         <h4 class="skills__category" data-i18n="skills.backend.title">Backend & Infrastructure</h4>
-                        <div class="skills-list">
-                            <div class="skills-item">
-                                <strong>Frameworks:</strong> FastAPI, Flask, SQLAlchemy, pandas, NumPy
+                        <div class="skills-cards-grid">
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-function-line"></i></div>
+                                <h5 class="skill-card__name">FastAPI, Flask</h5>
+                                <p class="skill-card__detail">Web Frameworks</p>
                             </div>
-                            <div class="skills-item">
-                                <strong>Databases:</strong> PostgreSQL, BigQuery, MySQL
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-database-2-line"></i></div>
+                                <h5 class="skill-card__name">PostgreSQL, BigQuery</h5>
+                                <p class="skill-card__detail">Databases</p>
                             </div>
-                            <div class="skills-item">
-                                <strong>DevOps:</strong> Docker, Git/GitHub, CI/CD basics
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-box-3-line"></i></div>
+                                <h5 class="skill-card__name">Docker, Git</h5>
+                                <p class="skill-card__detail">DevOps & Version Control</p>
+                            </div>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-stack-line"></i></div>
+                                <h5 class="skill-card__name">pandas, NumPy</h5>
+                                <p class="skill-card__detail">Data Libraries</p>
                             </div>
                         </div>
                     </div>
@@ -248,15 +275,21 @@
                     <!-- Data & Analytics Tools -->
                     <div class="skills-category-group">
                         <h4 class="skills__category" data-i18n="skills.analytics.title">Data & Analytics Tools</h4>
-                        <div class="skills-list">
-                            <div class="skills-item">
-                                <strong>Analytics:</strong> Google Analytics 4, Google Search Console
+                        <div class="skills-cards-grid">
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-bar-chart-2-line"></i></div>
+                                <h5 class="skill-card__name">GA4, GSC</h5>
+                                <p class="skill-card__detail">Analytics Platforms</p>
                             </div>
-                            <div class="skills-item">
-                                <strong>BI Tools:</strong> Power BI, Looker, Tableau
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-pie-chart-line"></i></div>
+                                <h5 class="skill-card__name">Power BI, Looker, Tableau</h5>
+                                <p class="skill-card__detail">BI Tools</p>
                             </div>
-                            <div class="skills-item">
-                                <strong>CRM Integration:</strong> Salesforce, HubSpot, Pipedrive
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-contacts-book-line"></i></div>
+                                <h5 class="skill-card__name">Salesforce, HubSpot</h5>
+                                <p class="skill-card__detail">CRM Integration</p>
                             </div>
                         </div>
                     </div>
@@ -264,32 +297,48 @@
                     <!-- AI & Modern Workflow -->
                     <div class="skills-category-group">
                         <h4 class="skills__category" data-i18n="skills.ai.title">AI & Modern Workflow</h4>
-                        <div class="skills-list">
-                            <div class="skills-item">
-                                <strong data-i18n="skills.ai.claude">Claude AI:</strong> Architecture, code review, iteration acceleration
+                        <div class="skills-cards-grid">
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-brain-line"></i></div>
+                                <h5 class="skill-card__name">Claude AI</h5>
+                                <p class="skill-card__detail">Architecture & Code Review</p>
                             </div>
-                            <div class="skills-item">
-                                <strong data-i18n="skills.ai.copilot">Copilot:</strong> GitHub Copilot, AI-assisted development
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-lightbulb-flash-line"></i></div>
+                                <h5 class="skill-card__name">GitHub Copilot</h5>
+                                <p class="skill-card__detail">AI-Assisted Development</p>
                             </div>
-                            <div class="skills-item" data-i18n="skills.ai.workflow">Workflow automation & process optimization</div>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-automation-line"></i></div>
+                                <h5 class="skill-card__name">Automation</h5>
+                                <p class="skill-card__detail">Workflow Optimization</p>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Domain Expertise -->
                     <div class="skills-category-group">
                         <h4 class="skills__category" data-i18n="skills.domain.title">Domain Expertise</h4>
-                        <div class="skills-list">
-                            <div class="skills-item">
-                                <strong>E-commerce:</strong> <span data-i18n="skills.domain.marketing">Marketing & E-commerce Analytics</span>
+                        <div class="skills-cards-grid">
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-shopping-cart-2-line"></i></div>
+                                <h5 class="skill-card__name">E-commerce</h5>
+                                <p class="skill-card__detail">Analytics & Marketing</p>
                             </div>
-                            <div class="skills-item">
-                                <strong>SaaS:</strong> <span data-i18n="skills.domain.saas">Product Analytics & Metrics</span>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-rocket-2-line"></i></div>
+                                <h5 class="skill-card__name">SaaS</h5>
+                                <p class="skill-card__detail">Product Analytics</p>
                             </div>
-                            <div class="skills-item">
-                                <strong>Operations:</strong> <span data-i18n="skills.domain.ops">Supply Chain & Logistics</span>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-truck-line"></i></div>
+                                <h5 class="skill-card__name">Operations</h5>
+                                <p class="skill-card__detail">Supply Chain</p>
                             </div>
-                            <div class="skills-item">
-                                <strong>Compliance:</strong> <span data-i18n="skills.domain.compliance">Data Privacy & RGPD</span>
+                            <div class="skill-card">
+                                <div class="skill-card__icon"><i class="ri-shield-lock-line"></i></div>
+                                <h5 class="skill-card__name">Compliance</h5>
+                                <p class="skill-card__detail">Data Privacy & RGPD</p>
                             </div>
                         </div>
                     </div>
