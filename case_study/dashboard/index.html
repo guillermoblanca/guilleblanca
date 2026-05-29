@@ -58,11 +58,16 @@
                 </div>
             </div>
 
-            <!-- INDUSTRY SELECTOR -->
-            <div class="industry-toggle">
-                <button class="industry-btn active" data-industry="ecommerce" data-lang-en="E-commerce" data-lang-es="E-commerce">E-commerce</button>
-                <button class="industry-btn" data-industry="saas" data-lang-en="SaaS" data-lang-es="SaaS">SaaS</button>
-                <button class="industry-btn" data-industry="ops" data-lang-en="Operations" data-lang-es="Operaciones">Operations</button>
+            <!-- DASHBOARD CONTROLS -->
+            <div class="dashboard-controls">
+                <div class="industry-toggle">
+                    <button class="industry-btn active" data-industry="ecommerce" data-lang-en="E-commerce" data-lang-es="E-commerce">E-commerce</button>
+                    <button class="industry-btn" data-industry="saas" data-lang-en="SaaS" data-lang-es="SaaS">SaaS</button>
+                    <button class="industry-btn" data-industry="ops" data-lang-en="Operations" data-lang-es="Operaciones">Operations</button>
+                </div>
+                <button class="compare-btn" id="compare-btn" data-lang-en="Compare all" data-lang-es="Comparar todo">
+                    <i class="ri-layout-grid-line"></i> <span data-lang-en="Compare all" data-lang-es="Comparar todo">Compare all</span>
+                </button>
             </div>
 
             <!-- METRICS -->
@@ -88,7 +93,50 @@
             <!-- INDUSTRY INSIGHT -->
             <div class="industry-insight" id="industry-insight">
                 <i class="ri-lightbulb-flash-line"></i>
-                <p id="insight-text"></p>
+                <div class="insight-body">
+                    <p id="insight-text"></p>
+                    <p class="insight-action" id="insight-action"></p>
+                </div>
+            </div>
+
+            <!-- COMPARE PANEL -->
+            <div class="compare-panel" id="compare-panel" hidden>
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>E-commerce</th>
+                            <th>SaaS</th>
+                            <th>Operations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong data-lang-en="KPI 1" data-lang-es="KPI 1">KPI 1</strong></td>
+                            <td data-status="good">€48.2K</td>
+                            <td data-status="good">€22.6K</td>
+                            <td data-status="good">94%</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-lang-en="KPI 2" data-lang-es="KPI 2">KPI 2</strong></td>
+                            <td data-status="warning">3.4%</td>
+                            <td data-status="warning">2.1%</td>
+                            <td data-status="warning">6.2h</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-lang-en="KPI 3" data-lang-es="KPI 3">KPI 3</strong></td>
+                            <td data-status="good">€89</td>
+                            <td data-status="bad">€-476</td>
+                            <td data-status="warning">4.2%</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-lang-en="KPI 4" data-lang-es="KPI 4">KPI 4</strong></td>
+                            <td data-status="bad">68%</td>
+                            <td data-status="good">4.2x</td>
+                            <td data-status="bad">47</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- SECTION: Dashboard -->
@@ -105,6 +153,35 @@
                         <canvas id="chart-breakdown"></canvas>
                     </div>
                 </div>
+            </section>
+
+            <!-- SECTION: What This Shows -->
+            <section class="cs-section" id="what-this-shows">
+                <h2 class="cs-section__title" data-lang-en="What This Demonstrates" data-lang-es="Lo Que Esto Demuestra">What This Demonstrates</h2>
+                <p class="cs-section__text" data-lang-en="Three industries, three different stories — but the underlying data infrastructure is identical." data-lang-es="Tres industrias, tres historias diferentes — pero la infraestructura de datos subyacente es idéntica.">Three industries, three different stories — but the underlying data infrastructure is identical.</p>
+
+                <div class="value-prop-grid">
+                    <div class="value-prop-card value-prop-card--same">
+                        <h4 data-lang-en="Same across all three" data-lang-es="Igual en los tres">Same across all three</h4>
+                        <ul>
+                            <li data-lang-en="ETL pipeline" data-lang-es="Pipeline ETL">ETL pipeline</li>
+                            <li data-lang-en="Data quality checks" data-lang-es="Controles de calidad">Data quality checks</li>
+                            <li data-lang-en="Visualization layer" data-lang-es="Capa de visualización">Visualization layer</li>
+                            <li data-lang-en="Multi-source integration" data-lang-es="Integración multi-fuente">Multi-source integration</li>
+                        </ul>
+                    </div>
+                    <div class="value-prop-card value-prop-card--different">
+                        <h4 data-lang-en="Adapts to each context" data-lang-es="Se adapta a cada contexto">Adapts to each context</h4>
+                        <ul>
+                            <li data-lang-en="KPIs and metrics" data-lang-es="KPIs y métricas">KPIs and metrics</li>
+                            <li data-lang-en="Business logic" data-lang-es="Lógica empresarial">Business logic</li>
+                            <li data-lang-en="Chart types" data-lang-es="Tipos de gráficos">Chart types</li>
+                            <li data-lang-en="Decision framing" data-lang-es="Marco de decisión">Decision framing</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p class="value-prop-conclusion" data-lang-en="This is what an adaptable data engineer delivers: domain-agnostic infrastructure + business-specific insight." data-lang-es="Esto es lo que entrega un data engineer adaptable: infraestructura agnóstica de dominio + insight específico del negocio.">This is what an adaptable data engineer delivers: domain-agnostic infrastructure + business-specific insight.</p>
             </section>
 
             <!-- SECTION: How It Works -->
@@ -173,6 +250,9 @@
             <ul class="cs-toc__list">
                 <li class="cs-toc__item--h2">
                     <a href="#dashboard" data-lang-en="Dashboard" data-lang-es="Dashboard">Dashboard</a>
+                </li>
+                <li class="cs-toc__item--h2">
+                    <a href="#what-this-shows" data-lang-en="What This Demonstrates" data-lang-es="Lo Que Esto Demuestra">What This Demonstrates</a>
                 </li>
                 <li class="cs-toc__item--h2">
                     <a href="#how-it-works" data-lang-en="How It Works" data-lang-es="Cómo Funciona">How It Works</a>
