@@ -154,18 +154,37 @@
                 </div>
 
                 <div class="skills__content role-data">
-                    <ol class="skills__group">
-                        <li class="skills__item">Python</li>
-                        <li class="skills__item">SQL / MySQL</li>
-                        <li class="skills__item">Power BI</li>
-                        <li class="skills__item">pandas / NumPy</li>
-                    </ol>
-                    <ol class="skills__group" start="5">
-                        <li class="skills__item">Matplotlib</li>
-                        <li class="skills__item">Statistical Analysis</li>
-                        <li class="skills__item">ETL Pipelines</li>
-                        <li class="skills__item">Git & GitHub</li>
-                    </ol>
+                    <div class="skills-category-group">
+                        <h4 class="skills__category" data-i18n="skills.core.title">Core Competencies</h4>
+                        <div class="skills-list">
+                            <div class="skills-item" data-i18n="skills.core.etl">ETL & Data Pipelines</div>
+                            <div class="skills-item" data-i18n="skills.core.integration">Multi-source Data Integration</div>
+                            <div class="skills-item" data-i18n="skills.core.quality">Data Quality & Testing</div>
+                            <div class="skills-item" data-i18n="skills.core.api">API Design & Integration</div>
+                        </div>
+                    </div>
+
+                    <div class="skills-category-group">
+                        <h4 class="skills__category" data-i18n="skills.tech.title">Technologies</h4>
+                        <div class="skills-list">
+                            <div class="skills-item">Python, PostgreSQL, Docker</div>
+                            <div class="skills-item">FastAPI, REST APIs</div>
+                            <div class="skills-item">Google Analytics 4, Google Search Console</div>
+                            <div class="skills-item">CRM Integrations (Salesforce, HubSpot, Pipedrive)</div>
+                            <div class="skills-item">Power BI, Looker, Tableau</div>
+                            <div class="skills-item">pandas, NumPy, SQLAlchemy</div>
+                        </div>
+                    </div>
+
+                    <div class="skills-category-group">
+                        <h4 class="skills__category" data-i18n="skills.domain.title">Domain Exposure</h4>
+                        <div class="skills-list">
+                            <div class="skills-item" data-i18n="skills.domain.marketing">Marketing & E-commerce Analytics</div>
+                            <div class="skills-item" data-i18n="skills.domain.saas">SaaS Product Analytics</div>
+                            <div class="skills-item" data-i18n="skills.domain.ops">Operations & Supply Chain</div>
+                            <div class="skills-item" data-i18n="skills.domain.compliance">Data Privacy & Compliance (RGPD, Consent Mode)</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -196,14 +215,14 @@
 
                 <div class="services__container container grid role-data">
                     <article class="services__card">
-                        <i class="ri-pie-chart-2-fill services__icon"></i>
-                        <h2 class="services__title" data-i18n="srv.data.eda.title"></h2>
-                        <p class="services__description" data-i18n="srv.data.eda.desc"></p>
+                        <i class="ri-shuffle-line services__icon"></i>
+                        <h2 class="services__title" data-i18n="srv.data.etl.title"></h2>
+                        <p class="services__description" data-i18n="srv.data.etl.desc"></p>
                     </article>
                     <article class="services__card">
                         <i class="ri-database-2-fill services__icon"></i>
-                        <h2 class="services__title" data-i18n="srv.data.db.title"></h2>
-                        <p class="services__description" data-i18n="srv.data.db.desc"></p>
+                        <h2 class="services__title" data-i18n="srv.data.dw.title"></h2>
+                        <p class="services__description" data-i18n="srv.data.dw.desc"></p>
                     </article>
                     <article class="services__card">
                         <i class="ri-line-chart-fill services__icon"></i>
@@ -279,6 +298,22 @@
                     <div class="services__container container grid role-data">
                         <article class="project__card project__card--data">
                             <div class="project__tag" data-i18n="proj.tag.casestudy"></div>
+                            <h3 data-i18n="proj.dw.title"></h3>
+                            <p data-i18n="proj.dw.desc"></p>
+                            <div style="display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin-top:.5rem;">
+                                <a href="case_study/datawarehouse/index.html" class="button" data-i18n="proj.dw.cta"></a>
+                            </div>
+                        </article>
+                        <article class="project__card project__card--data">
+                            <div class="project__tag" data-i18n="proj.tag.casestudy"></div>
+                            <h3 data-i18n="proj.dash.title"></h3>
+                            <p data-i18n="proj.dash.desc"></p>
+                            <div style="display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin-top:.5rem;">
+                                <a href="case_study/dashboard/index.html" class="button" data-i18n="proj.dash.cta"></a>
+                            </div>
+                        </article>
+                        <article class="project__card project__card--data">
+                            <div class="project__tag" data-i18n="proj.tag.casestudy"></div>
                             <h3>Amazon Reviews — <span data-i18n="proj.sentiment.title"></span></h3>
                             <p data-i18n="proj.sentiment.desc"></p>
                             <div style="display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin-top:.5rem;">
@@ -308,9 +343,17 @@
                 <h3 class="section__subtitle"><span data-i18n="contact.subtitle"></span></h3>
                 <h2 class="section__title" data-i18n="contact.title"></h2>
             </header>
-            <div class="contact__container container">
+
+            <!-- Game Dev Contact -->
+            <div class="contact__container container role-game">
                 <p><span data-i18n="contact.text"></span> <strong>guillermo_848@hotmail.com</strong></p>
                 <a href="mailto:guillermo_848@hotmail.com" class="contact button" data-i18n="contact.cta"></a>
+            </div>
+
+            <!-- Data Analyst Contact -->
+            <div class="contact__container container role-data">
+                <p><span data-i18n="contact.text"></span> <strong>guillermo_848@hotmail.com</strong></p>
+                <a href="mailto:guillermo_848@hotmail.com?subject=Data%20Analytics%20Inquiry&body=Hello%20Guillermo,%0A%0A" class="contact button" data-i18n="contact.cta"></a>
             </div>
         </div>
     </section>

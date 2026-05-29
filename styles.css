@@ -238,6 +238,16 @@ section:first-of-type {
   align-items: center;
 }
 
+.role-data .skills__content {
+  grid-template-columns: 1fr;
+  max-width: 100%;
+  margin: 0 auto;
+  column-gap: unset;
+  padding: 0 1rem;
+  align-items: start;
+  row-gap: 2rem;
+}
+
 .skills__group {
   row-gap: 1rem;
   list-style: decimal-leading-zero;
@@ -250,6 +260,57 @@ section:first-of-type {
 
 .skills__item::marker {
   color: var(--first-color);
+}
+
+/* Skills Category Styling for role-data */
+.skills__category {
+  font-size: var(--h3-font-size);
+  color: var(--first-color);
+  font-weight: var(--font-semi-bold);
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.skills-category-group {
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+.skills-category-group:first-child {
+  margin-top: 0;
+}
+
+.skills-category-group:last-child {
+  margin-bottom: 0;
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+}
+
+.skills-item {
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+  padding-left: 1.5rem;
+  padding-right: 1rem;
+  position: relative;
+  line-height: 1.6;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.skills-item::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--first-color);
+  font-weight: bold;
 }
 
 

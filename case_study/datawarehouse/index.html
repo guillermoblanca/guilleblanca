@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Data Warehouse — ETL Pipeline | Guillermo Blanca</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <style>
+        /* ── Layout ── */
+        .cs-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(var(--header-height) + 3rem) 1.5rem 5rem;
+            display: grid;
+            grid-template-columns: 1fr 220px;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .cs-page { min-width: 0; }
+
+        /* ── TOC Sidebar ── */
+        .cs-toc {
+            position: sticky;
+            top: calc(var(--header-height) + 2rem);
+            background-color: var(--container-color);
+            border-radius: 1rem;
+            padding: 1.25rem 1rem;
+        }
+
+        .cs-toc__title {
+            font-size: var(--smaller-font-size);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: var(--first-color);
+            font-weight: var(--font-semi-bold);
+            margin-bottom: 1rem;
+            padding-bottom: .6rem;
+            border-bottom: 1px solid hsl(228, 15%, 25%);
+        }
+
+        .cs-toc__list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: .1rem;
+        }
+
+        .cs-toc__item--h2 > a,
+        .cs-toc__item--h3 > a {
+            font-size: var(--smaller-font-size);
+            color: var(--text-color);
+            display: block;
+            padding: .35rem .5rem;
+            border-radius: .35rem;
+            border-left: 2px solid transparent;
+            transition: color .2s, background-color .2s;
+            line-height: 1.4;
+        }
+
+        .cs-toc__item--h3 > a {
+            opacity: .7;
+            padding-left: 1.1rem;
+        }
+
+        .cs-toc__item--h2 > a:hover,
+        .cs-toc__item--h3 > a:hover {
+            color: var(--first-color);
+            opacity: 1;
+            background-color: hsl(228, 15%, 18%);
+        }
+
+        .cs-toc__item--h2 > a.toc-active,
+        .cs-toc__item--h3 > a.toc-active {
+            color: var(--first-color);
+            opacity: 1;
+            border-left-color: var(--first-color);
+            background-color: hsl(228, 15%, 18%);
+        }
+
+        @media (max-width: 1023px) {
+            .cs-wrapper { grid-template-columns: 1fr; }
+            .cs-toc { display: none; }
+        }
+
+        /* ── Back link ── */
+        .cs-back {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            transition: color .3s;
+            margin-bottom: 2.5rem;
+        }
+        .cs-back:hover { color: var(--first-color); }
+
+        /* ── Hero ── */
+        .cs-hero { margin-bottom: 3rem; }
+
+        .cs-hero__tag {
+            display: inline-block;
+            background-color: var(--first-color-alt);
+            color: var(--title-color);
+            font-size: var(--smaller-font-size);
+            font-weight: var(--font-semi-bold);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            padding: .25rem .75rem;
+            border-radius: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cs-hero__title {
+            font-size: var(--h1-font-size);
+            color: var(--title-color);
+            line-height: 1.3;
+            margin-bottom: .75rem;
+        }
+
+        .cs-hero__title span { color: var(--first-color); }
+
+        .cs-hero__sub {
+            color: var(--text-color);
+            font-size: var(--normal-font-size);
+            line-height: 1.7;
+            margin-bottom: 1.75rem;
+            max-width: 680px;
+        }
+
+        .cs-hero__badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-bottom: 1.75rem;
+        }
+
+        .badge {
+            background-color: var(--container-color);
+            border: 1px solid hsl(228, 15%, 28%);
+            color: var(--text-color);
+            font-size: var(--smaller-font-size);
+            font-weight: var(--font-medium);
+            padding: .3rem .7rem;
+            border-radius: .4rem;
+        }
+
+        .cs-hero__actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* ── Metrics strip ── */
+        .cs-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .metric-card {
+            background-color: var(--container-color);
+            border: 2px solid transparent;
+            border-radius: 1rem;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            transition: border-color .3s;
+        }
+        .metric-card:hover { border-color: var(--first-color); }
+
+        .metric-card__value {
+            font-size: var(--h1-font-size);
+            font-weight: var(--font-semi-bold);
+            color: var(--first-color);
+            line-height: 1.1;
+        }
+
+        .metric-card__label {
+            font-size: var(--smaller-font-size);
+            color: var(--text-color);
+            margin-top: .35rem;
+        }
+
+        /* ── Section titles ── */
+        .cs-section { margin-bottom: 3.5rem; }
+
+        .cs-section__title {
+            font-size: var(--h2-font-size);
+            color: var(--title-color);
+            border-left: 3px solid var(--first-color);
+            padding-left: .75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-section__text {
+            color: var(--text-color);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* ── Pipeline diagram ── */
+        .pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 1.5rem 0;
+        }
+
+        .pipeline__step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .pipeline__connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 48px;
+            flex-shrink: 0;
+        }
+
+        .pipeline__dot {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--first-color-alt);
+            border: 2px solid var(--first-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--first-color);
+            flex-shrink: 0;
+        }
+
+        .pipeline__line {
+            width: 2px;
+            flex: 1;
+            min-height: 1.5rem;
+            background: linear-gradient(to bottom, var(--first-color), transparent);
+            margin: .25rem 0;
+        }
+
+        .pipeline__body {
+            background-color: var(--container-color);
+            border-radius: .75rem;
+            padding: 1rem 1.25rem;
+            flex: 1;
+            margin-bottom: .75rem;
+        }
+
+        .pipeline__phase {
+            font-size: var(--smaller-font-size);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: var(--first-color);
+            font-weight: var(--font-semi-bold);
+            margin-bottom: .25rem;
+        }
+
+        .pipeline__title {
+            font-size: var(--h3-font-size);
+            color: var(--title-color);
+            font-weight: var(--font-medium);
+            margin-bottom: .4rem;
+        }
+
+        .pipeline__detail {
+            font-size: var(--small-font-size);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* ── Data table ── */
+        .cs-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--small-font-size);
+            margin: 1.25rem 0;
+        }
+
+        .cs-table th {
+            background-color: var(--container-color);
+            color: var(--first-color);
+            font-weight: var(--font-semi-bold);
+            text-align: left;
+            padding: .75rem 1rem;
+            border-bottom: 2px solid var(--first-color-alt);
+        }
+
+        .cs-table td {
+            color: var(--text-color);
+            padding: .65rem 1rem;
+            border-bottom: 1px solid hsl(228, 15%, 18%);
+        }
+
+        .cs-table tr:hover {
+            background-color: hsl(228, 15%, 15%);
+        }
+
+        /* ── Callout boxes ── */
+        .callout {
+            background-color: var(--container-color);
+            border-left: 3px solid var(--first-color-alt);
+            border-radius: .5rem;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .callout__title {
+            font-size: var(--normal-font-size);
+            color: var(--first-color);
+            font-weight: var(--font-semi-bold);
+            margin-bottom: .5rem;
+        }
+
+        .callout__text {
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: var(--small-font-size);
+        }
+
+        /* ── Stack badges ── */
+        .stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin: 1.5rem 0;
+        }
+
+        .stack__item {
+            background-color: var(--first-color);
+            color: hsl(228, 15%, 10%);
+            padding: .35rem .85rem;
+            border-radius: 2rem;
+            font-size: var(--smaller-font-size);
+            font-weight: var(--font-medium);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .cs-metrics { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header blur-header" id="header">
+        <nav class="nav container">
+            <a href="../../index.html" class="nav__logo">Guillermo <span>Blanca</span></a>
+            <div class="nav__menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="../../index.html#projects" class="nav__link">Projects</a></li>
+                    <li class="nav__item"><a href="../../index.html#contact"  class="nav__link">Contact</a></li>
+                </ul>
+            </div>
+            <div class="nav__controls">
+                <div style="display:flex; gap:.5rem;">
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <span class="lang-sep">|</span>
+                    <button class="lang-btn" data-lang="es">ES</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="cs-wrapper">
+        <div class="cs-page">
+
+            <!-- Back link -->
+            <a href="../../index.html#projects" class="cs-back">
+                <i class="ri-arrow-left-line"></i>
+                <span>Back to Projects</span>
+            </a>
+
+            <!-- Hero section -->
+            <section class="cs-hero">
+                <span class="cs-hero__tag" data-lang-en="Educational Case Study" data-lang-es="Caso de Estudio Educativo">Educational Case Study</span>
+                <h1 class="cs-hero__title">
+                    <span data-lang-en="Enterprise " data-lang-es="Enterprise ">Enterprise </span>
+                    <span class="highlight-alt" data-lang-en="Data Warehouse" data-lang-es="Data Warehouse">Data Warehouse</span>
+                </h1>
+                <p class="cs-hero__sub" data-lang-en="Educational case study on designing an enterprise-scale ETL pipeline that consolidates multi-source data (analytics, search, CRM) into a unified platform. Covers automated quality scoring, reconciliation, alerting, and architectural patterns for production data warehouses." data-lang-es="Caso de estudio educativo sobre diseño de un pipeline ETL a escala empresarial que consolida datos de múltiples fuentes (analytics, búsqueda, CRM) en una plataforma unificada. Cubre scoring de calidad automatizado, reconciliación, alertas y patrones arquitectónicos para data warehouses en producción.">
+                    Educational case study on designing an enterprise-scale ETL pipeline that consolidates multi-source data into a unified platform. Covers automated quality scoring, reconciliation, and production architecture patterns.
+                </p>
+                <div class="cs-hero__badges">
+                    <span class="badge">Python</span>
+                    <span class="badge">PostgreSQL</span>
+                    <span class="badge">Docker</span>
+                    <span class="badge">FastAPI</span>
+                    <span class="badge">ETL</span>
+                    <span class="badge">Data Engineering</span>
+                </div>
+
+                <div class="callout" style="margin-top: 2rem; border-left-color: var(--first-color); background-color: hsl(228, 15%, 18%); opacity: 0.95;">
+                    <div class="callout__text" data-lang-en="This is an educational case study demonstrating enterprise data warehouse architecture, ETL patterns, and best practices for multi-source data consolidation. All content is conceptual and based on general data engineering principles. No proprietary information, client data, or implementation specifics are included." data-lang-es="Este es un caso de estudio educativo que demuestra arquitectura de data warehouse empresarial, patrones ETL y mejores prácticas para consolidación de datos multi-fuente. Todo el contenido es conceptual y se basa en principios generales de ingeniería de datos. No incluye información propietaria, datos de clientes ni especificidades de implementación.">
+                        <strong data-lang-en="Educational Content:" data-lang-es="Contenido Educativo:">Educational Content:</strong> This case study demonstrates enterprise data warehouse architecture and ETL patterns based on general data engineering principles.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Metrics -->
+            <div class="cs-metrics">
+                <div class="metric-card">
+                    <div class="metric-card__value">Multi-tenant</div>
+                    <div class="metric-card__label" data-lang-en="Architecture" data-lang-es="Arquitectura">Architecture</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card__value">∞</div>
+                    <div class="metric-card__label" data-lang-en="Data Retention" data-lang-es="Retención de Datos">Data Retention</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card__value">Daily</div>
+                    <div class="metric-card__label" data-lang-en="Auto QA" data-lang-es="QA Automática">Auto QA</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card__value">Real-time</div>
+                    <div class="metric-card__label" data-lang-en="Alerting" data-lang-es="Alertas">Alerting</div>
+                </div>
+            </div>
+
+            <!-- ETL Process -->
+            <section class="cs-section">
+                <h2 class="cs-section__title" id="etl" data-lang-en="ETL Process: From Multiple Sources to Single Source of Truth" data-lang-es="Proceso ETL: De Múltiples Fuentes a Única Fuente de Verdad">ETL Process: From Multiple Sources to Single Source of Truth</h2>
+
+                <p class="cs-section__text" data-lang-en="The core challenge: you don't trust a single data source. Google Analytics, Google Search Console, CRM systems, and ad platforms each report slightly different numbers. Why? Consent mode limitations, API differences, timing, and definitions diverge." data-lang-es="El desafío central: no confías en una única fuente de datos. Google Analytics, Google Search Console, sistemas CRM y plataformas de anuncios informan números ligeramente diferentes. ¿Por qué? Las limitaciones del consent mode, las diferencias de API, el timing y las definiciones divergen.">
+                    The core challenge: you don't trust a single data source. Google Analytics, Google Search Console, CRM systems, and ad platforms each report slightly different numbers. Why? Consent mode limitations, API differences, timing, and definitions diverge.
+                </p>
+
+                <p class="cs-section__text" data-lang-en="This pipeline solves that by automating extraction, normalization, reconciliation, and quality checks." data-lang-es="Este pipeline lo resuelve automatizando extracción, normalización, reconciliación y chequeos de calidad.">
+                    This pipeline solves that by automating extraction, normalization, reconciliation, and quality checks.
+                </p>
+
+                <div class="pipeline">
+                    <div class="pipeline__step">
+                        <div class="pipeline__connector">
+                            <div class="pipeline__dot"><i class="ri-download-line"></i></div>
+                            <div class="pipeline__line"></div>
+                        </div>
+                        <div class="pipeline__body">
+                            <div class="pipeline__phase" data-lang-en="Phase 1" data-lang-es="Fase 1">Phase 1</div>
+                            <div class="pipeline__title" data-lang-en="Extraction" data-lang-es="Extracción">Extraction</div>
+                            <div class="pipeline__detail" data-lang-en="Daily jobs fetch raw data from Google Analytics 4, Google Search Console, CRM platforms, and other integrated tools. Each source exports its full dataset or incremental changes via REST APIs. Data lands in staging tables per client." data-lang-es="Los trabajos diarios obtienen datos brutos de Google Analytics 4, Google Search Console, plataformas CRM y otras herramientas integradas. Cada fuente exporta su dataset completo o cambios incrementales a través de APIs REST. Los datos aterrizan en tablas de staging por cliente.">
+                        Fetch raw data from GA4, GSC, CRM, and third-party APIs. Data lands in per-client staging tables.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline__step">
+                        <div class="pipeline__connector">
+                            <div class="pipeline__dot"><i class="ri-settings-3-line"></i></div>
+                            <div class="pipeline__line"></div>
+                        </div>
+                        <div class="pipeline__body">
+                            <div class="pipeline__phase" data-lang-en="Phase 2" data-lang-es="Fase 2">Phase 2</div>
+                            <div class="pipeline__title" data-lang-en="Normalization &amp; Cleansing" data-lang-es="Normalización y Limpieza">Normalization &amp; Cleansing</div>
+                            <div class="pipeline__detail" data-lang-en="Raw data is transformed: standardized date formats, de-duplicated records, validated field types, and null handling. Unified naming conventions applied across all sources. Data quality baseline established." data-lang-es="Los datos brutos se transforman: formatos de fecha estandarizados, registros deduplicados, tipos de campo validados y manejo de nulos. Convenciones de nombres unificadas aplicadas en todas las fuentes. Se establece la línea base de calidad de datos.">
+                        Clean, standardize formats, deduplicate, validate data types. Apply consistent naming conventions.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline__step">
+                        <div class="pipeline__connector">
+                            <div class="pipeline__dot"><i class="ri-git-merge-line"></i></div>
+                            <div class="pipeline__line"></div>
+                        </div>
+                        <div class="pipeline__body">
+                            <div class="pipeline__phase" data-lang-en="Phase 3" data-lang-es="Fase 3">Phase 3</div>
+                            <div class="pipeline__title" data-lang-en="Reconciliation &amp; Truth Building" data-lang-es="Reconciliación y Construcción de la Verdad">Reconciliation &amp; Truth Building</div>
+                            <div class="pipeline__detail" data-lang-en="Compare identical metrics across sources. Where they diverge, investigate: was it consent mode, a timing issue, or a definition difference? Build 'best truth' tables that consolidate the most reliable data. Document every discrepancy." data-lang-es="Compara métricas idénticas entre fuentes. Donde divergen, investiga: ¿fue el consent mode, un problema de timing o una diferencia de definición? Construye tablas de 'mejor verdad' que consoliden los datos más confiables. Documenta cada discrepancia.">
+                        Compare metrics across sources, investigate discrepancies, build unified tables (single source of truth).
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline__step">
+                        <div class="pipeline__connector">
+                            <div class="pipeline__dot"><i class="ri-shield-check-line"></i></div>
+                            <div class="pipeline__line"></div>
+                        </div>
+                        <div class="pipeline__body">
+                            <div class="pipeline__phase" data-lang-en="Phase 4" data-lang-es="Fase 4">Phase 4</div>
+                            <div class="pipeline__title" data-lang-en="Quality Scoring &amp; Alerts" data-lang-es="Puntuación de Calidad y Alertas">Quality Scoring &amp; Alerts</div>
+                            <div class="pipeline__detail" data-lang-en="Automated tests run daily: unexpected null rates, volume anomalies, duplicates, schema violations, metric drift. Each check produces a score. If thresholds breach, intelligent alerts notify immediately. Historical trend analysis catches slow degradation." data-lang-es="Las pruebas automatizadas se ejecutan diariamente: tasas de nulos inesperados, anomalías de volumen, duplicados, violaciones de esquema, deriva de métricas. Cada chequeo produce una puntuación. Si se rompen los umbrales, las alertas inteligentes notifican inmediatamente. El análisis de tendencias históricas detecta degradación lenta.">
+                        Daily automated quality tests, scoring, anomaly detection, and real-time alerting on data failures.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline__step">
+                        <div class="pipeline__connector">
+                            <div class="pipeline__dot"><i class="ri-database-2-fill"></i></div>
+                        </div>
+                        <div class="pipeline__body">
+                            <div class="pipeline__phase" data-lang-en="Phase 5" data-lang-es="Fase 5">Phase 5</div>
+                            <div class="pipeline__title" data-lang-en="Production Data Warehouse" data-lang-es="Data Warehouse en Producción">Production Data Warehouse</div>
+                            <div class="pipeline__detail" data-lang-en="Clean, reconciled, quality-assured data lands in PostgreSQL production warehouse. Full historical retention (no 16-month limit). Indexed for analytics queries. Ready for BI dashboards, ML pipelines, or real-time API access." data-lang-es="Los datos limpios, reconciliados y garantizados de calidad aterrizan en el almacén de datos PostgreSQL de producción. Retención histórica completa (sin límite de 16 meses). Indexado para consultas de analytics. Listo para dashboards BI, pipelines ML o acceso API en tiempo real.">
+                        Store clean, validated data in PostgreSQL with full historical retention. Ready for analytics, BI, and ML.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Source Discrepancies -->
+            <section class="cs-section">
+                <h2 class="cs-section__title" id="discrepancies" data-lang-en="Why Sources Disagree: The Discrepancy Landscape" data-lang-es="Por Qué Las Fuentes No Coinciden: El Paisaje de Discrepancias">Why Sources Disagree: The Discrepancy Landscape</h2>
+
+                <div class="callout">
+                    <div class="callout__title" data-lang-en="The Problem" data-lang-es="El Problema">The Problem</div>
+                    <div class="callout__text" data-lang-en="Google Analytics and Google Search Console report different metrics for the same event. Your CRM counts conversions differently than GA. Why? It's not a bug—it's the architecture of each system." data-lang-es="Google Analytics y Google Search Console reportan métricas diferentes para el mismo evento. Tu CRM cuenta conversiones diferente que GA. ¿Por qué? No es un bug, es la arquitectura de cada sistema.">
+                        Google Analytics and Google Search Console report different metrics for the same event. Your CRM counts conversions differently than GA. Why? It's not a bug—it's the architecture of each system.
+                    </div>
+                </div>
+
+                <table class="cs-table">
+                    <thead>
+                        <tr>
+                            <th data-lang-en="Source" data-lang-es="Fuente">Source</th>
+                            <th data-lang-en="Why Data Differs" data-lang-es="Por Qué Los Datos Difieren">Why Data Differs</th>
+                            <th data-lang-en="Impact" data-lang-es="Impacto">Impact</th>
+                            <th data-lang-en="Solution" data-lang-es="Solución">Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong data-lang-en="GA4" data-lang-es="GA4">GA4</strong></td>
+                            <td data-lang-en="Event sampling, cookie consent mode, data retention limits (16 months)" data-lang-es="Muestreo de eventos, consent mode de cookies, límites de retención de datos (16 meses)">Event sampling, cookie consent mode, 16-month retention limit</td>
+                            <td data-lang-en="Sessions don't match CRM, old data lost" data-lang-es="Las sesiones no coinciden con CRM, se pierden datos antiguos">Sessions don't match CRM, old data discarded</td>
+                            <td data-lang-en="Store raw events in DW, build own session logic, unlimited retention" data-lang-es="Almacena eventos brutos en DW, construye tu propia lógica de sesión, retención ilimitada">Store events directly, unlimited retention</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-lang-en="GSC" data-lang-es="GSC">GSC</strong></td>
+                            <td data-lang-en="Filters & sampling, different session definition than GA4" data-lang-es="Filtros y muestreo, definición de sesión diferente que GA4">Filters, different session definition from GA4</td>
+                            <td data-lang-en="Search traffic counts don't align" data-lang-es="Los recuentos de tráfico de búsqueda no se alinean">Traffic numbers diverge from GA4</td>
+                            <td data-lang-en="Normalize GSC definition, reconcile with GA4 data" data-lang-es="Normaliza la definición de GSC, reconcilia con datos de GA4">Reconcile GSC metrics against GA4</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-lang-en="CRM" data-lang-es="CRM">CRM</strong></td>
+                            <td data-lang-en="Manual entry delays, custom conversion definitions, offline events" data-lang-es="Retrasos de entrada manual, definiciones de conversión personalizadas, eventos sin conexión">Manual entry delays, custom conversion logic, offline events</td>
+                            <td data-lang-en="Conversions don't match GA4 (may be ahead or behind)" data-lang-es="Las conversiones no coinciden con GA4 (pueden estar adelantadas o atrás)">Doesn't match GA4 timing or definitions</td>
+                            <td data-lang-en="Document conversion window, reconcile after time lag, flag outliers" data-lang-es="Documenta ventana de conversión, reconcilia después de desfase, marca valores atípicos">Map conversion windows, flag timing lags</td>
+                        </tr>
+                        <tr>
+                            <td><strong data-lang-en="Consent" data-lang-es="Consent">Consent</strong></td>
+                            <td data-lang-en="GA4 consent mode reduces tracked events; user consent inconsistent" data-lang-es="El consent mode de GA4 reduce eventos rastreados; el consentimiento del usuario es inconsistente">Reduces tracked events below actual traffic</td>
+                            <td data-lang-en="Undercount of traffic / conversions by 10–50%" data-lang-es="Recuento insuficiente de tráfico/conversiones del 10-50%">Traffic appears 10–50% lower than reality</td>
+                            <td data-lang-en="Store server-side events, compare consent vs non-consent, estimate true traffic" data-lang-es="Almacena eventos del lado del servidor, compara consentimiento vs no consentimiento, estima tráfico real">Track server-side, estimate true traffic</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p class="cs-section__text" data-lang-en="The warehouse normalizes these differences, documents them, and builds unified metrics you can trust." data-lang-es="El almacén normaliza estas diferencias, las documenta y construye métricas unificadas en las que puedes confiar.">
+                    The warehouse normalizes these differences, documents them, and builds unified metrics you can trust.
+                </p>
+            </section>
+
+            <!-- Architecture & Stack -->
+            <section class="cs-section">
+                <h2 class="cs-section__title" id="architecture" data-lang-en="Architecture &amp; Technology Stack" data-lang-es="Arquitectura y Stack Tecnológico">Architecture &amp; Technology Stack</h2>
+
+                <p class="cs-section__text" data-lang-en="Built for reliability, scalability, and ease of iteration." data-lang-es="Construido para confiabilidad, escalabilidad y facilidad de iteración.">
+                    Built for reliability, scalability, and ease of iteration.
+                </p>
+
+                <div class="stack">
+                    <span class="stack__item">Python 3.10+</span>
+                    <span class="stack__item">PostgreSQL 14+</span>
+                    <span class="stack__item">Docker</span>
+                    <span class="stack__item">FastAPI</span>
+                    <span class="stack__item">Pandas</span>
+                    <span class="stack__item">SQLAlchemy</span>
+                </div>
+
+                <h3 class="cs-section__title" data-lang-en="Design Principles" data-lang-es="Principios de Diseño" style="font-size: var(--h3-font-size); border-left-width: 2px; padding-left: .5rem; margin: 2rem 0 1rem;">Design Principles</h3>
+
+                <ul style="color: var(--text-color); line-height: 1.8; margin-left: 1.5rem;">
+                    <li data-lang-en="Separation of Concerns: Extract → Normalize → Reconcile → Validate → Load, each as independent, testable units." data-lang-es="Separación de Preocupaciones: Extraer → Normalizar → Reconciliar → Validar → Cargar, cada uno como unidades independientes y probables.">
+                        <strong data-lang-en="Separation of Concerns:" data-lang-es="Separación de Preocupaciones:">Separation of Concerns:</strong> Extract → Normalize → Reconcile → Validate → Load, each as independent, testable units.
+                    </li>
+                    <li data-lang-en="Idempotency: Any job can be re-run without corrupting data. Upserts, not appends." data-lang-es="Idempotencia: Cualquier trabajo se puede volver a ejecutar sin corromper datos. Upserts, no appends.">
+                        <strong data-lang-en="Idempotency:" data-lang-es="Idempotencia:">Idempotency:</strong> Any job can be re-run without corrupting data. Upserts, not appends.
+                    </li>
+                    <li data-lang-en="Observability: Every step logs success/failure, row counts, processing time, and data quality metrics." data-lang-es="Observabilidad: Cada paso registra éxito/fallo, recuentos de filas, tiempo de procesamiento y métricas de calidad de datos.">
+                        <strong data-lang-en="Observability:" data-lang-es="Observabilidad:">Observability:</strong> Every step logs success/failure, row counts, processing time, and data quality metrics.
+                    </li>
+                    <li data-lang-en="Extensibility: New sources plug in with minimal code. New quality checks are configuration-driven." data-lang-es="Extensibilidad: Las nuevas fuentes se conectan con código mínimo. Los nuevos chequeos de calidad se impulsan por configuración.">
+                        <strong data-lang-en="Extensibility:" data-lang-es="Extensibilidad:">Extensibility:</strong> New sources plug in with minimal code. New quality checks are configuration-driven.
+                    </li>
+                </ul>
+
+                <h3 class="cs-section__title" data-lang-en="Why This Stack?" data-lang-es="¿Por Qué Este Stack?" style="font-size: var(--h3-font-size); border-left-width: 2px; padding-left: .5rem; margin: 2rem 0 1rem;">Why This Stack?</h3>
+
+                <table class="cs-table">
+                    <thead>
+                        <tr>
+                            <th data-lang-en="Component" data-lang-es="Componente">Component</th>
+                            <th data-lang-en="Reason" data-lang-es="Razón">Reason</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Python</strong></td>
+                            <td data-lang-en="Rich ecosystem for data processing: pandas, SQLAlchemy, requests. Easy iteration and testing. Cloud-agnostic." data-lang-es="Ecosistema rico para procesamiento de datos: pandas, SQLAlchemy, requests. Fácil iteración y pruebas. Agnóstico a la nube.">Rich ecosystem: pandas, SQLAlchemy, requests. Easy iteration, cloud-agnostic.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PostgreSQL</strong></td>
+                            <td data-lang-en="Mature, open-source. Excellent for structured data, complex queries, and full ACID compliance. No vendor lock-in." data-lang-es="Maduro, de código abierto. Excelente para datos estructurados, consultas complejas y cumplimiento total de ACID. Sin bloqueo de proveedor.">Mature, open-source, ACID-compliant. Handles complex queries, full data retention. No vendor lock-in.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Docker</strong></td>
+                            <td data-lang-en="Containerize ETL jobs for consistent, reproducible runs across environments. Easy CI/CD integration." data-lang-es="Conteneriza trabajos ETL para ejecuciones consistentes y reproducibles entre entornos. Fácil integración de CI/CD.">Containerizes jobs for reproducible, consistent execution. CI/CD-ready.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FastAPI</strong></td>
+                            <td data-lang-en="Modern async Python framework. Handles real-time data queries, webhook callbacks, and monitoring dashboards. Type-safe, auto-documented." data-lang-es="Marco Python asincrónico moderno. Maneja consultas de datos en tiempo real, devoluciones de llamada de webhook y dashboards de monitoreo. Seguro de tipos, autodocumentado.">Async Python for real-time queries, webhooks, and dashboards. Type-safe, self-documenting.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Value Proposition -->
+            <section class="cs-section">
+                <h2 class="cs-section__title" id="value" data-lang-en="Why a Data Warehouse? Beyond Native Tools" data-lang-es="¿Por Qué Un Data Warehouse? Más Allá de Las Herramientas Nativas">Why a Data Warehouse? Beyond Native Tools</h2>
+
+                <div style="display: grid; gap: 1.5rem;">
+                    <div class="callout">
+                        <div class="callout__title" data-lang-en="Unlimited Historical Data" data-lang-es="Datos Históricos Ilimitados">Unlimited Historical Data</div>
+                        <div class="callout__text" data-lang-en="Google Analytics retains only 16 months. The warehouse keeps everything. Perfect for year-over-year analysis, cohort studies, ML training, and trend detection—without losing historical context." data-lang-es="Google Analytics retiene solo 16 meses. El almacén mantiene todo. Perfecto para análisis de año a año, estudios de cohorte, entrenamiento de ML y detección de tendencias sin perder contexto histórico.">
+                            GA4 limits history to 16 months. DW keeps everything. Enables YoY analysis, cohort studies, and ML on years of data.
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <div class="callout__title" data-lang-en="Single Source of Truth" data-lang-es="Única Fuente de Verdad">Single Source of Truth</div>
+                        <div class="callout__text" data-lang-en="Stop debating which number is 'correct.' Automated reconciliation builds unified metrics everyone trusts. When discrepancies surface, they're logged and explained—not silently hidden." data-lang-es="Deja de debatir cuál número es 'correcto'. La reconciliación automatizada construye métricas unificadas en las que todos confían. Cuando emergen discrepancias, se registran y explican, no se ocultan silenciosamente.">
+                            Reconcile GA4, GSC, CRM, and consent data into unified, auditable metrics. No more 'which number is right?'
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <div class="callout__title" data-lang-en="Automated Data Quality" data-lang-es="Calidad de Datos Automatizada">Automated Data Quality</div>
+                        <div class="callout__text" data-lang-en="Daily automated tests detect anomalies—unexpected nulls, volume spikes, duplicates, metric drift. Real-time alerts prevent bad data from corrupting decisions. Historical trends identify slow degradation." data-lang-es="Las pruebas automatizadas diarias detectan anomalías: nulos inesperados, picos de volumen, duplicados, deriva de métricas. Las alertas en tiempo real previenen que los datos malos corrompan decisiones. Las tendencias históricas identifican degradación lenta.">
+                            Real-time alerts on data failures. Catch bad data before it corrupts dashboards and decisions.
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <div class="callout__title" data-lang-en="Ready for ML & Prediction" data-lang-es="Listo para ML y Predicción">Ready for ML & Prediction</div>
+                        <div class="callout__text" data-lang-en="Years of clean, validated, historical data. The foundation for predictive models, churn analysis, revenue forecasting, and customer segmentation—unavailable in native tools." data-lang-es="Años de datos limpios, validados e históricos. La base para modelos predictivos, análisis de churn, pronósticos de ingresos y segmentación de clientes, no disponibles en herramientas nativas.">
+                            Clean historical data enables ML pipelines, predictive models, and advanced analytics native tools can't support.
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <div class="callout__title" data-lang-en="Real-time Query Access" data-lang-es="Acceso de Consulta en Tiempo Real">Real-time Query Access</div>
+                        <div class="callout__text" data-lang-en="FastAPI endpoints expose warehouse data for custom dashboards, mobile apps, and external integrations. Query your entire data history in milliseconds." data-lang-es="Los endpoints de FastAPI exponen datos del almacén para dashboards personalizados, aplicaciones móviles e integraciones externas. Consulta todo tu historial de datos en milisegundos.">
+                            Custom API endpoints for real-time dashboards, mobile apps, and third-party integrations.
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <div class="callout__title" data-lang-en="Multi-tenant Isolation" data-lang-es="Aislamiento Multi-tenant">Multi-tenant Isolation</div>
+                        <div class="callout__text" data-lang-en="A single ETL pipeline can serve multiple organizations with complete data isolation. Each tenant's schema is separate, but orchestration is unified—reducing operational complexity and maintenance overhead." data-lang-es="Un único pipeline ETL puede servir a múltiples organizaciones con aislamiento completo de datos. El esquema de cada tenant es separado, pero la orquestación es unificada, reduciendo complejidad operacional y sobrecarga de mantenimiento.">
+                            Single pipeline, multiple tenants with complete isolation. Unified orchestration reduces operational overhead.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience & Expertise -->
+            <section class="cs-section">
+                <h2 class="cs-section__title" id="experience" data-lang-en="Experience: From Design to Production" data-lang-es="Experiencia: Del Diseño a La Producción">Experience: From Design to Production</h2>
+
+                <p class="cs-section__text" data-lang-en="This project required expertise across the full data engineering lifecycle:" data-lang-es="Este proyecto requería experiencia en todo el ciclo de vida de la ingeniería de datos:">
+                    This project required expertise across the full data engineering lifecycle:
+                </p>
+
+                <ul style="color: var(--text-color); line-height: 1.8; margin-left: 1.5rem;">
+                    <li data-lang-en="API Integration: Designing OAuth flows, handling rate limits, and parsing diverse APIs (GA4, GSC, CRM REST endpoints, webhooks)." data-lang-es="Integración de API: Diseño de flujos OAuth, manejo de límites de velocidad y análisis de diversas API (GA4, GSC, endpoints REST de CRM, webhooks).">
+                        <strong data-lang-en="API Integration:" data-lang-es="Integración de API:">API Integration:</strong> OAuth flows, rate limiting, parsing diverse schemas from GA4, GSC, CRM systems.
+                    </li>
+                    <li data-lang-en="ETL Pipeline Architecture: Building modular, testable stages that extract, normalize, reconcile, and load data—each independently scalable." data-lang-es="Arquitectura de Pipeline ETL: Construcción de etapas modulares y probables que extraen, normalizan, reconcilian y cargan datos, cada una escalable independientemente.">
+                        <strong data-lang-en="ETL Architecture:" data-lang-es="Arquitectura ETL:">ETL Architecture:</strong> Modular extraction, normalization, reconciliation, and loading stages—each independently scalable and testable.
+                    </li>
+                    <li data-lang-en="Data Modeling: Designing schemas for multi-client isolation, normalized fact/dimension tables, and efficient queries on massive historical datasets." data-lang-es="Modelado de Datos: Diseño de esquemas para aislamiento multi-cliente, tablas de hecho/dimensión normalizadas y consultas eficientes en conjuntos de datos históricos masivos.">
+                        <strong data-lang-en="Data Modeling:" data-lang-es="Modelado de Datos:">Data Modeling:</strong> Multi-client schemas, normalized fact/dimension tables, optimized for analytics queries.
+                    </li>
+                    <li data-lang-en="Quality Assurance: Building automated test suites, anomaly detection, and alerting systems that catch data failures in production." data-lang-es="Aseguramiento de Calidad: Construcción de suites de pruebas automatizadas, detección de anomalías y sistemas de alerta que detectan fallos de datos en producción.">
+                        <strong data-lang-en="Quality Assurance:" data-lang-es="Aseguramiento de Calidad:">Quality Assurance:</strong> Automated testing, anomaly detection, alerting, and continuous monitoring.
+                    </li>
+                    <li data-lang-en="Production Operations: Docker containerization, logging, error handling, and recovery mechanisms. Designed for reliability in 24/7 production." data-lang-es="Operaciones de Producción: Containerización Docker, registro, manejo de errores y mecanismos de recuperación. Diseñado para confiabilidad en producción 24/7.">
+                        <strong data-lang-en="Production Operations:" data-lang-es="Operaciones de Producción:">Production Operations:</strong> Docker, logging, error recovery, and 24/7 monitoring for production reliability.
+                    </li>
+                    <li data-lang-en="Stakeholder Communication: Documenting discrepancies, explaining trade-offs, and aligning technical choices with business goals." data-lang-es="Comunicación con Partes Interesadas: Documentación de discrepancias, explicación de compensaciones y alineación de opciones técnicas con objetivos comerciales.">
+                        <strong data-lang-en="Stakeholder Communication:" data-lang-es="Comunicación con Partes Interesadas:">Stakeholder Communication:</strong> Documenting discrepancies, explaining trade-offs, and aligning solutions with business goals.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Versatility: Apply Anywhere -->
+            <section class="cs-section">
+                <h2 class="cs-section__title" id="versatility" data-lang-en="These Principles Apply Everywhere" data-lang-es="Estos Principios Aplican en Todas Partes">These Principles Apply Everywhere</h2>
+
+                <p class="cs-section__text" data-lang-en="This case study uses marketing data as an example (GA, GSC, CRMs). But the architecture, ETL patterns, and quality approach work across any industry:" data-lang-es="Este caso de estudio usa datos de marketing como ejemplo (GA, GSC, CRMs). Pero la arquitectura, patrones ETL y enfoque de calidad funcionan en cualquier industria:">
+                    This case study uses marketing data as an example (GA, GSC, CRMs). But the architecture, ETL patterns, and quality approach work across any industry:
+                </p>
+
+                <div style="display: grid; gap: 1.5rem; margin: 2rem 0;">
+                    <div class="callout">
+                        <div class="callout__title" data-lang-en="E-commerce" data-lang-es="E-commerce">E-commerce</div>
+                        <div class="callout__text" data-lang-en="Sales system + inventory management + customer data + marketing spend. Same ETL, same reconciliation challenges. Same solution." data-lang-es="Sistema de ventas + gestión de inventario + datos de cliente + gasto en marketing. Mismo ETL, mismos desafíos de reconciliación. Misma solución.">
+                            Sales system + inventory management + customer data + marketing spend. Same ETL patterns, same data quality challenges.
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <div class="callout__title" data-lang-en="SaaS / Subscription" data-lang-es="SaaS / Suscripción">SaaS / Subscription</div>
+                        <div class="callout__text" data-lang-en="Producto analytics + billing system + customer support + revenue data. Consolidate into one source of truth for product, finance, and ops teams." data-lang-es="Analytics de producto + sistema de facturación + soporte al cliente + datos de ingresos. Consolida en una única fuente de verdad para equipos de producto, finanzas y ops.">
+                            Product analytics + billing system + customer support + revenue data. Same consolidation, same governance, different domain.
+                        </div>
+                    </div>
+
+                    <div class="callout">
+                        <div class="callout__title" data-lang-en="Operations / Logistics" data-lang-es="Operaciones / Logística">Operations / Logistics</div>
+                        <div class="callout__text" data-lang-en="Warehouse system + supplier data + shipping system + cost accounting. Build a DW that shows what's REALLY happening vs what systems report." data-lang-es="Sistema de almacén + datos de proveedores + sistema de envío + contabilidad de costos. Construye un DW que muestre qué está REALMENTE pasando vs lo que reportan los sistemas.">
+                            Warehouse system + supplier data + shipping system + cost accounting. Same architecture, same data quality issues, same solution.
+                        </div>
+                    </div>
+                </div>
+
+                <p class="cs-section__text" data-lang-en="The domain changes. The data problems stay the same." data-lang-es="El dominio cambia. Los problemas de datos permanecen igual.">
+                    <strong data-lang-en="The domain changes. The data problems stay the same." data-lang-es="El dominio cambia. Los problemas de datos permanecen igual.">The domain changes. The data problems stay the same.</strong>
+                </p>
+            </section>
+
+            <!-- Closing -->
+            <section class="cs-section">
+                <h2 class="cs-section__title" id="takeaway" data-lang-en="Key Takeaway" data-lang-es="Conclusión Clave">Key Takeaway</h2>
+
+                <p class="cs-section__text" data-lang-en="Data fragmentation is expensive. This project proves that a well-designed ETL pipeline, built on solid engineering principles, can consolidate messy multi-source data into a reliable, auditable single source of truth—at scale, for multiple clients, with minimal operational overhead." data-lang-es="La fragmentación de datos es costosa. Este proyecto demuestra que un pipeline ETL bien diseñado, construido sobre principios de ingeniería sólidos, puede consolidar datos desordenados de múltiples fuentes en una única fuente de verdad confiable y auditable, a escala, para múltiples clientes, con una sobrecarga operacional mínima.">
+                    Data fragmentation is expensive. A well-designed ETL pipeline consolidates messy multi-source data into a reliable, auditable single source of truth—at enterprise scale.
+                </p>
+
+                <p class="cs-section__text" data-lang-en="The investment: clean architecture, automated quality checks, and intelligent alerting. The return: trustworthy data, reduced decision-making risk, and a foundation for advanced analytics and ML." data-lang-es="La inversión: arquitectura limpia, chequeos de calidad automatizados y alertas inteligentes. El rendimiento: datos confiables, reducción del riesgo de toma de decisiones y una base para análisis avanzados y ML.">
+                    The investment: clean architecture, automated QA, intelligent alerting. The return: trustworthy data, reduced risk, ML-ready platform.
+                </p>
+            </section>
+
+        </div>
+
+        <!-- Sidebar TOC -->
+        <aside class="cs-toc">
+            <div class="cs-toc__title">Contents</div>
+            <ul class="cs-toc__list">
+                <li class="cs-toc__item--h2"><a href="#etl" class="toc-link">ETL Process</a></li>
+                <li class="cs-toc__item--h2"><a href="#discrepancies" class="toc-link">Why Sources Disagree</a></li>
+                <li class="cs-toc__item--h2"><a href="#architecture" class="toc-link">Architecture</a></li>
+                <li class="cs-toc__item--h2"><a href="#value" class="toc-link">Value Proposition</a></li>
+                <li class="cs-toc__item--h2"><a href="#experience" class="toc-link">Experience</a></li>
+                <li class="cs-toc__item--h2"><a href="#versatility" class="toc-link">Versatility</a></li>
+                <li class="cs-toc__item--h2"><a href="#takeaway" class="toc-link">Key Takeaway</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <footer style="text-align: center; padding: 3rem 1.5rem; color: var(--text-color); font-size: var(--small-font-size);">
+        <p>© 2025 Guillermo Blanca</p>
+    </footer>
+
+    <script>
+        // Language toggle
+        const langBtns = document.querySelectorAll('.lang-btn');
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-lang-en], [data-lang-es]').forEach(el => {
+                const text = el.getAttribute(`data-lang-${lang}`);
+                if (text !== null) el.textContent = text;
+            });
+            langBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
+        }
+
+        langBtns.forEach(btn => btn.addEventListener('click', () => applyLanguage(btn.dataset.lang)));
+
+        // TOC active link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('[id]');
+            const scrollPos = window.scrollY + 100;
+            sections.forEach(section => {
+                if (section.offsetTop <= scrollPos && section.offsetTop + section.offsetHeight > scrollPos) {
+                    document.querySelectorAll('.toc-link').forEach(link => {
+                        link.classList.toggle('toc-active', link.getAttribute('href') === `#${section.id}`);
+                    });
+                }
+            });
+        });
+
+        // Init
+        applyLanguage(currentLang);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Dashboard — Multi-Industry Analytics | Guillermo Blanca</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <header class="header blur-header" id="header">
+        <nav class="nav container">
+            <a href="../../index.html#projects" class="nav__logo">Guillermo <span>Blanca</span></a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="../../index.html#home" class="nav__link">Home</a></li>
+                    <li class="nav__item"><a href="../../index.html#about" class="nav__link">About</a></li>
+                    <li class="nav__item"><a href="../../index.html#services" class="nav__link">Services</a></li>
+                    <li class="nav__item"><a href="../../index.html#projects" class="nav__link">Projects</a></li>
+                </ul>
+            </div>
+
+            <div class="nav__controls">
+                <div class="lang-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <span class="lang-sep">|</span>
+                    <button class="lang-btn" data-lang="es">ES</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ==================== MAIN ==================== -->
+    <div class="cs-wrapper">
+        <div class="cs-page">
+            <a href="../../index.html#projects" class="cs-back">
+                <i class="ri-arrow-left-line"></i>
+                <span data-lang-en="Back to projects" data-lang-es="Volver a proyectos">Back to projects</span>
+            </a>
+
+            <!-- HERO -->
+            <div class="cs-hero">
+                <span class="cs-hero__tag" data-lang-en="Business Dashboard" data-lang-es="Dashboard de Negocio">Business Dashboard</span>
+                <h1 class="cs-hero__title">
+                    <span data-lang-en="Multi-Industry" data-lang-es="Multi-Industria">Multi-Industry</span> <span data-lang-en="Analytics Dashboard" data-lang-es="Dashboard Analítico">Analytics Dashboard</span>
+                </h1>
+                <p class="cs-hero__sub" data-lang-en="A unified dashboard showcasing how the same data infrastructure and visualization principles apply across different industries. Change the industry selector below to see how analytics adapts." data-lang-es="Un dashboard unificado que demuestra cómo la misma infraestructura de datos y principios de visualización se aplican a diferentes industrias. Cambia el selector de industria para ver cómo el análisis se adapta.">A unified dashboard showcasing how the same data infrastructure and visualization principles apply across different industries. Change the industry selector below to see how analytics adapts.</p>
+                <div class="cs-hero__badges">
+                    <span class="badge">Chart.js</span>
+                    <span class="badge">Business Intelligence</span>
+                    <span class="badge">Multi-source Data</span>
+                </div>
+            </div>
+
+            <!-- INDUSTRY SELECTOR -->
+            <div class="industry-toggle">
+                <button class="industry-btn active" data-industry="ecommerce" data-lang-en="E-commerce" data-lang-es="E-commerce">E-commerce</button>
+                <button class="industry-btn" data-industry="saas" data-lang-en="SaaS" data-lang-es="SaaS">SaaS</button>
+                <button class="industry-btn" data-industry="ops" data-lang-en="Operations" data-lang-es="Operaciones">Operations</button>
+            </div>
+
+            <!-- METRICS -->
+            <div class="cs-metrics" id="metrics-container">
+                <div class="metric-card">
+                    <div class="metric-card__value" data-metric="kpi1">€48.2K</div>
+                    <div class="metric-card__label" data-metric-label="kpi1" data-lang-en="Revenue" data-lang-es="Ingresos">Revenue</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card__value" data-metric="kpi2">3.4%</div>
+                    <div class="metric-card__label" data-metric-label="kpi2" data-lang-en="Conversion" data-lang-es="Conversión">Conversion</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card__value" data-metric="kpi3">€89</div>
+                    <div class="metric-card__label" data-metric-label="kpi3" data-lang-en="Avg Order" data-lang-es="Orden Promedio">Avg Order</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card__value" data-metric="kpi4">68%</div>
+                    <div class="metric-card__label" data-metric-label="kpi4" data-lang-en="Cart Abandon" data-lang-es="Abandono Carrito">Cart Abandon</div>
+                </div>
+            </div>
+
+            <!-- INDUSTRY INSIGHT -->
+            <div class="industry-insight" id="industry-insight">
+                <i class="ri-lightbulb-flash-line"></i>
+                <p id="insight-text"></p>
+            </div>
+
+            <!-- SECTION: Dashboard -->
+            <section class="cs-section" id="dashboard">
+                <h2 class="cs-section__title" data-lang-en="Interactive Dashboard" data-lang-es="Dashboard Interactivo">Interactive Dashboard</h2>
+
+                <div class="cs-chart-grid">
+                    <div class="chart-card">
+                        <h3 class="chart-card__title" data-chart-title="trend">Revenue Trend</h3>
+                        <canvas id="chart-trend"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-card__title" data-chart-title="breakdown">Performance Breakdown</h3>
+                        <canvas id="chart-breakdown"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: How It Works -->
+            <section class="cs-section" id="how-it-works">
+                <h2 class="cs-section__title" data-lang-en="How It Works" data-lang-es="Cómo Funciona">How It Works</h2>
+                <p class="cs-section__text" data-lang-en="The same ETL pipeline and data quality principles work across industries. Only the metrics and visualization context change." data-lang-es="El mismo pipeline ETL y principios de calidad de datos funcionan en todas las industrias. Solo cambian las métricas y el contexto de visualización.">The same ETL pipeline and data quality principles work across industries. Only the metrics and visualization context change.</p>
+
+                <div class="pipeline">
+                    <div class="pipeline__step">
+                        <div class="pipeline__connector">
+                            <div class="pipeline__dot">
+                                <i class="ri-database-2-line"></i>
+                            </div>
+                            <div class="pipeline__line"></div>
+                        </div>
+                        <div class="pipeline__body">
+                            <div class="pipeline__phase" data-lang-en="Phase 1" data-lang-es="Fase 1">Phase 1</div>
+                            <div class="pipeline__title" data-lang-en="Data Collection" data-lang-es="Recopilación de Datos">Data Collection</div>
+                            <div class="pipeline__detail" data-lang-en="Pull raw data from multiple sources: CRM, analytics platforms, payment systems, operational logs." data-lang-es="Extraer datos sin procesar de múltiples fuentes: CRM, plataformas de análisis, sistemas de pago, registros operacionales.">Pull raw data from multiple sources: CRM, analytics platforms, payment systems, operational logs.</div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline__step">
+                        <div class="pipeline__connector">
+                            <div class="pipeline__dot">
+                                <i class="ri-git-merge-line"></i>
+                            </div>
+                            <div class="pipeline__line"></div>
+                        </div>
+                        <div class="pipeline__body">
+                            <div class="pipeline__phase" data-lang-en="Phase 2" data-lang-es="Fase 2">Phase 2</div>
+                            <div class="pipeline__title" data-lang-en="ETL & Transformation" data-lang-es="ETL y Transformación">ETL & Transformation</div>
+                            <div class="pipeline__detail" data-lang-en="Standardize formats, resolve discrepancies, aggregate metrics. Quality checks ensure data integrity." data-lang-es="Estandarizar formatos, resolver discrepancias, agregar métricas. Las verificaciones de calidad aseguran la integridad de los datos.">Standardize formats, resolve discrepancies, aggregate metrics. Quality checks ensure data integrity.</div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline__step">
+                        <div class="pipeline__connector">
+                            <div class="pipeline__dot">
+                                <i class="ri-bar-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="pipeline__body">
+                            <div class="pipeline__phase" data-lang-en="Phase 3" data-lang-es="Fase 3">Phase 3</div>
+                            <div class="pipeline__title" data-lang-en="Visualization & Insight" data-lang-es="Visualización e Insight">Visualization & Insight</div>
+                            <div class="pipeline__detail" data-lang-en="Create context-aware dashboards. Same infrastructure, different story depending on industry needs." data-lang-es="Crear dashboards conscientes del contexto. Misma infraestructura, historia diferente según las necesidades de la industria.">Create context-aware dashboards. Same infrastructure, different story depending on industry needs.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: Key Insight -->
+            <section class="cs-section" id="insight">
+                <h2 class="cs-section__title" data-lang-en="Key Insight" data-lang-es="Insight Clave">Key Insight</h2>
+
+                <div class="callout">
+                    <div class="callout__title" data-lang-en="Adaptability is the Core Strength" data-lang-es="La Adaptabilidad es la Fortaleza Fundamental">Adaptability is the Core Strength</div>
+                    <div class="callout__text" data-lang-en="What changes across industries isn't the infrastructure—it's the business context. A data engineer who understands both multi-source integration AND how to translate data into business impact can pivot to any domain. The technical patterns (ETL, data quality, visualization layer) remain constant." data-lang-es="Lo que cambia entre industrias no es la infraestructura, es el contexto empresarial. Un ingeniero de datos que entiende tanto la integración multi-fuente como la traducción de datos en impacto empresarial puede pivotar a cualquier dominio. Los patrones técnicos (ETL, calidad de datos, capa de visualización) permanecen constantes.">What changes across industries isn't the infrastructure—it's the business context. A data engineer who understands both multi-source integration AND how to translate data into business impact can pivot to any domain. The technical patterns (ETL, data quality, visualization layer) remain constant.</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TOC SIDEBAR -->
+        <aside class="cs-toc">
+            <div class="cs-toc__title" data-lang-en="Contents" data-lang-es="Contenidos">Contents</div>
+            <ul class="cs-toc__list">
+                <li class="cs-toc__item--h2">
+                    <a href="#dashboard" data-lang-en="Dashboard" data-lang-es="Dashboard">Dashboard</a>
+                </li>
+                <li class="cs-toc__item--h2">
+                    <a href="#how-it-works" data-lang-en="How It Works" data-lang-es="Cómo Funciona">How It Works</a>
+                </li>
+                <li class="cs-toc__item--h2">
+                    <a href="#insight" data-lang-en="Key Insight" data-lang-es="Insight Clave">Key Insight</a>
+                </li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <p data-lang-en="© 2025 Guillermo Blanca. All rights reserved." data-lang-es="© 2025 Guillermo Blanca. Todos los derechos reservados.">© 2025 Guillermo Blanca. All rights reserved.</p>
+    </footer>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="script.js"></script>
+</body>
+</html>
