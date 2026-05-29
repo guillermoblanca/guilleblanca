@@ -315,6 +315,12 @@ body[data-role="game"] .skills__container {
 .skills__data { text-align: center; }
 body[data-role="game"] .skills__data { text-align: initial; }
 body[data-role="data"] .skills__data { display: none !important; }
+body[data-role="data"] .skills__container {
+  grid-template-columns: 1fr;
+  max-width: 100%;
+  margin-inline: 0;
+  padding: 0 2rem;
+}
 .skills__description { margin-bottom: 2rem; }
 
 /* Game Dev list */
@@ -340,7 +346,8 @@ body[data-role="game"] .skills__content {
   background-color: rgba(255, 255, 255, 0.02);
   border: 1px solid hsl(228, 15%, 25%);
   border-radius: 1rem;
-  padding: 1.75rem 1.5rem;
+  padding: 2rem;
+  min-height: 280px;
   transition: border-color 0.3s, transform 0.3s;
 }
 
